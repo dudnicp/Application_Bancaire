@@ -1,5 +1,6 @@
 package model;
 
+
 import java.util.ArrayList;
 
 public class BankData {
@@ -7,6 +8,7 @@ public class BankData {
 	
 	
 	public BankData() {
+		clients = new ArrayList<BankClient>();
 		clients.add(new BankClient("123456789", "helloworld"));
 	}
 	
