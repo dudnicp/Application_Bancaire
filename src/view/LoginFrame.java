@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.accessibility.AccessibleAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +22,6 @@ import javax.swing.JTextField;
 import controller.Controller;
 import model.InvalidPasswordException;
 import model.InvalidUserException;
-import view.LoginFrame.KeyLoginListener;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -2050486294034364666L;
