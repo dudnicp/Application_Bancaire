@@ -112,24 +112,20 @@ public class LoginFrame extends JFrame {
 	
 	public void login() {
 		try {
-			controller.validateLogin(idField.getText(), passwordField.getText());
-			JOptionPane.showMessageDialog(null, "Welcome to the Bank-App!", null, JOptionPane.INFORMATION_MESSAGE);
+			controller.login(idField.getText(), passwordField.getText());
+			JOptionPane.showMessageDialog(null, controller.createWelcomeMessage(), 
+											null, JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 			
 			/* Place holder */
-			JFrame appFrame = new JFrame();
-			appFrame.setTitle("Bank-App");
-			appFrame.setSize(new Dimension(1000, 600));
-			appFrame.setResizable(false);
-			appFrame.setLocationRelativeTo(null);
-			appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			appFrame.setVisible(true);
-			
-		} catch (InvalidUserException e2) {
-			JOptionPane.showMessageDialog(null, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+			AppFrame app = new AppFrame(controller);
+		} catch (InvalidUserException e) {
+			JOptionPane.showMessageDialog(null, "User not found", "Error", 
+											JOptionPane.ERROR_MESSAGE);
 			reset();
-		} catch (InvalidPasswordException e2) {
-			JOptionPane.showMessageDialog(null, "Invalid password", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (InvalidPasswordException e) {
+			JOptionPane.showMessageDialog(null, "Invalid password", "Error", 
+											JOptionPane.ERROR_MESSAGE);
 			passwordField.setText(null);
 		}
 	}

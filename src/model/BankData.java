@@ -4,26 +4,22 @@ package model;
 import java.util.ArrayList;
 
 public class BankData {
-	private ArrayList<BankClient> clients;
+	private ArrayList<User> clients;
 	
 	
 	public BankData() {
-		clients = new ArrayList<BankClient>();
-		clients.add(new BankClient("123456789", "helloworld"));
+		clients = new ArrayList<User>();
+		clients.add(new User("12345", "hello", "Paul", "Dudnic", "Lord"));
 	}
 	
-	public ArrayList<BankClient> getClients() {
+	public ArrayList<User> getClients() {
 		return clients;
 	}
 	
-	public void validateUser(String id, String password) 
-			throws InvalidUserException, InvalidPasswordException {
-		for (BankClient client : clients) {
-			if (client.getId().equals(id)) {
-				if (client.getPassword().equals(password)) {
-					return;
-				}
-				throw new InvalidPasswordException();
+	public User getUserFromId(String id) throws InvalidUserException{
+		for (User user : clients) {
+			if (user.getId().equals(id)) {
+				return user;
 			}
 		}
 		throw new InvalidUserException();
