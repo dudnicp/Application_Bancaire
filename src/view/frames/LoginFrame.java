@@ -1,4 +1,4 @@
-package view;
+package view.frames;
 
 
 import java.awt.Color;
@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import controller.Controller;
 import model.InvalidPasswordException;
 import model.InvalidUserException;
+import view.panels.LoginPanel;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -2050486294034364666L;
@@ -39,7 +40,7 @@ public class LoginFrame extends JFrame {
 		this.controller = controller;
 		
 		this.setTitle("Bank-App");
-		this.setSize(new Dimension(500, 300));
+		this.setSize(500,300);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,7 +101,9 @@ public class LoginFrame extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(loginButton, c);
 		
+		
 		contentPanel.add(panel);
+		
 		this.setContentPane(contentPanel);
 		this.setVisible(true);
 	}
@@ -112,24 +115,21 @@ public class LoginFrame extends JFrame {
 	
 	public void login() {
 		try {
-			controller.validateLogin(idField.getText(), passwordField.getText());
-			JOptionPane.showMessageDialog(null, "Welcome to the Bank-App!", null, JOptionPane.INFORMATION_MESSAGE);
+			controller.login(idField.getText(), passwordField.getText());
+			JOptionPane.showMessageDialog(null, controller.createWelcomeMessage(), 
+											null, JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 			
 			/* Place holder */
-			JFrame appFrame = new JFrame();
-			appFrame.setTitle("Bank-App");
-			appFrame.setSize(new Dimension(1000, 600));
-			appFrame.setResizable(false);
-			appFrame.setLocationRelativeTo(null);
-			appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			appFrame.setVisible(true);
+			AppFrame app = new AppFrame(controller);
 			
-		} catch (InvalidUserException e2) {
-			JOptionPane.showMessageDialog(null, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (InvalidUserException e) {
+			JOptionPane.showMessageDialog(null, "User not found", "Error", 
+											JOptionPane.ERROR_MESSAGE);
 			reset();
-		} catch (InvalidPasswordException e2) {
-			JOptionPane.showMessageDialog(null, "Invalid password", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (InvalidPasswordException e) {
+			JOptionPane.showMessageDialog(null, "Invalid password", "Error", 
+											JOptionPane.ERROR_MESSAGE);
 			passwordField.setText(null);
 		}
 	}
