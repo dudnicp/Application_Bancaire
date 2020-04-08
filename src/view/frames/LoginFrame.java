@@ -117,7 +117,7 @@ public class LoginFrame extends JFrame {
 		try {
 			controller.login(idField.getText(), passwordField.getText());
 			JOptionPane.showMessageDialog(null, controller.createWelcomeMessage(), 
-											null, JOptionPane.INFORMATION_MESSAGE);
+											"Welcome!", JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 			
 			/* Place holder */

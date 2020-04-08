@@ -2,7 +2,7 @@ package model;
 
 public class AppData {
 	private User loggedUser;
-	private BankData bank;
+	private BankData bank;	
 	
 	public AppData(BankData bank) {
 		this.bank = bank;
