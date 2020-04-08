@@ -40,6 +40,7 @@ public class LoginFrame extends JFrame {
 		this.controller = controller;
 		
 		this.setTitle("Bank-App");
+		this.setSize(500,300);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +53,6 @@ public class LoginFrame extends JFrame {
 		loginButton.addActionListener(new LoginButtonListener());
 		
 		LoginPanel contentPanel = new LoginPanel();
-		contentPanel.setPreferredSize(new Dimension(1000, 1000));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 0, 0));
@@ -105,7 +105,6 @@ public class LoginFrame extends JFrame {
 		contentPanel.add(panel);
 		
 		this.setContentPane(contentPanel);
-		this.pack();
 		this.setVisible(true);
 	}
 	
