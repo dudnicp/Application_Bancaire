@@ -4,6 +4,7 @@ package app;
 import controller.Controller;
 import model.AppData;
 import model.BankData;
+import view.frames.AppFrame;
 import view.frames.LoginFrame;
 
 public class BankUserApp {
@@ -11,6 +12,7 @@ public class BankUserApp {
 		BankData bank = new BankData();
 		AppData appData = new AppData(bank);
 		Controller controller = new Controller(appData);
-		LoginFrame login = new LoginFrame(controller);
+//		LoginFrame login = new LoginFrame(controller);
+		AppFrame app = new AppFrame(controller);
 	}
 }
