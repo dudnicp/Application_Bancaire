@@ -1,6 +1,5 @@
 package model;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class User {
 	private String firstName;

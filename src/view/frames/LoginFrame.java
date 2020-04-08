@@ -1,4 +1,4 @@
-package view;
+package view.frames;
 
 
 import java.awt.Color;
@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import controller.Controller;
 import model.InvalidPasswordException;
 import model.InvalidUserException;
+import view.panels.LoginPanel;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -2050486294034364666L;
@@ -39,7 +40,6 @@ public class LoginFrame extends JFrame {
 		this.controller = controller;
 		
 		this.setTitle("Bank-App");
-		this.setSize(new Dimension(500, 300));
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +52,7 @@ public class LoginFrame extends JFrame {
 		loginButton.addActionListener(new LoginButtonListener());
 		
 		LoginPanel contentPanel = new LoginPanel();
+		contentPanel.setPreferredSize(new Dimension(1000, 1000));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 0, 0));
@@ -100,8 +101,11 @@ public class LoginFrame extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(loginButton, c);
 		
+		
 		contentPanel.add(panel);
+		
 		this.setContentPane(contentPanel);
+		this.pack();
 		this.setVisible(true);
 	}
 	
@@ -119,6 +123,7 @@ public class LoginFrame extends JFrame {
 			
 			/* Place holder */
 			AppFrame app = new AppFrame(controller);
+			
 		} catch (InvalidUserException e) {
 			JOptionPane.showMessageDialog(null, "User not found", "Error", 
 											JOptionPane.ERROR_MESSAGE);

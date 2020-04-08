@@ -1,8 +1,10 @@
-package view;
+package app;
+
 
 import controller.Controller;
 import model.AppData;
 import model.BankData;
+import view.frames.LoginFrame;
 
 public class BankUserApp {
 	public static void main(String[] args) {

@@ -14,7 +14,6 @@ public class Controller {
 	}
 
 	
-	
 	public void login(String id, String password) 
 			throws InvalidUserException, InvalidPasswordException{
 		appData.login(id, password);
