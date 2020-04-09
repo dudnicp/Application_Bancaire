@@ -9,7 +9,7 @@ public class AppData {
 		this.loggedUser = new User("", "", "", "", "");
 		for (int i = 0; i < 20; i++) {		
 			PersonalAccount newAccount = new PersonalAccount("Compte" + i, 
-					AccountType.COMPTE_COURRANT);
+					AccountType.COMPTE_COURRANT, 100);
 			newAccount.setName("Compte" + i);
 			loggedUser.addPersonalAccount(newAccount);
 		}

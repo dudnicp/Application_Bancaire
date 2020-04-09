@@ -6,12 +6,15 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
-public class AccountSmallResumePanel extends JPanel {
+public class AccountSmallResumePanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = -3601361845540054272L;
 
 	private PersonalAccount linkedAccount;
@@ -31,7 +34,6 @@ public class AccountSmallResumePanel extends JPanel {
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = GridBagConstraints.REMAINDER;
-//		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(0, 0, 0, 80);
 		this.add(nameLabel, c);
 		
@@ -69,6 +71,35 @@ public class AccountSmallResumePanel extends JPanel {
 		c.gridwidth = 1;
 		this.add(pendingAmountLabel, c);
 		
-		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		
+		this.setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		this.addMouseListener(this);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		this.setBorder(BorderFactory.createLoweredBevelBorder());
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		this.setBorder(BorderFactory.createRaisedBevelBorder());
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		this.setBackground(UIManager.getColor("TabbedPane.background"));
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		this.setBackground(UIManager.getColor("Panel.background"));
 	}
 }
