@@ -6,6 +6,13 @@ public class AppData {
 	
 	public AppData(BankData bank) {
 		this.bank = bank;
+		this.loggedUser = new User("", "", "", "", "");
+		for (int i = 0; i < 20; i++) {		
+			PersonalAccount newAccount = new PersonalAccount("Compte" + i, 
+					AccountType.COMPTE_COURRANT);
+			newAccount.setName("Compte" + i);
+			loggedUser.addPersonalAccount(newAccount);
+		}
 	}
 	
 	public void setLoggedUser(User loggedUser) {

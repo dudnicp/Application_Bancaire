@@ -13,6 +13,7 @@ public class PersonalAccount extends Account {
 		super(iban);
 		this.type = type;
 		history = new PriorityQueue<Transaction>();
+		pendingTransactions = new ArrayList<Transaction>();
 	}
 	
 	
@@ -31,6 +32,18 @@ public class PersonalAccount extends Account {
 	
 	public PriorityQueue<Transaction> getHistory() {
 		return history;
+	}
+	
+	public ArrayList<Transaction> getPendingTransactions() {
+		return pendingTransactions;
+	}
+	
+	public double getPendingAmount() {
+		double amount = 0;
+		for (Transaction transaction : pendingTransactions) {
+			amount += transaction.getAmount();
+		}
+		return amount;
 	}
 	
 }
