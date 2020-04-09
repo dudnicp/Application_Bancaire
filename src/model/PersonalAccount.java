@@ -9,10 +9,12 @@ public class PersonalAccount extends Account {
 	private PriorityQueue<Transaction> history;
 	private ArrayList<Transaction> pendingTransactions;
 	
-	public PersonalAccount(String iban, AccountType type) {
+	public PersonalAccount(String iban, AccountType type, double amount) {
 		super(iban);
+		this.amount = amount;
 		this.type = type;
 		history = new PriorityQueue<Transaction>();
+		this.pendingTransactions = new ArrayList<Transaction>();
 	}
 	
 	
@@ -20,6 +22,9 @@ public class PersonalAccount extends Account {
 		pendingTransactions.add(t);
 	}
 	
+	public void addHistory(Transaction t){
+		history.add(t);
+	}
 	
 	public double getAmount() {
 		return amount;
