@@ -15,6 +15,9 @@ public class Transaction {
 		this.category = InBuiltTransactionCategory.UNKNOWN.toString();
 	}
 	
+	public Transaction(Transaction other) {
+		this(other.recieverAccount, other.amount, other.date);
+	}
 	
 	public void setCategory(String category) {
 		this.category = category;
