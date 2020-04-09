@@ -9,6 +9,11 @@ public class Account {
 		this.name = "";
 	}
 	
+	public Account(String iban, String name) {
+		this.iban = iban;
+		this.name = name;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

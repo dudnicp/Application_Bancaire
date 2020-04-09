@@ -17,6 +17,11 @@ public class PersonalAccount extends Account {
 		pendingTransactions = new ArrayList<Transaction>();
 	}
 	
+	public PersonalAccount(String iban, AccountType type, double amount, String name) {
+		this(iban, type, amount);
+		this.setName(name);
+	}
+	
 	public PersonalAccount(PersonalAccount other) {
 		this(other.getIban(), other.getType(), other.amount);
 	}

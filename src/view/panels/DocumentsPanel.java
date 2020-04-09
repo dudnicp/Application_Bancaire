@@ -1,8 +1,5 @@
 package view.panels;
 
-import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.JPanel;;
 
 public class DocumentsPanel extends JPanel {

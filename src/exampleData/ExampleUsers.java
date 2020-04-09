@@ -13,9 +13,9 @@ public class ExampleUsers extends LinkedList<User>{
 		User alix = new User("bruckali", "nulenmath", "Alix","BRUCKERT", "Princesse");
 		User adrien = new User("delepla", "vener", "Adrien","DELEPLACE", "Dauphin");
 		
-		PersonalAccount compteVal = new PersonalAccount("001", AccountType.COMPTE_COURRANT, 100);
-		PersonalAccount compteAlix = new PersonalAccount("002", AccountType.COMPTE_COURRANT, 100);
-		PersonalAccount compteAdrien = new PersonalAccount("003", AccountType.COMPTE_COURRANT, 100);
+		PersonalAccount compteVal = new PersonalAccount("001", AccountType.COMPTE_COURRANT, 100, "001");
+		PersonalAccount compteAlix = new PersonalAccount("002", AccountType.COMPTE_COURRANT, 100, "002");
+		PersonalAccount compteAdrien = new PersonalAccount("003", AccountType.COMPTE_COURRANT, 100, "003");
 
 		val.addBeneficiary(compteAlix);
 		alix.addBeneficiary(compteAdrien);

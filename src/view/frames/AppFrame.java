@@ -1,37 +1,37 @@
 package view.frames;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
 
-import controller.Controller;
-import view.panels.AccountsPanel;
-import view.panels.DocumentsPanel;
-import view.panels.LoansPanel;
-import view.panels.PreferencesPanel;
-import view.panels.TransfersPanel;
+import controller.MainMenuController;
 
 public class AppFrame extends JFrame {
 	private static final long serialVersionUID = -912989417505291367L;
-	private JTabbedPane tabs;
 	
-	private Controller controller;
+	private CardLayout cardLayout;
+	private static final String ACCOUNTS = "accounts";
+	private static final String TRANSFERS = "transfers";
+	private static final String LOANS = "loans";
+	private static final String PREFERENCES = "preferences";
 	
-	public AppFrame(Controller controller) {
+	private JPanel accountsPanel;
+	private JPanel transfersPanel;
+	private JPanel loansPanel;
+	private JPanel preferencesPanel;
+	
+	
+	private MainMenuController controller;
+	
+	
+	public AppFrame(MainMenuController controller) {
 		
 		this.controller = controller;
 		
@@ -39,92 +39,145 @@ public class AppFrame extends JFrame {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel contentPanel = new JPanel(new GridBagLayout());
-		
+		this.cardLayout = new CardLayout();
+		JPanel contentPane = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		tabs = new JTabbedPane(JTabbedPane.LEFT);
+		Dimension buttonDimension = new Dimension(150,80);
+		Dimension panelDimension = new Dimension(450,380);
 		
-		Dimension tabSize = new Dimension(100,80);
-		Color transparent = new Color(0,0,0,0);
-		
-		tabs.add(new AccountsPanel(controller));
-		JPanel tab0 = new JPanel(new BorderLayout());
-		tab0.setBackground(transparent);
-		tab0.setPreferredSize(tabSize);
-		tab0.add(new JLabel("Comptes"), BorderLayout.EAST);
-		tabs.setTabComponentAt(0, tab0);
-		
-		tabs.add(new TransfersPanel());
-		JPanel tab1 = new JPanel(new BorderLayout());
-		tab1.setBackground(transparent);
-		tab1.setPreferredSize(tabSize);
-		tab1.add(new JLabel("Virements"), BorderLayout.EAST);
-		tabs.setTabComponentAt(1, tab1);
-		
-		tabs.add(new LoansPanel());
-		JPanel tab2 = new JPanel(new BorderLayout());
-		tab2.setBackground(transparent);
-		tab2.setPreferredSize(tabSize);
-		tab2.add(new JLabel("Emprunts"),  BorderLayout.EAST);
-		tabs.setTabComponentAt(2, tab2);
-		
-		tabs.add(new PreferencesPanel());
-		JPanel tab3 = new JPanel(new BorderLayout());
-		tab3.setBackground(transparent);
-		tab3.setPreferredSize(tabSize);
-		tab3.add(new JLabel("Préférences"),  BorderLayout.EAST);
-		tabs.setTabComponentAt(3, tab3);
+		JButton accountsButton = new JButton("Comptes");
+		accountsButton.setPreferredSize(buttonDimension);
+		JButton transferButton = new JButton("Virements");
+		transferButton.setPreferredSize(buttonDimension);
+		JButton loansButton = new JButton("Emprunts");
+		loansButton.setPreferredSize(buttonDimension);
+		JButton preferencesButton = new JButton("Réglages");
+		preferencesButton.setPreferredSize(buttonDimension);
+		JButton decoButton = new JButton("Deconnéxion");
+		decoButton.setPreferredSize(new Dimension(150, 30));
+		JButton quitButton = new JButton("Quitter");
+		quitButton.setPreferredSize(new Dimension(150, 30));
 		
 		c.gridx = 0;
 		c.gridy = 0;
+		c.gridwidth = 1;
 		c.gridheight = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.BOTH;
-		contentPanel.add(tabs, c);
+		contentPane.add(accountsButton, c);
 		
-		
-		JButton decoButton = new JButton("Déconnexion");
-		decoButton.addActionListener(new DecoButtonListener());
 		c.gridx = 0;
 		c.gridy = 1;
-		c.gridheight = 1;
 		c.gridwidth = 1;
-		c.insets = new Insets(0, 400, 0, 0);
-		c.anchor = GridBagConstraints.LAST_LINE_END;
+		c.gridheight = 1;
+		c.fill = GridBagConstraints.BOTH;
+		contentPane.add(transferButton, c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.fill = GridBagConstraints.BOTH;
+		contentPane.add(loansButton, c);
+		
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.fill = GridBagConstraints.BOTH;
+		contentPane.add(preferencesButton, c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.fill = GridBagConstraints.BOTH;
+		contentPane.add(decoButton, c);
+		
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 1;
+		c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
-		contentPanel.add(decoButton, c);
+		contentPane.add(quitButton, c);
 		
-		JButton quitButton = new JButton("Quitter");
-		quitButton.addActionListener(new QuitButtonListener());
+		
+		JPanel tabs = new JPanel(cardLayout);
+		accountsPanel = new JPanel();
+		accountsPanel.setPreferredSize(panelDimension);
+		tabs.add(accountsPanel, ACCOUNTS);
+		
+		transfersPanel = new JPanel();
+		transfersPanel.setPreferredSize(panelDimension);
+		tabs.add(transfersPanel, TRANSFERS);
+		
+		loansPanel = new JPanel();
+		loansPanel.setPreferredSize(panelDimension);
+		tabs.add(loansPanel, LOANS);
+		
+		preferencesPanel = new JPanel();
+		preferencesPanel.setPreferredSize(panelDimension);
+		tabs.add(preferencesPanel, PREFERENCES);
+		
 		c.gridx = 1;
-		c.gridy = 1;
-		c.gridheight = 1;
+		c.gridy = 0;
 		c.gridwidth = 1;
-		c.insets = new Insets(0, 0, 0, 0);
-		c.anchor = GridBagConstraints.PAGE_END;
-		contentPanel.add(quitButton, c);
+		c.gridheight = GridBagConstraints.REMAINDER;
+		c.fill = GridBagConstraints.BOTH;
+		contentPane.add(tabs, c);
 		
-		this.setContentPane(contentPanel);
+		
+		this.setContentPane(contentPane);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
+	class AccountsButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	class TransfersButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	class LoansButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	class PreferencesButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
 	class DecoButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			controller.deconnectCurrentUser();
-			dispose();
-			LoginFrame newLogin = new LoginFrame(controller);
+			// TODO Auto-generated method stub
+			
 		}
 	}
 	
 	class QuitButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			controller.deconnectCurrentUser();
-			dispose();
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

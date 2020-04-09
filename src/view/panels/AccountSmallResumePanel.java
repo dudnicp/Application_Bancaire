@@ -1,4 +1,4 @@
-package model;
+package view.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,15 +14,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import controller.LoginController;
+import model.PersonalAccount;
+
 public class AccountSmallResumePanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = -3601361845540054272L;
 
+	private AccountsPanel parentTab;
 	private PersonalAccount linkedAccount;
+	private LoginController controller;
 	
-	public AccountSmallResumePanel(PersonalAccount account) {
-		this.linkedAccount = account;
+	public AccountSmallResumePanel(PersonalAccount account, AccountsPanel parenTab, 
+														LoginController controller) {
 		
-		this.setPreferredSize(new Dimension(200, 100));
+		this.linkedAccount = account;
+		this.parentTab = parenTab;
+		this.controller = controller;
+		
+		this.setPreferredSize(new Dimension(400, 100));
+		this.setMaximumSize(new Dimension(400, 100));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -39,7 +49,7 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 		
 		
 		Double amount = linkedAccount.getAmount();
-		JLabel amountLabel = new JLabel(amount.toString() + "€");
+		JLabel amountLabel = new JLabel(amount.toString() + " €");
 		amountLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 		c.gridx = 1;
 		c.gridy = 0;
@@ -58,12 +68,14 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 		this.add(pendingLabel, c);
 		
 		Double pendingAmount = linkedAccount.getPendingAmount();
-		JLabel pendingAmountLabel = new JLabel(pendingAmount.toString() + "€");
+		JLabel pendingAmountLabel = new JLabel();
 		pendingAmountLabel.setFont(new Font(Font.SERIF, Font.ITALIC, 15));
-		if (pendingAmount < 0) {
-			pendingAmountLabel.setForeground(Color.RED);
+		if (pendingAmount <= 0) {
+			pendingAmountLabel.setText(pendingAmount.toString() + " €");
+			pendingAmountLabel.setForeground(new Color(200, 50, 50));
 		} else if (pendingAmount > 0) {
-			pendingAmountLabel.setForeground(Color.GREEN);
+			pendingAmountLabel.setText("+" + pendingAmount.toString() + " €");
+			pendingAmountLabel.setForeground(new Color(50,200,50 ));
 		}
 		c.gridx = 1;
 		c.gridy = 2;
@@ -79,27 +91,32 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO
-		
+		parentTab.setupAccountHistoryPanel(linkedAccount);
+		parentTab.switchToAccountInfoPanel();
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		this.setBorder(BorderFactory.createLoweredBevelBorder());
+		this.setBackground(UIManager.getColor("TabbedPane.background"));
+		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		this.setBorder(BorderFactory.createRaisedBevelBorder());
+		this.setBackground(UIManager.getColor("Panel.background"));
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		this.setBackground(UIManager.getColor("TabbedPane.background"));
+		this.setBorder(BorderFactory.createLoweredBevelBorder());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		this.setBackground(UIManager.getColor("Panel.background"));
+		this.setBorder(BorderFactory.createRaisedBevelBorder());
+		if(this.contains(e.getPoint())) {
+			parentTab.setupAccountHistoryPanel(linkedAccount);
+			parentTab.switchToAccountInfoPanel();	
+		}
 	}
 }

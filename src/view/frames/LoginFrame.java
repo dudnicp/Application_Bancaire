@@ -19,15 +19,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controller.Controller;
-import model.InvalidPasswordException;
-import model.InvalidUserException;
+import controller.LoginController;
+import model.events.Event;
+import model.events.LoginEvent;
+import model.paterns.Observer;
 import view.panels.LoginPanel;
 
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame implements Observer{
 	private static final long serialVersionUID = -2050486294034364666L;
 	
-	private Controller controller;
+	private LoginController controller;
 	
 	private final JLabel idLabel = new JLabel("User ID: ");
 	private final JLabel passwordLabel = new JLabel("Password: ");
@@ -36,7 +37,7 @@ public class LoginFrame extends JFrame {
 	private JButton loginButton;
 	
 	
-	public LoginFrame(Controller controller) {
+	public LoginFrame(LoginController controller) {
 		this.controller = controller;
 		
 		this.setTitle("Bank-App");
@@ -113,31 +114,10 @@ public class LoginFrame extends JFrame {
 		passwordField.setText(null);
 	}
 	
-	public void login() {
-		try {
-			controller.login(idField.getText(), passwordField.getText());
-			JOptionPane.showMessageDialog(null, controller.createWelcomeMessage(), 
-											"Welcome!", JOptionPane.INFORMATION_MESSAGE);
-			dispose();
-			
-			/* Place holder */
-			AppFrame app = new AppFrame(controller);
-			
-		} catch (InvalidUserException e) {
-			JOptionPane.showMessageDialog(null, "User not found", "Error", 
-											JOptionPane.ERROR_MESSAGE);
-			reset();
-		} catch (InvalidPasswordException e) {
-			JOptionPane.showMessageDialog(null, "Invalid password", "Error", 
-											JOptionPane.ERROR_MESSAGE);
-			passwordField.setText(null);
-		}
-	}
-	
 	class LoginButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			login();
+			controller.login(idField.getText(), passwordField.getText());
 		}
 	}
 	
@@ -146,7 +126,7 @@ public class LoginFrame extends JFrame {
 		public void keyPressed(KeyEvent e) {
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_ENTER:
-				login();
+				controller.login(idField.getText(), passwordField.getText());
 				break;
 			default:
 				break;
@@ -161,6 +141,30 @@ public class LoginFrame extends JFrame {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// pass, nothing to do here
+		}
+	}
+
+	@Override
+	public void update(Event e) {
+		LoginEvent loginEvent = (LoginEvent) e;
+		switch (loginEvent.getLoginStatus()) {
+		case LoginEvent.INVALID_ID:
+			JOptionPane.showMessageDialog(null, "Utilisateur inconnu!", "Erreur", 
+										JOptionPane.ERROR_MESSAGE);
+			reset();
+			break;
+		case LoginEvent.INVALID_PASSWORD:
+			JOptionPane.showMessageDialog(null, "Mot de passe invalide", "Erreur", 
+					JOptionPane.ERROR_MESSAGE);
+			passwordField.setText("");
+			break;
+		default:
+			String welcomeMessage = "Connécté en tant que " 
+							+ loginEvent.getLoggedUser().toString();
+			JOptionPane.showMessageDialog(null, welcomeMessage, "Bienvenue!", 
+										JOptionPane.INFORMATION_MESSAGE);
+			dispose();
+			break;
 		}
 	}
 }
