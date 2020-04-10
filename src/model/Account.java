@@ -4,11 +4,6 @@ public class Account {
 	private String name;
 	private String iban;
 	
-	public Account(String iban) {
-		this.iban = iban;
-		this.name = "";
-	}
-	
 	public Account(String iban, String name) {
 		this.iban = iban;
 		this.name = name;

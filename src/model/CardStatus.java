@@ -2,7 +2,7 @@ package model;
 
 public enum CardStatus {
 	ACTIVE("Active"),
-	BLOQUEE("Bloquée");
+	BLOCKED("Bloquée");
 	
 	private String str = "Active";
 	

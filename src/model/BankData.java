@@ -21,12 +21,12 @@ public class BankData {
 		return clients;
 	}
 	
-	public User getUserFromId(String id) throws InvalidUserException{
+	public User getUserFromId(String id) {
 		for (User user : clients) {
 			if (user.getId().equals(id)) {
 				return user;
 			}
 		}
-		throw new InvalidUserException();
+		return null;
 	}
 }

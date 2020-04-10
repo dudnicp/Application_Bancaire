@@ -2,19 +2,16 @@ package view.panels;
 
 import javax.swing.JPanel;
 
-import controller.LoginController;
-import model.Card;
+import controller.CreditCardController;
 
 public class CreditCardInfoPanel extends JPanel {
 	
 	private static final long serialVersionUID = 5640132158978517923L;
 	
-	private Card linkedCard;
 	private AccountsPanel parentTab;
-	private LoginController controller;
+	private CreditCardController controller;
 	
-	public CreditCardInfoPanel(Card card, AccountsPanel parentTab, LoginController controller) {
-		this.linkedCard = card;
+	public CreditCardInfoPanel(AccountsPanel parentTab, CreditCardController controller) {
 		this.parentTab = parentTab;
 		this.controller = controller;
 	}

@@ -3,11 +3,11 @@ import java.util.Date;
 
 public class Loan {
 	
-	private RegTransaction forUser, forBank;
+	private PermanentTransfer forUser, forBank;
 	
-	public Loan(RegTransaction forUser, RegTransaction forBank) {
-		this.forUser = new RegTransaction(forUser);
-		this.forBank = new RegTransaction(forBank);
+	public Loan(PermanentTransfer forUser, PermanentTransfer forBank) {
+		this.forUser = new PermanentTransfer(forUser);
+		this.forBank = new PermanentTransfer(forBank);
 	}
 	
 	public Loan(Loan other) {

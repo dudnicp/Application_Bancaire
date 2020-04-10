@@ -4,38 +4,43 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class PersonalAccount extends Account {
-	private double amount;
+	
+	private double balance;
 	private AccountType type;
 	private PriorityQueue<Transaction> history;
 	private ArrayList<Transaction> pendingTransactions;
 	
-	public PersonalAccount(String iban, AccountType type, double amount) {
-		super(iban);
-		this.amount = amount;
+	public PersonalAccount(String iban, String name, AccountType type, double amount) {
+		super(iban, name);
+		this.balance = amount;
 		this.type = type;
-		history = new PriorityQueue<Transaction>();
-		pendingTransactions = new ArrayList<Transaction>();
-	}
-	
-	public PersonalAccount(String iban, AccountType type, double amount, String name) {
-		this(iban, type, amount);
-		this.setName(name);
+		
+		this.history = new PriorityQueue<Transaction>(new TransactionComparator());
+		this.pendingTransactions = new ArrayList<Transaction>();
 	}
 	
 	public PersonalAccount(PersonalAccount other) {
-		this(other.getIban(), other.getType(), other.amount);
+		this(other.getIban(), other.getName(), other.type, other.balance);
+		for (Transaction transaction : other.history) {
+			this.history.add(transaction);
+		}
+		for (Transaction transaction : other.pendingTransactions) {
+			this.pendingTransactions.add(transaction);
+		}
 	}
 	
 	public void addPendingTransaction(Transaction t) {
 		pendingTransactions.add(t);
 	}
 	
-	public void addHistory(Transaction t){
+	public void addTransactionToHistory(Transaction t){
 		history.add(t);
 	}
 	
-	public double getAmount() {
-		return amount;
+
+	
+	public double getBalance() {
+		return balance;
 	}
 	
 	public AccountType getType() {

@@ -8,37 +8,32 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-
-import controller.LoginController;
-import model.PersonalAccount;
+import controller.PersonalAccountController;
 
 public class AccountSmallResumePanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = -3601361845540054272L;
 
 	private AccountsPanel parentTab;
-	private PersonalAccount linkedAccount;
-	private LoginController controller;
+	private PersonalAccountController controller;
 	
-	public AccountSmallResumePanel(PersonalAccount account, AccountsPanel parenTab, 
-														LoginController controller) {
+	public AccountSmallResumePanel(AccountsPanel parenTab, 
+					PersonalAccountController controller) {
 		
-		this.linkedAccount = account;
 		this.parentTab = parenTab;
 		this.controller = controller;
 		
-		this.setPreferredSize(new Dimension(400, 100));
-		this.setMaximumSize(new Dimension(400, 100));
+		this.setPreferredSize(new Dimension(385, 100));
+		this.setMaximumSize(new Dimension(385, 100));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
 		
-		JLabel nameLabel = new JLabel(linkedAccount.getName());
+		JLabel nameLabel = new JLabel(controller.getAccount().getName());
 		nameLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 		c.gridx = 0;
 		c.gridy = 0;
@@ -48,7 +43,7 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 		this.add(nameLabel, c);
 		
 		
-		Double amount = linkedAccount.getAmount();
+		Double amount = controller.getPersonnalAccount().getBalance();
 		JLabel amountLabel = new JLabel(amount.toString() + " €");
 		amountLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 		c.gridx = 1;
@@ -67,7 +62,7 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 		c.insets = new Insets(0, 0, 0, 0);
 		this.add(pendingLabel, c);
 		
-		Double pendingAmount = linkedAccount.getPendingAmount();
+		Double pendingAmount = controller.getPersonnalAccount().getPendingAmount();
 		JLabel pendingAmountLabel = new JLabel();
 		pendingAmountLabel.setFont(new Font(Font.SERIF, Font.ITALIC, 15));
 		if (pendingAmount <= 0) {
@@ -91,8 +86,7 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		parentTab.setupAccountHistoryPanel(linkedAccount);
-		parentTab.switchToAccountInfoPanel();
+		parentTab.switchToAccountInfoPanel(controller);
 	}
 
 	@Override
@@ -115,8 +109,7 @@ public class AccountSmallResumePanel extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		this.setBorder(BorderFactory.createRaisedBevelBorder());
 		if(this.contains(e.getPoint())) {
-			parentTab.setupAccountHistoryPanel(linkedAccount);
-			parentTab.switchToAccountInfoPanel();	
+			parentTab.switchToAccountInfoPanel(controller);	
 		}
 	}
 }

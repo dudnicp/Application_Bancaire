@@ -2,7 +2,15 @@ package model;
 
 import java.util.ArrayList;
 
-public class User {
+import model.events.Event;
+import model.events.TransactionCategoryEvent;
+import model.paterns.Observable;
+import model.paterns.Observer;
+
+public class User implements Observable{
+	
+	ArrayList<Observer> observers;
+	
 	
 	/* User personal data */
 	private String firstName;
@@ -25,6 +33,9 @@ public class User {
 	
 	
 	public User(String id, String password, String firstName, String lastName, String title) {
+		
+		observers = new ArrayList<Observer>();
+		
 		this.id = id;
 		this.password = password;
 		this.firstName = firstName;
@@ -90,12 +101,13 @@ public class User {
 	}
 	
 	
-	
-	
-	
 	public void addPersonalAccount(PersonalAccount account) {
 		accounts.add(account);
 		beneficiaries.add(account);
+	}
+	
+	public void addBeneficiary(String iban, String name) {
+		addBeneficiary(new Account(iban, name));
 	}
 	
 	public void addBeneficiary(Account account) {
@@ -103,13 +115,38 @@ public class User {
 	}
 	
 	
-	
-	
-	
-	@Override
-	public String toString() {
+	public String personalData() {
 		String retString = new String();
 		retString += title + " " + firstName + " " + lastName;
 		return retString;
+	}
+
+	public void addTransactionCategory(String category) {
+		if (!transactionCategories.contains(category)) {
+			transactionCategories.add(category);
+			notifyObservers(new TransactionCategoryEvent(category, 
+					TransactionCategoryEvent.UNKNOWN_CATEGORY));
+		} else {
+			notifyObservers(new TransactionCategoryEvent(category, 
+					TransactionCategoryEvent.KNOWN_CATEGORY));
+		}
+	}
+	
+	
+	@Override
+	public void addObserver(Observer obs) {
+		observers.add(obs);
+	}
+
+	@Override
+	public void removeObservers() {
+		observers = new ArrayList<Observer>();
+	}
+	
+	@Override
+	public void notifyObservers(Event e) {
+		for (Observer observer : observers) {
+			observer.update(e);
+		}
 	}
 }

@@ -18,13 +18,7 @@ public class LoginData implements Observable {
 		this.observers = new ArrayList<Observer>();
 		
 		this.bank = bank;
-		this.loggedUser = new User("", "", "", "", "");
-		for (int i = 0; i < 20; i++) {		
-			PersonalAccount newAccount = new PersonalAccount("Compte" + i, 
-					AccountType.COMPTE_COURRANT, 100);
-			newAccount.setName("Compte" + i);
-			loggedUser.addPersonalAccount(newAccount);
-		}
+		this.loggedUser = null;
 	}
 	
 	public void setLoggedUser(User loggedUser) {
@@ -40,20 +34,20 @@ public class LoginData implements Observable {
 			if (client.getId().equals(id)) {
 				if (client.getPassword().equals(password)) {
 					setLoggedUser(client);
-					notifyObserver(new LoginEvent(LoginEvent.SUCCESSFUL, client));
+					notifyObservers(new LoginEvent(LoginEvent.SUCCESSFUL, client));
 				} else {
-					notifyObserver(new LoginEvent(LoginEvent.INVALID_PASSWORD));
+					notifyObservers(new LoginEvent(LoginEvent.INVALID_PASSWORD));
 				}
 				return;
 			}
 		}
-		notifyObserver(new LoginEvent(LoginEvent.INVALID_ID));
+		notifyObservers(new LoginEvent(LoginEvent.INVALID_ID));
 		return;
 	}
 	
 	public void disconnectCurrentUser() {
 		this.loggedUser = null;
-		notifyObserver(new LoginEvent(LoginEvent.DISCONNECTED));
+		notifyObservers(new LoginEvent(LoginEvent.DISCONNECTED));
 	}
 
 	@Override
@@ -62,12 +56,12 @@ public class LoginData implements Observable {
 	}
 
 	@Override
-	public void removeObserver() {
+	public void removeObservers() {
 		observers = new ArrayList<Observer>();
 	}
 
 	@Override
-	public void notifyObserver(Event e) {
+	public void notifyObservers(Event e) {
 		for (Observer observer : observers) {
 			observer.update(e);
 		}

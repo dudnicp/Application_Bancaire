@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controller.LoginController;
+import controller.UserController;
 import model.events.Event;
 import model.events.LoginEvent;
 import model.paterns.Observer;
@@ -28,7 +28,7 @@ import view.panels.LoginPanel;
 public class LoginFrame extends JFrame implements Observer{
 	private static final long serialVersionUID = -2050486294034364666L;
 	
-	private LoginController controller;
+	private UserController controller;
 	
 	private final JLabel idLabel = new JLabel("User ID: ");
 	private final JLabel passwordLabel = new JLabel("Password: ");
@@ -37,7 +37,7 @@ public class LoginFrame extends JFrame implements Observer{
 	private JButton loginButton;
 	
 	
-	public LoginFrame(LoginController controller) {
+	public LoginFrame(UserController controller) {
 		this.controller = controller;
 		
 		this.setTitle("Bank-App");
@@ -160,10 +160,10 @@ public class LoginFrame extends JFrame implements Observer{
 			break;
 		default:
 			String welcomeMessage = "Connécté en tant que " 
-							+ loginEvent.getLoggedUser().toString();
+							+ loginEvent.getLoggedUser().personalData();
 			JOptionPane.showMessageDialog(null, welcomeMessage, "Bienvenue!", 
 										JOptionPane.INFORMATION_MESSAGE);
-			controller.getLoginData().removeObserver();
+			controller.getLoginData().removeObservers();
 			dispose();
 			AppFrame newApp = new AppFrame(controller);
 			controller.getLoginData().addObserver(newApp);
