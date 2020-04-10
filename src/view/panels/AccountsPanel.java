@@ -13,7 +13,7 @@ import controller.LoginController;
 import model.Card;
 import model.PersonalAccount;
 
-public class AccountsPanel extends JPanel {
+public class AccountsPanel extends MainMenuTabPanel {
 	private static final long serialVersionUID = 3231733128092158223L;
 	
 	private LoginController controller;

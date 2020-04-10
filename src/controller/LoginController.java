@@ -2,9 +2,6 @@ package controller;
 
 
 import model.LoginData;
-import model.InvalidPasswordException;
-import model.InvalidUserException;
-import model.User;
 
 public class LoginController {
 	private LoginData loginData;
@@ -17,5 +14,13 @@ public class LoginController {
 	
 	public void login(String id, String password) {
 		loginData.login(id, password);
+	}
+	
+	public void disconnectCurrentUser() {
+		loginData.disconnectCurrentUser();
+	}
+	
+	public LoginData getLoginData() {
+		return loginData;
 	}
 }

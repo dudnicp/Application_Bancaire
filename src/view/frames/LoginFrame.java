@@ -163,7 +163,10 @@ public class LoginFrame extends JFrame implements Observer{
 							+ loginEvent.getLoggedUser().toString();
 			JOptionPane.showMessageDialog(null, welcomeMessage, "Bienvenue!", 
 										JOptionPane.INFORMATION_MESSAGE);
+			controller.getLoginData().removeObserver();
 			dispose();
+			AppFrame newApp = new AppFrame(controller);
+			controller.getLoginData().addObserver(newApp);
 			break;
 		}
 	}

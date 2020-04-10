@@ -9,18 +9,27 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.MainMenuController;
+import controller.LoginController;
+import model.events.Event;
+import model.events.LoginEvent;
+import model.paterns.Observer;
 
-public class AppFrame extends JFrame {
+
+public class AppFrame extends JFrame implements Observer {
 	private static final long serialVersionUID = -912989417505291367L;
 	
-	private CardLayout cardLayout;
+	private LoginController controller;
+	
 	private static final String ACCOUNTS = "accounts";
 	private static final String TRANSFERS = "transfers";
 	private static final String LOANS = "loans";
 	private static final String PREFERENCES = "preferences";
+	
+	private CardLayout cardLayout;
+	private JPanel tabs;
 	
 	private JPanel accountsPanel;
 	private JPanel transfersPanel;
@@ -28,10 +37,7 @@ public class AppFrame extends JFrame {
 	private JPanel preferencesPanel;
 	
 	
-	private MainMenuController controller;
-	
-	
-	public AppFrame(MainMenuController controller) {
+	public AppFrame(LoginController controller) {
 		
 		this.controller = controller;
 		
@@ -48,16 +54,27 @@ public class AppFrame extends JFrame {
 		
 		JButton accountsButton = new JButton("Comptes");
 		accountsButton.setPreferredSize(buttonDimension);
+		accountsButton.addActionListener(new AccountsButtonListener());
+		
 		JButton transferButton = new JButton("Virements");
 		transferButton.setPreferredSize(buttonDimension);
+		transferButton.addActionListener(new TransfersButtonListener());
+		
 		JButton loansButton = new JButton("Emprunts");
 		loansButton.setPreferredSize(buttonDimension);
+		loansButton.addActionListener(new LoansButtonListener());
+		
 		JButton preferencesButton = new JButton("Réglages");
 		preferencesButton.setPreferredSize(buttonDimension);
+		preferencesButton.addActionListener(new PreferencesButtonListener());
+		
 		JButton decoButton = new JButton("Deconnéxion");
 		decoButton.setPreferredSize(new Dimension(150, 30));
+		decoButton.addActionListener(new DecoButtonListener());
+		
 		JButton quitButton = new JButton("Quitter");
 		quitButton.setPreferredSize(new Dimension(150, 30));
+		quitButton.addActionListener(new QuitButtonListener());
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -102,7 +119,7 @@ public class AppFrame extends JFrame {
 		contentPane.add(quitButton, c);
 		
 		
-		JPanel tabs = new JPanel(cardLayout);
+		tabs = new JPanel(cardLayout);
 		accountsPanel = new JPanel();
 		accountsPanel.setPreferredSize(panelDimension);
 		tabs.add(accountsPanel, ACCOUNTS);
@@ -136,8 +153,7 @@ public class AppFrame extends JFrame {
 	class AccountsButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+// TODO			
 		}
 	}
 	
@@ -168,16 +184,32 @@ public class AppFrame extends JFrame {
 	class DecoButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			controller.disconnectCurrentUser();
+			LoginFrame newLogin = new LoginFrame(controller);
+			controller.getLoginData().addObserver(newLogin);
 		}
 	}
 	
 	class QuitButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			controller.disconnectCurrentUser();
+		}
+	}
+
+	@Override
+	public void update(Event e) {
+		LoginEvent loginEvent = (LoginEvent) e;
+		switch (loginEvent.getLoginStatus()) {
+		case LoginEvent.DISCONNECTED:
+			controller.getLoginData().removeObserver();
+			dispose();
+			JOptionPane.showMessageDialog(null, "Vous avez été déconnecté.", "À bientôt!",
+											JOptionPane.INFORMATION_MESSAGE);
 			
+			break;
+		default:
+			break;
 		}
 	}
 }

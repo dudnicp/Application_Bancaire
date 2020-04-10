@@ -50,6 +50,11 @@ public class LoginData implements Observable {
 		notifyObserver(new LoginEvent(LoginEvent.INVALID_ID));
 		return;
 	}
+	
+	public void disconnectCurrentUser() {
+		this.loggedUser = null;
+		notifyObserver(new LoginEvent(LoginEvent.DISCONNECTED));
+	}
 
 	@Override
 	public void addObserver(Observer obs) {
@@ -58,7 +63,7 @@ public class LoginData implements Observable {
 
 	@Override
 	public void removeObserver() {
-		observers.clear();
+		observers = new ArrayList<Observer>();
 	}
 
 	@Override

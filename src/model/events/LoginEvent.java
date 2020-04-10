@@ -3,17 +3,14 @@ package model.events;
 import model.User;
 
 public class LoginEvent extends Event {
-	public static final int INVALID_ID = 0;
-	public static final int INVALID_PASSWORD = 1;
-	public static final int SUCCESSFUL = 2;
+	public static final int DISCONNECTED = -1;
+	public static final int SUCCESSFUL = 0;
+	public static final int INVALID_ID = 1;
+	public static final int INVALID_PASSWORD = 2;
+	
 	
 	private int loginStatus;
 	private User loggedUser;
-	
-	public LoginEvent() {
-		this.loginStatus = INVALID_ID;
-		this.loggedUser = null;
-	}
 	
 	public LoginEvent(int status) {
 		this.loginStatus = status;
