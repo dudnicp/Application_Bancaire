@@ -2,21 +2,21 @@ package model;
 
 import java.util.Date;
 
-public class RegTransaction {
+public class PermanentTransfer {
 	private double regul;
 	private Date beginDate;
 	private double amount;
 	private PersonalAccount receivor;
 	
 	
-	public RegTransaction(double regul, Date begindate, double amount, PersonalAccount receivor){
+	public PermanentTransfer(double regul, Date begindate, double amount, PersonalAccount receivor){
 		this.regul = regul;
 		this.beginDate = begindate;
 		this.amount = amount;
 		this.receivor = new PersonalAccount(receivor);
 	}
 	
-	public RegTransaction(RegTransaction other) {
+	public PermanentTransfer(PermanentTransfer other) {
 		this(other.regul, other.beginDate, other.amount, other.receivor);
 	}
 	

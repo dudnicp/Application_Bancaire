@@ -1,11 +1,11 @@
 package model;
 
 public enum InBuiltTransactionCategory {
-	HOBBIES("Hobbies"),
-	FOOD("Food"),
-	HEALTH("Health"),
+	HOBBIES("Loisirs"),
+	FOOD("Alimentation"),
+	HEALTH("Santée"),
 	TRANSPORTS("Transports"),
-	UNKNOWN("Unknown");
+	UNKNOWN("Inconnue");
 	
 	private String str;
 	

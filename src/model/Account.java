@@ -4,9 +4,9 @@ public class Account {
 	private String name;
 	private String iban;
 	
-	public Account(String iban) {
+	public Account(String iban, String name) {
 		this.iban = iban;
-		this.name = "";
+		this.name = name;
 	}
 	
 	public void setName(String name) {

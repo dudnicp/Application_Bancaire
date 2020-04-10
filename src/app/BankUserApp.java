@@ -1,16 +1,19 @@
 package app;
 
 
-import controller.Controller;
-import model.AppData;
+import controller.UserController;
+import model.LoginData;
 import model.BankData;
+import view.frames.AppFrame;
 import view.frames.LoginFrame;
 
 public class BankUserApp {
 	public static void main(String[] args) {
 		BankData bank = new BankData();
-		AppData appData = new AppData(bank);
-		Controller controller = new Controller(appData);
-		LoginFrame login = new LoginFrame(controller);
+		LoginData loginData = new LoginData(bank);
+		UserController controller = new UserController(loginData);
+		LoginFrame loginFrame = new LoginFrame(controller);
+//		AppFrame app = new AppFrame();
+		loginData.addObserver(loginFrame);
 	}
 }
