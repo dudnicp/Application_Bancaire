@@ -2,18 +2,27 @@ package model;
 
 public class Card {
 	
+	private User owner;
 	private String code;
 	private String number;
 	CardStatus status;
 	
-	public Card(String code, String num, CardStatus status) {
+	public Card(User owner, String code, String number) {
+		this.owner = owner;
 		this.code = code;
-		this.number = num;
-		this.status = status;
+		this.number = number;
+		this.status = CardStatus.ACTIVE;
 	}
 	
 	public Card(Card other) {
-		this(other.code, other.number, other.status);
+		this.owner = other.owner;
+		this.code = other.code;
+		this.number = other.number;
+		this.status = other.status;
+	}
+	
+	public User getOwner() {
+		return owner;
 	}
 	
 	public String getCode() {

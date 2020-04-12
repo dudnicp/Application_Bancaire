@@ -2,15 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import model.events.Event;
-import model.events.TransactionCategoryEvent;
-import model.paterns.Observable;
-import model.paterns.Observer;
-
-public class User implements Observable{
-	
-	ArrayList<Observer> observers;
-	
+public class User {
 	
 	/* User personal data */
 	private String firstName;
@@ -18,6 +10,7 @@ public class User implements Observable{
 	private String title;
 	private String email;
 	private String phoneNumber;
+	private String adress;
 	
 	/* Login Data */
 	private String id;
@@ -32,15 +25,17 @@ public class User implements Observable{
 	
 	
 	
-	public User(String id, String password, String firstName, String lastName, String title) {
-		
-		observers = new ArrayList<Observer>();
+	public User(String id, String password, String firstName, String lastName, 
+			String title, String email, String phoneNumber, String adress) {
 		
 		this.id = id;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.title = title;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.adress = adress;
 		
 		accounts = new ArrayList<PersonalAccount>();
 		beneficiaries = new ArrayList<Account>();
@@ -68,7 +63,12 @@ public class User implements Observable{
 	}
 	
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return String.valueOf(phoneNumber).replaceFirst(
+				"(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d+)", "$1 $2 $3 $4 $5");
+	}
+	
+	public String getAdress() {
+		return adress;
 	}
 	
 	public String getId() {
@@ -87,6 +87,10 @@ public class User implements Observable{
 		return beneficiaries;
 	}
 	
+	public ArrayList<String> getTransactionCategories() {
+		return transactionCategories;
+	}
+	
 	
 	public void setEmail(String email) {
 		this.email = email;
@@ -94,6 +98,10 @@ public class User implements Observable{
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
 	
 	public void setPassword(String password) {
@@ -124,29 +132,6 @@ public class User implements Observable{
 	public void addTransactionCategory(String category) {
 		if (!transactionCategories.contains(category)) {
 			transactionCategories.add(category);
-			notifyObservers(new TransactionCategoryEvent(category, 
-					TransactionCategoryEvent.UNKNOWN_CATEGORY));
-		} else {
-			notifyObservers(new TransactionCategoryEvent(category, 
-					TransactionCategoryEvent.KNOWN_CATEGORY));
-		}
-	}
-	
-	
-	@Override
-	public void addObserver(Observer obs) {
-		observers.add(obs);
-	}
-
-	@Override
-	public void removeObservers() {
-		observers = new ArrayList<Observer>();
-	}
-	
-	@Override
-	public void notifyObservers(Event e) {
-		for (Observer observer : observers) {
-			observer.update(e);
 		}
 	}
 }

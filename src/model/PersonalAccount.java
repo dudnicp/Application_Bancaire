@@ -1,26 +1,35 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.PriorityQueue;
 
-public class PersonalAccount extends Account {
+public abstract class PersonalAccount extends Account {
 	
-	private double balance;
-	private AccountType type;
-	private PriorityQueue<Transaction> history;
-	private ArrayList<Transaction> pendingTransactions;
+	public static final String CURRENT_ACCOUNT = "Compte courrant";
+	public static final String PEL = "PEL";
+	public static final String LIVRET_A = "Livret A";
 	
-	public PersonalAccount(String iban, String name, AccountType type, double amount) {
+	protected User owner;
+	protected double balance;
+	protected Date openingDate;
+	protected double balanceCeiling;
+	protected PriorityQueue<Transaction> history;
+	protected ArrayList<Transaction> pendingTransactions;
+	
+	public PersonalAccount(String iban, String name, User owner, Date date, double amount, double balanceCeiling) {
 		super(iban, name);
+		this.owner = owner;
+		this.openingDate = date;
 		this.balance = amount;
-		this.type = type;
+		this.balanceCeiling = balanceCeiling;
 		
 		this.history = new PriorityQueue<Transaction>(new TransactionComparator());
 		this.pendingTransactions = new ArrayList<Transaction>();
 	}
 	
 	public PersonalAccount(PersonalAccount other) {
-		this(other.getIban(), other.getName(), other.type, other.balance);
+		this(other.getIban(), other.getName(), other.owner, other.openingDate, other.balance, other.balanceCeiling);
 		for (Transaction transaction : other.history) {
 			this.history.add(transaction);
 		}
@@ -37,14 +46,16 @@ public class PersonalAccount extends Account {
 		history.add(t);
 	}
 	
-
+	public User getOwner() {
+		return owner;
+	}
 	
 	public double getBalance() {
 		return balance;
 	}
-	
-	public AccountType getType() {
-		return type;
+
+	public Date getOpeningDate() {
+		return openingDate;
 	}
 	
 	public PriorityQueue<Transaction> getHistory() {
@@ -62,5 +73,19 @@ public class PersonalAccount extends Account {
 		}
 		return amount;
 	}
+	
+	public double getMinBalance() {
+		return 0;
+	}
+	
+	public double getBalanceCeiling() {
+		return balanceCeiling;
+	}
+	
+	public void setBalanceCeiling(double balanceCeiling) {
+		this.balanceCeiling = balanceCeiling;
+	}
+	
+	public abstract String getType();
 	
 }

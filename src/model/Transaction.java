@@ -1,16 +1,9 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import model.events.Event;
-import model.events.TransactionCategoryEvent;
-import model.paterns.Observable;
-import model.paterns.Observer;
 
-public class Transaction implements Observable {
-	
-	private ArrayList<Observer> observers;
+public class Transaction {
 	
 	private Account recieverAccount;
 	private double amount;
@@ -33,8 +26,6 @@ public class Transaction implements Observable {
 	
 	public void setCategory(String category) {
 		this.category = category;
-		notifyObservers(new TransactionCategoryEvent(category, 
-				TransactionCategoryEvent.KNOWN_CATEGORY));		
 	}
 	
 	
@@ -56,23 +47,6 @@ public class Transaction implements Observable {
 	
 	public TransactionType getType() {
 		return type;
-	}
-
-	@Override
-	public void addObserver(Observer obs) {
-		observers.add(obs);
-	}
-
-	@Override
-	public void removeObservers() {
-		observers = new ArrayList<Observer>();
-	}
-
-	@Override
-	public void notifyObservers(Event e) {
-		for (Observer observer : observers) {
-			observer.update(e);
-		}
 	}
 }
 

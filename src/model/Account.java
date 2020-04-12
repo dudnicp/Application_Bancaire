@@ -1,8 +1,8 @@
 package model;
 
 public class Account {
-	private String name;
-	private String iban;
+	protected String name;
+	protected String iban;
 	
 	public Account(String iban, String name) {
 		this.iban = iban;
@@ -13,7 +13,9 @@ public class Account {
 		this.name = name;
 	}
 	
-	
+	public Account(Account other) {
+		this(other.iban, other.name);
+	}
 	
 	public String getIban() {
 		return iban;

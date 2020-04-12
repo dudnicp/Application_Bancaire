@@ -13,7 +13,7 @@ public class PermanentTransfer {
 		this.regul = regul;
 		this.beginDate = begindate;
 		this.amount = amount;
-		this.receivor = new PersonalAccount(receivor);
+//		this.receivor = new PersonalAccount(receivor);
 	}
 	
 	public PermanentTransfer(PermanentTransfer other) {
