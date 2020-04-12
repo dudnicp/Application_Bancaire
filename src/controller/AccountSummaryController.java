@@ -27,14 +27,14 @@ public class AccountSummaryController extends Controller {
 	public void setupViewText() {
 		
 		view.setLabelText(0, account.getName());
-		view.setLabelFont(0, new Font(Font.SERIF, Font.BOLD, 20));
+		view.setLabelFont(0, new Font(Font.SERIF, Font.ITALIC, 20));
 
 		view.setLabelText(1, account.getType());
-		view.setLabelFont(1, new Font(Font.SERIF, Font.BOLD, 15));
+		view.setLabelFont(1, new Font(Font.DIALOG, Font.BOLD, 15));
 		
 		Double amount = account.getBalance();
 		view.setLabelText(2, amount + " €");
-		view.setLabelFont(2, new Font(Font.SERIF, Font.BOLD, 20));
+		view.setLabelFont(2, new Font(Font.DIALOG, Font.BOLD, 20));
 		if (amount < 0) {
 			view.setLabelColor(2, new Color(200, 50, 50));
 		}
@@ -80,7 +80,7 @@ public class AccountSummaryController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		// No buttons here
 	}
 }

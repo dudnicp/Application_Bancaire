@@ -30,7 +30,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 	
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addButtonListener(new ButtonActionListener());
 	}
 
@@ -38,7 +38,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 	public void setupViewText() {
 		
 		int min = 0;
-		int max = (int) account.getWithrdrawalCeiling();
+		int max = (int) account.getMaxWithdraw();
 		double current = account.getCurrentlyEngagedAmount();
 		int displayedCurrent = (int) current;
 		
@@ -47,13 +47,14 @@ public class AccountWithrdrawCeilingController extends Controller {
 		view.setProgressBarCurrent(displayedCurrent);
 		
 		Font font = new Font(Font.SERIF, Font.ITALIC, 12);
+		for (int i = 0; i < 4; i++) {
+			view.setLabelFont(i, font);
+		}
 		
-		view.setLabelText(0, "Plafond: " +  Integer.toString(max));
-		view.setLabelFont(0, font);
-		view.setLabelText(1, "Montant engagé: " + current);
-		view.setLabelFont(1, new Font(Font.SERIF, Font.ITALIC, 12));
-		
-		view.setAuxVisibility(false);
+		view.setLabelText(0, "Montant engagé: ");
+		view.setLabelText(1, Double.toString(current));
+		view.setLabelText(2, "Maximim: ");
+		view.setLabelText(3, Integer.toString(max));
 		
 		view.setButtonText("Modifier");
 		view.setBorder(BorderFactory.createTitledBorder("Plafond de payement/retrait"));

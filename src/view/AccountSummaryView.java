@@ -46,6 +46,7 @@ public class AccountSummaryView extends HoverableAndClickableView {
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = 1;
+		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(10, 0, 10, 0);
 		this.add(labels[2], c);
 		

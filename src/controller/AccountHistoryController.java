@@ -12,6 +12,7 @@ import model.Transaction;
 import view.AccountHistoryView;
 import view.AccountInfoView;
 import view.AllAccountsView;
+import view.AllCardsView;
 import view.TransactionView;
 
 public class AccountHistoryController extends Controller {
@@ -60,9 +61,9 @@ public class AccountHistoryController extends Controller {
 	class CardsButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AccountInfoView accountInfoView = new AccountInfoView();
-			AccountInfoController controller = new AccountInfoController(account, accountInfoView, mainMenuController);
-			mainMenuController.changeView(accountInfoView);
+			AllCardsView allCards = new AllCardsView();
+			AllCardsController controller = new AllCardsController((CurrentAccount)account, allCards, mainMenuController);
+			mainMenuController.changeView(allCards);
 			controller.setupView();
 			controller.displayView();
 		}
@@ -92,7 +93,7 @@ public class AccountHistoryController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		 view.addButtonAction(0, new CardsButtonListener());
 		 view.addButtonAction(1, new InfoButtonListener());
 		 view.addButtonAction(2, new ReturnButtonListener());

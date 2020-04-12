@@ -17,9 +17,9 @@ public class BalanceCeilingChangeController extends DataChangeController {
 	@Override
 	void changeData(String newData) throws CustomException {
 		try {
-			double newCeiling = Double.parseDouble(newData);
+			int newCeiling = Integer.parseInt(newData);
 			if (newCeiling > account.getBalance()) {
-				account.setBalanceCeiling(newCeiling);
+				account.setMaxBalance(newCeiling);
 			} else {
 				throw new CustomException("Le nouveau plafond ne peut pas etre inférieur au solde actuel.");
 			}

@@ -16,7 +16,7 @@ public class ExampleUsers extends LinkedList<User>{
 		User alix = new User("", "", "Alix", "Brocoli", "Mr", 
 				"alix.brocoli@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
 		
-		CurrentAccount compteVal = new CurrentAccount("001", "Compte1", val, new Date(), 100, 1000, 300, 0);
+		CurrentAccount compteVal = new CurrentAccount("001", "Compte1", val, new Date(), 100, 1000, 0, 300);
 		CurrentAccount compteAlix = new CurrentAccount(compteVal);
 		CurrentAccount compteAdrien = new CurrentAccount(compteAlix);
 
@@ -28,6 +28,11 @@ public class ExampleUsers extends LinkedList<User>{
 		Transaction t1 = new Transaction(compteAlix, 5, new Date(), new OneTimeTransferTransaction());
 		Transaction t2 = new Transaction(compteAdrien, 15, new Date(), new OneTimeTransferTransaction());
 		Transaction t3 = new Transaction(compteVal, 50, new Date(), new OneTimeTransferTransaction());
+		
+		Card valCard = new Card(val, "3443", "1234234534564567");
+		for (int i = 0; i < 10; i++) {
+			compteVal.addCard(new Card(valCard));
+		}
 		
 		compteVal.addPendingTransaction(t3);
 		compteVal.addTransactionToHistory(t3);
@@ -42,7 +47,7 @@ public class ExampleUsers extends LinkedList<User>{
 		
 		val.addPersonalAccount(compteVal);
 		val.addPersonalAccount(new PELAccount("123", "MonPEL", val, new Date(), 4000, 5000));
-		val.addPersonalAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 300, 200));
+		val.addPersonalAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 200, 500));
 		for (int i = 0; i < 10; i++) {
 			val.addPersonalAccount(new CurrentAccount(compteVal));
 		}

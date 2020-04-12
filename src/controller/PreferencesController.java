@@ -79,7 +79,7 @@ public class PreferencesController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addButtonAction(0, new MailChangeButton());
 		view.addButtonAction(1, new PhoneNumberChangeButton());
 		view.addButtonAction(2, new AdressChangeButton());

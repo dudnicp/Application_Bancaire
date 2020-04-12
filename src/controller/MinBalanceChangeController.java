@@ -17,7 +17,7 @@ public class MinBalanceChangeController extends DataChangeController {
 	@Override
 	void changeData(String newData) throws CustomException {
 		try {
-			double minBalance = Double.parseDouble(newData);
+			int minBalance = Integer.parseInt(newData);
 			if (minBalance < account.getBalance()) {
 				account.setMinBalance(minBalance);;
 			} else {

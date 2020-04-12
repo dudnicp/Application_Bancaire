@@ -18,8 +18,8 @@ public class AccountBalanceCeilingController extends Controller {
 	private ProgressBarButtonView view;
 	private User user;
 	
-	public AccountBalanceCeilingController(User user, PersonalAccount accout, ProgressBarButtonView view) {
-		this.account = accout;
+	public AccountBalanceCeilingController(User user, PersonalAccount account, ProgressBarButtonView view) {
+		this.account = account;
 		this.view = view;
 		this.user = user;
 	}
@@ -30,7 +30,7 @@ public class AccountBalanceCeilingController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addButtonListener(new ButtonActionListener());
 		view.addAuxButtonListener(new AuxButtonActionListener());
 	}
@@ -39,7 +39,7 @@ public class AccountBalanceCeilingController extends Controller {
 	public void setupViewText() {
 		
 		int min = (int) account.getMinBalance();
-		int max = (int) account.getBalanceCeiling();
+		int max = (int) account.getMaxBalance();
 		double current = account.getBalance();
 		int displayedCurrent = (int) current;
 		
@@ -49,20 +49,28 @@ public class AccountBalanceCeilingController extends Controller {
 		
 		Font font = new Font(Font.SERIF, Font.ITALIC, 12);
 		
-		view.setAuxLabelText("Minimum: " + min);
-		view.setAuxLabelFont(font);
-		view.setLabelText(0, "Maximum: " + max);
-		view.setLabelFont(0, font);
-		
-		view.setLabelText(1, "Solde actuel: " + current);
-		view.setLabelFont(1, new Font(Font.SERIF, Font.ITALIC, 12));
-		
-		if (account instanceof PELAccount) {
-			view.setAuxVisibility(false);
+		for (int i = 0; i < 4; i++) {
+			view.setLabelFont(i, font);
 		}
+		
+		for (int i = 0; i < 2; i++) {
+			view.setAuxLabelFont(i, font);
+		}
+		
+		view.setLabelText(0, "Solde actuel: ");
+		view.setLabelText(1, Double.toString(current));
+		view.setLabelText(2, "Maximim: ");
+		view.setLabelText(3, Integer.toString(max));
+		
+		view.setAuxLabelText(0, "Minimum: ");
+		view.setAuxLabelText(1, Integer.toString(min));
 		
 		view.setButtonText("Modifier");
 		view.setAuxButtonText("Modifier");
+		
+		if (!(account instanceof PELAccount)) {
+			view.addAuxComponents();
+		}
 		
 		view.setBorder(BorderFactory.createTitledBorder("Plafond de liquidité"));
 	}

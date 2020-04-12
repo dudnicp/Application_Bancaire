@@ -119,7 +119,7 @@ public class MainMenuController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addMainButtonAction(0, new AccountButtonListener());
 		view.addMainButtonAction(1, new TransfersButtonListener());
 		view.addMainButtonAction(2, new LoansButtonListener());

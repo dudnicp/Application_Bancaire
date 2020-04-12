@@ -33,6 +33,11 @@ public class Card {
 		return this.number;
 	}
 	
+	public String getFormatedNumber() {
+		return String.valueOf(number).replaceFirst(
+				"(\\d{4})(\\d{4})(\\d{4})(\\d+)", "$1-$2-$3-$4");
+	}
+	
 	public String getShortNumber() {
 		if (number.length() > 4) {
 			return "X" + number.substring(number.length()-4, number.length());
@@ -46,7 +51,7 @@ public class Card {
 		return this.status;
 	}
 	
-	public void lockCard() {
+	public void lock() {
 		this.status = CardStatus.BLOCKED;
 	}
 	

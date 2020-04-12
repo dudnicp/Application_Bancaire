@@ -17,9 +17,9 @@ public class WithdrawalCeilingChangeController extends DataChangeController {
 	@Override
 	void changeData(String newData) throws CustomException {
 		try {
-			double newCeiling = Double.parseDouble(newData);
+			int newCeiling = Integer.parseInt(newData);
 			if (newCeiling > account.getCurrentlyEngagedAmount()) {
-				account.setWithrdrawalCeiling(newCeiling);
+				account.setMaxWithrdraw(newCeiling);
 			} else {
 				throw new CustomException("Le nouveau plafond ne peut pas etre inferieur au montant engagé");
 			}

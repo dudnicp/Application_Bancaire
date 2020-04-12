@@ -17,7 +17,7 @@ public class AccountHistoryView extends ContentView {
 	
 	public AccountHistoryView() {
 		
-		scrollableList.setScrollPaneSize(new Dimension(420, 270));
+		scrollableList.setScrollPaneSize(new Dimension(420, 280));
 		
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i] = new JButton();

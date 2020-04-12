@@ -8,8 +8,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import model.CurrentAccount;
+import model.PELAccount;
 import model.PersonalAccount;
 import model.WithdrawableAccount;
+import view.AccountHistoryView;
 import view.AccountInfoView;
 import view.AllAccountsView;
 import view.ProgressBarButtonView;
@@ -63,19 +65,34 @@ public class AccountInfoController extends Controller {
 			view.addContent(progressBarBis);
 		}
 		
-		JButton button = new JButton("Retour à la liste des comptes");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AllAccountsView accountsList = new AllAccountsView();
-				AllAccountsController controller = new AllAccountsController(
-						mainMenuController.getLoggedUser(), accountsList, mainMenuController);
-				mainMenuController.changeView(accountsList);
-				controller.setupView();
-				controller.displayView();
-			}
-		});
-		view.addContent(button);
+		if (account instanceof PELAccount) {
+			JButton button = new JButton("Retour à la liste des comptes");
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					AllAccountsView accountsList = new AllAccountsView();
+					AllAccountsController controller = new AllAccountsController(
+							mainMenuController.getLoggedUser(), accountsList, mainMenuController);
+					mainMenuController.changeView(accountsList);
+					controller.setupView();
+					controller.displayView();
+				}
+			});
+			view.addContent(button);
+		} else {
+			JButton button = new JButton("Retour à l'historiques des transactions");
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					AccountHistoryView accountView = new AccountHistoryView();
+					AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
+					mainMenuController.changeView(accountView);
+					controller.setupView();
+					controller.displayView();
+				}
+			});
+			view.addContent(button);
+		}
 	}
 
 	@Override
@@ -84,7 +101,7 @@ public class AccountInfoController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		// TODO
 	}
 

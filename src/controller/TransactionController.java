@@ -82,7 +82,7 @@ public class TransactionController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		// No Buttons here
 	}
 }

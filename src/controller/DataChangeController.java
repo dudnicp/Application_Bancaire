@@ -55,7 +55,7 @@ public abstract class DataChangeController extends Controller {
 	}
 	
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addAnnulButtonListener(new AnnulButtonListener());
 		view.addConfirmButtonListener(new ConfirmButtonListener());
 	}

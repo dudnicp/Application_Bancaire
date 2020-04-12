@@ -41,7 +41,7 @@ public class AllAccountsController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		// No buttons here
 	}
 }

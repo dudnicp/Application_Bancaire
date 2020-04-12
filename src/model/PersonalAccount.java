@@ -13,23 +13,23 @@ public abstract class PersonalAccount extends Account {
 	protected User owner;
 	protected double balance;
 	protected Date openingDate;
-	protected double balanceCeiling;
+	protected int maxBalance;
 	protected PriorityQueue<Transaction> history;
 	protected ArrayList<Transaction> pendingTransactions;
 	
-	public PersonalAccount(String iban, String name, User owner, Date date, double amount, double balanceCeiling) {
+	public PersonalAccount(String iban, String name, User owner, Date date, double amount, int maxBalance) {
 		super(iban, name);
 		this.owner = owner;
 		this.openingDate = date;
 		this.balance = amount;
-		this.balanceCeiling = balanceCeiling;
+		this.maxBalance = maxBalance;
 		
 		this.history = new PriorityQueue<Transaction>(new TransactionComparator());
 		this.pendingTransactions = new ArrayList<Transaction>();
 	}
 	
 	public PersonalAccount(PersonalAccount other) {
-		this(other.getIban(), other.getName(), other.owner, other.openingDate, other.balance, other.balanceCeiling);
+		this(other.getIban(), other.getName(), other.owner, other.openingDate, other.balance, other.maxBalance);
 		for (Transaction transaction : other.history) {
 			this.history.add(transaction);
 		}
@@ -74,18 +74,17 @@ public abstract class PersonalAccount extends Account {
 		return amount;
 	}
 	
-	public double getMinBalance() {
+	public int getMinBalance() {
 		return 0;
 	}
 	
-	public double getBalanceCeiling() {
-		return balanceCeiling;
+	public int getMaxBalance() {
+		return maxBalance;
 	}
 	
-	public void setBalanceCeiling(double balanceCeiling) {
-		this.balanceCeiling = balanceCeiling;
+	public void setMaxBalance(int maxBalance) {
+		this.maxBalance = maxBalance;
 	}
 	
 	public abstract String getType();
-	
 }
