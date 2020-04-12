@@ -7,13 +7,12 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
-import model.CurrentAccount;
 import model.PELAccount;
 import model.PersonalAccount;
 import model.WithdrawableAccount;
 import view.AccountHistoryView;
 import view.AccountInfoView;
-import view.AllAccountsView;
+import view.DialogView;
 import view.ProgressBarButtonView;
 
 public class AccountInfoController extends Controller {
@@ -65,23 +64,33 @@ public class AccountInfoController extends Controller {
 			view.addContent(progressBarBis);
 		}
 		
+		
 		if (account instanceof PELAccount) {
-			JButton button = new JButton("Retour à la liste des comptes");
-			button.addActionListener(new ActionListener() {
+			
+			JButton closePelButton = new JButton("Retour à la liste des comptes");
+			closePelButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					AllAccountsView accountsList = new AllAccountsView();
-					AllAccountsController controller = new AllAccountsController(
-							mainMenuController.getLoggedUser(), accountsList, mainMenuController);
-					mainMenuController.changeView(accountsList);
-					controller.setupView();
-					controller.displayView();
+					
 				}
 			});
-			view.addContent(button);
+			view.addContent(closePelButton);
+			
+			JButton returnButton = new JButton("Retour à la liste des comptes");
+			returnButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String password = DialogView.getConfirmation("Etes vous sûrs de vouloir cloturer le compte?", 
+							"Confirmation", "Entrez code secret utilisateur", "Confirmation");
+					if (account.getOwner().getPassword().equals(password)) {
+						
+					}
+				}
+			});
+			view.addContent(returnButton);
 		} else {
-			JButton button = new JButton("Retour à l'historiques des transactions");
-			button.addActionListener(new ActionListener() {
+			JButton returnButton = new JButton("Retour à l'historiques des transactions");
+			returnButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					AccountHistoryView accountView = new AccountHistoryView();
@@ -91,7 +100,7 @@ public class AccountInfoController extends Controller {
 					controller.displayView();
 				}
 			});
-			view.addContent(button);
+			view.addContent(returnButton);
 		}
 	}
 

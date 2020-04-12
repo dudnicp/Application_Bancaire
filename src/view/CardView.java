@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 
 public class CardView extends ContentView {
@@ -19,6 +19,10 @@ public class CardView extends ContentView {
 	private JLabel[] labels = new JLabel[3];
 	
 	public CardView() {
+		
+		this.setPreferredSize(new Dimension(385, 70));
+		this.setMaximumSize(new Dimension(385, 70));
+		
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createRaisedBevelBorder());
 		GridBagConstraints c = new GridBagConstraints();
@@ -66,20 +70,5 @@ public class CardView extends ContentView {
 	
 	public void addButtonListener(ActionListener l) {
 		button.addActionListener(l);
-	}
-	
-	public String getConfirmation(String msg1, String title1, String msg2, String title2) {
-		int decision = JOptionPane.showConfirmDialog(null, msg1, title1,
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if (decision == JOptionPane.OK_OPTION) {
-			String retString = JOptionPane.showInputDialog(
-					null, msg2, title2, JOptionPane.QUESTION_MESSAGE);
-			return retString;
-		}
-		return null;
-	}
-	
-	public void displayInfoDialog(String msg, String title) {
-		JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 }

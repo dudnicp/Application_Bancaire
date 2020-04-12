@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Transaction;
+import view.DialogView;
 import view.Interaction;
 import view.TransactionView;
 
@@ -69,14 +70,21 @@ public class TransactionController extends Controller {
 			ArrayList<String> knownCategories = mainMenuController.getLoggedUser().getTransactionCategories();
 			ArrayList<String> possibleOptions = new ArrayList<String>(knownCategories);
 			possibleOptions.add(0, addCategory);
-			String newCategory = view.showOptions(possibleOptions, "Nouvelle catégorie:",  "Édition catégorie",
-					"Entrez le nom de la catégorie", "Édition catégorie");
+			String newCategory = DialogView.getStringOptionFromList(
+					possibleOptions, "Séléctionnez catégorie", "Édition catégorie");
+			if (newCategory != null && newCategory.equals(addCategory)) {
+				newCategory = DialogView.getStringOption(
+						"Entrez le nom de la nouvelle catégorie: ", "Édition catégorie");
+			}
 			if (newCategory != null) {
-				if (!knownCategories.contains(newCategory)) {
-					mainMenuController.getLoggedUser().addTransactionCategory(newCategory);
+				String password = DialogView.askPassword();
+				if (password != null && password.equals(mainMenuController.getLoggedUser().getPassword())) {
+					if (!knownCategories.contains(newCategory)) {
+						mainMenuController.getLoggedUser().addTransactionCategory(newCategory);
+					}
+					transaction.setCategory(newCategory);
+					view.setLabelText(5, transaction.getCategory());
 				}
-				transaction.setCategory(newCategory);
-				view.setLabelText(5, transaction.getCategory());
 			}
 		}
 	}

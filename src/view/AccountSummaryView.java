@@ -15,8 +15,8 @@ public class AccountSummaryView extends HoverableAndClickableView {
 	
 	public AccountSummaryView() {
 		
-		this.setPreferredSize(new Dimension(385, 90));
-		this.setMaximumSize(new Dimension(385, 90));
+		this.setPreferredSize(new Dimension(385, 70));
+		this.setMaximumSize(new Dimension(385, 70));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -37,8 +37,7 @@ public class AccountSummaryView extends HoverableAndClickableView {
 		c.gridy = 1;
 		c.gridwidth = 1;
 		c.gridheight = GridBagConstraints.REMAINDER;
-		c.anchor = GridBagConstraints.PAGE_START;
-		
+		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(0, 0, 0, 80);
 		this.add(labels[1], c);
 		
@@ -47,7 +46,7 @@ public class AccountSummaryView extends HoverableAndClickableView {
 		c.gridwidth = 1;
 		c.gridheight = 1;
 		c.anchor = GridBagConstraints.LINE_END;
-		c.insets = new Insets(10, 0, 10, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		this.add(labels[2], c);
 		
 		c.gridx = 1;

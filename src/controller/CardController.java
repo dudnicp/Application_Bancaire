@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import model.Card;
 import model.CardStatus;
 import view.CardView;
+import view.DialogView;
 
 public class CardController extends Controller {
 
@@ -47,7 +48,7 @@ public class CardController extends Controller {
 		public void actionPerformed(ActionEvent e) {
 			switch (card.getStatus()) {
 			case ACTIVE:
-				String password = view.getConfirmation("Etes vous sûrs de vouloir bloquer cette carte?", 
+				String password = DialogView.getConfirmation("Etes vous sûrs de vouloir bloquer cette carte?", 
 						"Confirmation", "Entrez code secret utilisateur", "Confirmation");
 				if (card.getOwner().getPassword().equals(password)) {
 					card.lock();
@@ -56,7 +57,7 @@ public class CardController extends Controller {
 				}
 				break;
 			case BLOCKED:
-				view.displayInfoDialog("Appelez votre banquier pour débloquer la carte.", null);
+				DialogView.displayInfoDialog("Appelez votre banquier pour débloquer la carte.", null);
 			default:
 				break;
 			}

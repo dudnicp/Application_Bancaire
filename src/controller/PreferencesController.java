@@ -3,8 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import aux.CustomException;
 import model.User;
-import view.DataChangeView;
+import view.DialogView;
 import view.PreferencesView;
 
 public class PreferencesController extends Controller {
@@ -36,45 +37,115 @@ public class PreferencesController extends Controller {
 	public void displayView() {
 		view.setVisible(true);
 	}
+	
 
 	class MailChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Modification mail", false, "mail", false);
-			MailChangeController controller = new MailChangeController(loggedUser, newView, PreferencesController.this);
-			controller.setupView();
-			controller.displayView();
+			String[] input = DialogView.getDoubleStringOption(
+					"Entrez nouveau mail: ", "Confirmez nouveau mail: ", "Édition mail", false, false);
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) {
+							loggedUser.setEmail(newData);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor mailEditor = new Editor();
+					mailEditor.runDoubleInputEditionProtocol(
+							input[0], input[1], ".+"+"@"+".+"+"."+".+", loggedUser.getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
+	
 	
 	class PhoneNumberChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Modification téléphone", true, "téléphone", false);
-			PhoneNumberChangeController controller = new PhoneNumberChangeController(loggedUser, 
-					newView, PreferencesController.this);
-			controller.setupView();
-			controller.displayView();
+			String[] input = DialogView.getDoubleStringOption(
+					"Entrez nouveau téléphone: ", "Confirmez nouveau téléphone: ", "Édition téléphone", false, false);
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) {
+							loggedUser.setPhoneNumber(newData);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor mailEditor = new Editor();
+					mailEditor.runDoubleInputEditionProtocol(
+							input[0], input[1], "0[0-9]{9}", loggedUser.getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
+	
 	
 	class AdressChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Modification adresse", true, "adresse", true);
-			AdressChangeController controller = new AdressChangeController(loggedUser, newView, PreferencesController.this);
-			controller.setupView();
-			controller.displayView();
+			String[] input = DialogView.getDoubleStringOption(
+					"Entrez nouvelle adresse: ", "Confirmez adresse: ", "Édition adresse", false, false);
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) {
+							loggedUser.setAdress(newData);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor mailEditor = new Editor();
+					mailEditor.runDoubleInputEditionProtocol(
+							input[0], input[1], ".*", loggedUser.getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 	
 	class PasswordChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Modification code secret", true, "code secret", false);
-			PasswordChangeController controller = new PasswordChangeController(loggedUser, newView, PreferencesController.this);
-			controller.setupView();
-			controller.displayView();
+			String[] input = DialogView.getDoubleStringOption(
+					"Entrez nouveau code secret: ", "Confirmez code secret: ", "Édition code secret", true, true);
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) {
+							loggedUser.setPassword(newData);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor mailEditor = new Editor();
+					mailEditor.runDoubleInputEditionProtocol(
+							input[0], input[1], ".*", loggedUser.getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -16,9 +17,10 @@ public class MainMenuView extends JFrame {
 	private static final long serialVersionUID = -8220796308066878211L;
 
 	
-	private static final Dimension MAIN_BUTTON_DIMENSION = new Dimension(150, 80);
+	private static final Dimension MAIN_BUTTON_DIMENSION = new Dimension(150, 120);
 	private static final Dimension SECUNDARY_BUTTON_DIMENSION = new Dimension(150, 50);
-	private static final Dimension PANEL_DIMENSION = new Dimension(450, 390);
+	private static final Dimension PANEL_DIMENSION = new Dimension(450, 510);
+	private static final Font MAIN_BUTTON_FONT = new Font(Font.DIALOG, Font.BOLD, 14);
 	
 	
 	private JPanel contentPanel = new JPanel();
@@ -34,6 +36,7 @@ public class MainMenuView extends JFrame {
 		for (int i = 0; i < mainButtons.length; i++) {
 			mainButtons[i] = new JButton();
 			mainButtons[i].setPreferredSize(MAIN_BUTTON_DIMENSION);
+			mainButtons[i].setFont(MAIN_BUTTON_FONT);
 		}
 		
 		for (int i = 0; i < secundaryButtons.length; i++) {

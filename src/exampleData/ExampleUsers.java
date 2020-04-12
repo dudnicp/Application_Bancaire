@@ -20,9 +20,9 @@ public class ExampleUsers extends LinkedList<User>{
 		CurrentAccount compteAlix = new CurrentAccount(compteVal);
 		CurrentAccount compteAdrien = new CurrentAccount(compteAlix);
 
-		val.addBeneficiary(compteAlix);
-		alix.addBeneficiary(compteAdrien);
-		adrien.addBeneficiary(compteVal);
+		val.addPayee(compteAlix);
+		alix.addPayee(compteAdrien);
+		adrien.addPayee(compteVal);
 		
 		
 		Transaction t1 = new Transaction(compteAlix, 5, new Date(), new OneTimeTransferTransaction());
@@ -45,14 +45,14 @@ public class ExampleUsers extends LinkedList<User>{
 		compteAdrien.addTransactionToHistory(t2);
 		compteAdrien.addPendingTransaction(t2);
 		
-		val.addPersonalAccount(compteVal);
-		val.addPersonalAccount(new PELAccount("123", "MonPEL", val, new Date(), 4000, 5000));
-		val.addPersonalAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 200, 500));
+		val.addCurrentAccount(compteVal);
+		val.addPelAccount(new PELAccount("123", "MonPEL", val, new Date(), 4000, 5000));
+		val.addLivretAAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 200, 500));
 		for (int i = 0; i < 10; i++) {
-			val.addPersonalAccount(new CurrentAccount(compteVal));
+			val.addCurrentAccount(new CurrentAccount(compteVal));
 		}
-		alix.addPersonalAccount(compteAlix);
-		adrien.addPersonalAccount(compteAdrien);
+		alix.addCurrentAccount(compteAlix);
+		adrien.addCurrentAccount(compteAdrien);
 		
 		this.add(val);
 		this.add(alix);
