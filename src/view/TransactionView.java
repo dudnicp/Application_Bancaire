@@ -6,9 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 public class TransactionView extends HoverableAndClickableView {
 
@@ -83,17 +81,5 @@ public class TransactionView extends HoverableAndClickableView {
 	
 	public void setLabelColor(int index, Color color) {
 		labels[index].setForeground(color);
-	}
-	
-	public String showOptions(ArrayList<String> options, String msg1, String title1, String msg2, String title2) {
-		String selectedOption = (String) JOptionPane.showInputDialog(null, msg1, title1, 
-				JOptionPane.INFORMATION_MESSAGE, null, options.toArray(), options.toArray()[0]);
-		
-		if (selectedOption != null && selectedOption.equals(options.get(0))) {
-			return JOptionPane.showInputDialog(null, msg2, title2, 
-					JOptionPane.QUESTION_MESSAGE);
-		} else {
-			return selectedOption;
-		}
 	}
 }

@@ -3,21 +3,22 @@ package view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
 public class AccountHistoryView extends ContentView {
 
 	private static final long serialVersionUID = -1457620948356582102L;
-	private ScrollableListView scrollableList = new ScrollableListView();
+	private ScrollableListView[] scrollLists = new ScrollableListView[2];
 	private JButton[] buttons = new JButton[3];
 	
 	public AccountHistoryView() {
 		
-		scrollableList.setScrollPaneSize(new Dimension(420, 270));
+		for (int i = 0; i < scrollLists.length; i++) {
+			scrollLists[i] = new ScrollableListView();
+			scrollLists[i].setScrollPaneSize(new Dimension(420, 200));
+		}
 		
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i] = new JButton();
@@ -26,42 +27,32 @@ public class AccountHistoryView extends ContentView {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 1;
+		c.gridheight = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridheight = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(0, 0, 10, 0);
-		this.add(scrollableList, c);
 		
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridheight = 1;
-		c.gridwidth = 1;
-		c.insets = new Insets(0, 0, 0, 0);
-		this.add(buttons[0], c);
+		for (int i = 0; i < scrollLists.length; i++, c.gridy++) {
+			this.add(scrollLists[i], c);
+		}
 		
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridheight = 1;
-		this.add(buttons[1], c);
-		
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridheight = 1;
-		this.add(buttons[2], c);
+		for (int i = 0; i < buttons.length; i++, c.gridy++) {
+			this.add(buttons[i], c);
+		}
+				
 	}
 	
-	public void addContentToContentBox(ContentView content) {
-		scrollableList.addContentToContentBox(content);
+	public void addContentToList(int index, ContentView content) {
+		scrollLists[index].addContentToContentBox(content);
 	}
 	
-	public void setScrollPaneBorder(Border border) {
-		scrollableList.setScrollPaneBorder(border);
+	public void setListBorder(int index, Border border) {
+		scrollLists[index].setScrollPaneBorder(border);
 	}
 	
-	public void setScrollPaneSize(Dimension dim) {
-		scrollableList.setScrollPaneSize(dim);
+	public void setListSize(int index, Dimension dim) {
+		scrollLists[index].setScrollPaneSize(dim);
 	}
 	
 	public void setButtonText(int index, String text) {

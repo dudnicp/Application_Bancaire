@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class User {
 	
@@ -17,8 +18,15 @@ public class User {
 	private String password;
 	
 	/* Accounts */
-	private ArrayList<PersonalAccount> accounts;
-	private ArrayList<Account> beneficiaries;
+	private ArrayList<CurrentAccount> currentAccounts;
+	private ArrayList<LivretAAccount> livretAAccounts;
+	private ArrayList<PELAccount> pelAccounts;
+	
+	/* Payees */
+	private ArrayList<Account> payees;
+	
+	/* Permanent Transfers */
+	private PriorityQueue<PermanentTransfer> permanentTransfers;
 	
 	/* Misc */
 	private ArrayList<String> transactionCategories;
@@ -37,8 +45,12 @@ public class User {
 		this.phoneNumber = phoneNumber;
 		this.adress = adress;
 		
-		accounts = new ArrayList<PersonalAccount>();
-		beneficiaries = new ArrayList<Account>();
+		currentAccounts = new ArrayList<CurrentAccount>();
+		livretAAccounts = new ArrayList<LivretAAccount>();
+		pelAccounts = new ArrayList<PELAccount>();
+		payees = new ArrayList<Account>();
+		
+		permanentTransfers = new PriorityQueue<PermanentTransfer>(new PermanentTransferComparator());
 		
 		transactionCategories = new ArrayList<String>();
 		for (InBuiltTransactionCategory type: InBuiltTransactionCategory.values()) {
@@ -79,16 +91,36 @@ public class User {
 		return password;
 	}
 	
-	public ArrayList<PersonalAccount> getAccounts() {
-		return accounts;
+	public ArrayList<CurrentAccount> getCurrentAccounts() {
+		return currentAccounts;
 	}
 	
-	public ArrayList<Account> getBeneficiaries() {
-		return beneficiaries;
+	public ArrayList<LivretAAccount> getLivretAAccounts() {
+		return livretAAccounts;
+	}
+	
+	public ArrayList<PELAccount> getPelAccounts() {
+		return pelAccounts;
+	}
+	
+	public ArrayList<PersonalAccount> getAccounts() {
+		ArrayList<PersonalAccount> allAccounts = new ArrayList<PersonalAccount>();
+		allAccounts.addAll(currentAccounts);
+		allAccounts.addAll(livretAAccounts);
+		allAccounts.addAll(pelAccounts);
+		return allAccounts;
+	}
+	
+	public ArrayList<Account> getPayees() {
+		return payees;
 	}
 	
 	public ArrayList<String> getTransactionCategories() {
 		return transactionCategories;
+	}
+	
+	public PriorityQueue<PermanentTransfer> getPermanentTransfers() {
+		return permanentTransfers;
 	}
 	
 	
@@ -109,19 +141,33 @@ public class User {
 	}
 	
 	
-	public void addPersonalAccount(PersonalAccount account) {
-		accounts.add(account);
-		beneficiaries.add(account);
+	public void addCurrentAccount(CurrentAccount account) {
+		currentAccounts.add(account);
 	}
 	
-	public void addBeneficiary(String iban, String name) {
-		addBeneficiary(new Account(iban, name));
+	public void addLivretAAccount(LivretAAccount livretA) {
+		livretAAccounts.add(livretA);
 	}
 	
-	public void addBeneficiary(Account account) {
-		beneficiaries.add(account);
+	public void addPelAccount(PELAccount pel) {
+		pelAccounts.add(pel);
 	}
 	
+	public void closePel(PELAccount pel) {
+		pelAccounts.remove(pel);
+	}
+	
+	public void addPayee(String iban, String name) {
+		addPayee(new Account(iban, name));
+	}
+	
+	public void addPayee(Account account) {
+		payees.add(account);
+	}
+	
+	public void removePayee(Account payee) {
+		payees.remove(payee);
+	}
 	
 	public String personalData() {
 		String retString = new String();
@@ -133,5 +179,13 @@ public class User {
 		if (!transactionCategories.contains(category)) {
 			transactionCategories.add(category);
 		}
+	}
+	
+	public void addPermanentTransfer(PermanentTransfer transfer) {
+		permanentTransfers.add(transfer);
+	}
+	
+	public void removePermanentTransfer(PermanentTransfer transfer) {
+		permanentTransfers.remove(transfer);
 	}
 }

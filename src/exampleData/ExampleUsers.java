@@ -11,43 +11,41 @@ public class ExampleUsers extends LinkedList<User>{
 	public ExampleUsers() {
 		User val = new User("", "", "Valérian", "Thomas", "Mr", 
 				"valerian.thomas@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
-		User adrien = new User("", "", "Adrien", "Déplacé", "Mr", 
+		User adrien = new User("1", "1", "Adrien", "Déplacé", "Mr", 
 				"adrien.deplace@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
-		User alix = new User("", "", "Alix", "Brocoli", "Mr", 
+		User alix = new User("2", "2", "Alix", "Brocoli", "Mr", 
 				"alix.brocoli@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
 		
-		CurrentAccount compteVal = new CurrentAccount("001", "Compte1", val, new Date(), 100, 1000, 300, 0);
+		CurrentAccount compteVal = new CurrentAccount("1234567890097556", "Compte1", val, new Date(), 100, 1000, 0, 300);
 		CurrentAccount compteAlix = new CurrentAccount(compteVal);
-		CurrentAccount compteAdrien = new CurrentAccount(compteAlix);
+		CurrentAccount compteAdrien = new CurrentAccount("12345", "Compte Adrien", adrien, new Date(), 400, 2000, 200, 800);
 
-		val.addBeneficiary(compteAlix);
-		alix.addBeneficiary(compteAdrien);
-		adrien.addBeneficiary(compteVal);
+		val.addPayee(compteAlix);
+		alix.addPayee(compteAdrien);
+		adrien.addPayee(compteVal);
 		
 		
-		Transaction t1 = new Transaction(compteAlix, 5, new Date(), new OneTimeTransferTransaction());
-		Transaction t2 = new Transaction(compteAdrien, 15, new Date(), new OneTimeTransferTransaction());
-		Transaction t3 = new Transaction(compteVal, 50, new Date(), new OneTimeTransferTransaction());
 		
-		compteVal.addPendingTransaction(t3);
-		compteVal.addTransactionToHistory(t3);
+		Card valCard = new Card(val, "3443", "1234234534564567");
 		for (int i = 0; i < 10; i++) {
-			compteVal.addPendingTransaction(new Transaction(t3));
-			compteVal.addTransactionToHistory(new Transaction(t3));
+			compteVal.addCard(new Card(valCard));
 		}
-		compteAlix.addTransactionToHistory(t1);
-		compteAlix.addPendingTransaction(t1);
-		compteAdrien.addTransactionToHistory(t2);
-		compteAdrien.addPendingTransaction(t2);
 		
-		val.addPersonalAccount(compteVal);
-		val.addPersonalAccount(new PELAccount("123", "MonPEL", val, new Date(), 4000, 5000));
-		val.addPersonalAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 300, 200));
-		for (int i = 0; i < 10; i++) {
-			val.addPersonalAccount(new CurrentAccount(compteVal));
+		Card adrienCard = new Card(adrien, "1122", "1234098745678765");
+		
+		for (int i = -30; i <= 30; i+=10) {
+			compteVal.addTransaction(new Transaction(compteAdrien, i, (i%3 == 0)? 1 : 0, new Date(), new CardTransaction(adrienCard)));
 		}
-		alix.addPersonalAccount(compteAlix);
-		adrien.addPersonalAccount(compteAdrien);
+		
+		val.addCurrentAccount(compteVal);
+		val.addPelAccount(new PELAccount("123", "MonPEL", val, new Date(), 4000, 5000));
+		val.addLivretAAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 200, 500));
+		for (int i = 0; i < 10; i++) {
+			val.addCurrentAccount(new CurrentAccount(compteVal));
+			val.addPermanentTransfer(new PermanentTransfer(compteVal, compteAdrien, 50, new Date(), TransferRegularity.MONTHLY));
+		}
+		alix.addCurrentAccount(compteAlix);
+		adrien.addCurrentAccount(compteAdrien);
 		
 		this.add(val);
 		this.add(alix);

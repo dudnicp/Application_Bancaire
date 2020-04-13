@@ -5,19 +5,15 @@ import java.util.Date;
 
 public class LivretAAccount extends WithdrawableAccount {
 
-	public LivretAAccount(String iban, String name, User owner, Date date, double amount,double balanceCeiling, 
-			double withdrawalceiling, double minimalBalance) {
-		super(iban, name, owner, date, amount, balanceCeiling, withdrawalceiling, minimalBalance);
-		this.balanceCeiling = balanceCeiling;
+	public LivretAAccount(String iban, String name, User owner, Date date, double amount, int maxBalance,
+			int minBalance, int maxWithrdraw) {
+		super(iban, name, owner, date, amount, maxBalance, minBalance, maxWithrdraw);
+		this.maxBalance = maxBalance;
 	}
 	
 	public LivretAAccount(LivretAAccount other) {
 		super(other);
-		this.balanceCeiling = other.balanceCeiling;
-	}
-	
-	public double getBalanceCeiling() {
-		return balanceCeiling;
+		this.maxBalance = other.maxBalance;
 	}
 
 	@Override

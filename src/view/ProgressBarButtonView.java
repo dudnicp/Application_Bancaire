@@ -3,68 +3,94 @@ package view;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 public class ProgressBarButtonView extends ContentView {
+	
+	private int[] possibleUpdates = new int[2];
 
 	private static final long serialVersionUID = 8304068256917862597L;
 	
 	private JProgressBar progressBar = new JProgressBar();
-	private JLabel[] labels = new JLabel[2];
-	private JLabel auxLabel = new JLabel();
+	private JLabel[] labels = new JLabel[4];
+	private JLabel[] auxLabels = new JLabel[2];
 	private JButton button = new JButton();
 	private JButton auxButton = new JButton();
+	private GridBagConstraints c = new GridBagConstraints();
 	
 	public ProgressBarButtonView() {
 		
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
 		
 		for (int i = 0; i < labels.length; i++) {
 			labels[i] = new JLabel();
+		}
+		
+		for (int i = 0; i < auxLabels.length; i++) {
+			auxLabels[i] = new JLabel();
 		}
 		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridheight = 1;
-		c.ipadx = 90;
+		c.ipadx = 200;
+		c.insets = new Insets(0, 10, 0, 10);
+		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		this.add(progressBar, c);
 		
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		c.gridheight = 1;
-		this.add(auxLabel, c);
-		
-		c.gridx = 1;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		this.add(auxButton, c);
-		
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 1;
-		c.gridheight = 1;
+		c.ipadx = 0;
+		c.insets = new Insets(0, 10, 0, 0);
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.LINE_START;
 		this.add(labels[0], c);
 		
 		c.gridx = 1;
-		c.gridy = 2;
-		c.gridwidth = 1;;
-		c.gridheight = 1;
-		this.add(button, c);
+		c.insets = new Insets(0, 0, 0, 0);
+		this.add(labels[1], c);
 		
 		c.gridx = 0;
+		c.gridy = 2;
+		c.insets = new Insets(0, 10, 0, 10);
+		this.add(labels[2], c);
+		
+		c.gridx = 1;
+		c.insets = new Insets(0, 0, 0, 0);
+		this.add(labels[3], c);
+		
+		c.gridx = 2;
+		c.anchor = GridBagConstraints.LINE_END;
+		c.insets = new Insets(0, 0, 0, 10);
+		this.add(button, c);
+	}
+	
+	public void addAuxComponents() {
+		c.gridx = 0;
 		c.gridy = 3;
-		c.gridwidth = GridBagConstraints.REMAINDER;;
-		c.gridheight = 1;
-		this.add(labels[1], c);
+		c.insets = new Insets(0, 10, 0, 0);
+		c.anchor = GridBagConstraints.LINE_START;
+		this.add(auxLabels[0], c);
+		
+		c.gridx = 1;
+		c.insets = new Insets(0, 0, 0, 00);
+		this.add(auxLabels[1], c);
+		
+		c.gridx = 2;
+		c.insets = new Insets(0, 0, 00, 10);
+		c.anchor = GridBagConstraints.LINE_END;
+		this.add(auxButton, c);
+	}
+	
+	public void setPossibleModification(int index, int id) {
+		possibleUpdates[index] = id;
 	}
 	
 	public void setProgressBarMin(int min) {
@@ -95,17 +121,12 @@ public class ProgressBarButtonView extends ContentView {
 		button.addActionListener(l);
 	}
 	
-	public void setAuxVisibility(boolean b) {
-		auxButton.setVisible(b);
-		auxLabel.setVisible(b);
+	public void setAuxLabelText(int index, String text) {
+		auxLabels[index].setText(text);
 	}
 	
-	public void setAuxLabelText(String text) {
-		auxLabel.setText(text);
-	}
-	
-	public void setAuxLabelFont(Font font) {
-		auxLabel.setFont(font);
+	public void setAuxLabelFont(int index, Font font) {
+		auxLabels[index].setFont(font);
 	}
 	
 	public void setAuxButtonText(String text) {

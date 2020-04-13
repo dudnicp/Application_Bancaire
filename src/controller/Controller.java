@@ -3,9 +3,9 @@ package controller;
 public abstract class Controller {
 	public void setupView() {
 		setupViewText();
-		setupViewButtons();
+		setupViewButtonsActions();
 	}
 	public abstract void displayView();
-	public abstract void setupViewButtons();
+	public abstract void setupViewButtonsActions();
 	public abstract void setupViewText();
 }

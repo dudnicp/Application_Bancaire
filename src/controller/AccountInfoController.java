@@ -6,12 +6,15 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-
+import javax.swing.JOptionPane;
 import model.CurrentAccount;
+import model.PELAccount;
 import model.PersonalAccount;
 import model.WithdrawableAccount;
+import view.AccountHistoryView;
 import view.AccountInfoView;
 import view.AllAccountsView;
+import view.DialogView;
 import view.ProgressBarButtonView;
 
 public class AccountInfoController extends Controller {
@@ -49,7 +52,7 @@ public class AccountInfoController extends Controller {
 		
 		ProgressBarButtonView progressBar = new ProgressBarButtonView();
 		AccountBalanceCeilingController controller = 
-				new AccountBalanceCeilingController(account.getOwner(), account, progressBar);
+				new AccountBalanceCeilingController(account, progressBar);
 		controller.setupView();
 		controller.displayView();
 		view.addContent(progressBar);
@@ -57,25 +60,73 @@ public class AccountInfoController extends Controller {
 		if (account instanceof WithdrawableAccount) {
 			ProgressBarButtonView progressBarBis = new ProgressBarButtonView();
 			AccountWithrdrawCeilingController controllerBis = 
-					new AccountWithrdrawCeilingController(account.getOwner(), (WithdrawableAccount)account, progressBarBis);
+					new AccountWithrdrawCeilingController((WithdrawableAccount)account, progressBarBis);
 			controllerBis.setupView();
 			controllerBis.displayView();
 			view.addContent(progressBarBis);
 		}
 		
-		JButton button = new JButton("Retour à la liste des comptes");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AllAccountsView accountsList = new AllAccountsView();
-				AllAccountsController controller = new AllAccountsController(
-						mainMenuController.getLoggedUser(), accountsList, mainMenuController);
-				mainMenuController.changeView(accountsList);
-				controller.setupView();
-				controller.displayView();
-			}
-		});
-		view.addContent(button);
+		
+		if (account instanceof PELAccount) {
+			
+			JButton closePelButton = new JButton("Clôturer PEL");
+			closePelButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int confirmation = DialogView.askConfirmation("Êtes vous sûrs de vouloir clôturer ce compte?", "Confirmation");
+					if (confirmation == JOptionPane.OK_OPTION) {
+						CurrentAccount dest = (CurrentAccount) DialogView.getOptionFromList(
+								account.getOwner().getCurrentAccounts(), 
+								"Séléctionnez un compte sur lequel verser l'argent: ", 
+								"Clôturation du PEL");
+						if (dest != null) {
+							String password = DialogView.askPassword();
+							if (password != null) {
+								if (password.equals(account.getOwner().getPassword())) {
+									((PELAccount) account).close(dest);
+									DialogView.displayInfoDialog("PEL clôturé avec succès.", null);
+									
+									AllAccountsView newView = new AllAccountsView();
+									AllAccountsController controller = new AllAccountsController(
+											mainMenuController.getLoggedUser(), newView, mainMenuController);
+									mainMenuController.changeView(newView);
+									controller.setupView();
+									controller.displayView();
+								}
+							}
+						}
+					}
+				}
+			});
+			view.addContent(closePelButton);
+			
+			JButton returnButton = new JButton("Retour à la liste des comptes");
+			returnButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					AllAccountsView accountsList = new AllAccountsView();
+					AllAccountsController controller = new AllAccountsController(
+							mainMenuController.getLoggedUser(), accountsList, mainMenuController);
+					mainMenuController.changeView(accountsList);
+					controller.setupView();
+					controller.displayView();
+				}
+			});
+			view.addContent(returnButton);
+		} else {
+			JButton returnButton = new JButton("Retour à l'historiques des transactions");
+			returnButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					AccountHistoryView accountView = new AccountHistoryView();
+					AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
+					mainMenuController.changeView(accountView);
+					controller.setupView();
+					controller.displayView();
+				}
+			});
+			view.addContent(returnButton);
+		}
 	}
 
 	@Override
@@ -84,7 +135,7 @@ public class AccountInfoController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		// TODO
 	}
 

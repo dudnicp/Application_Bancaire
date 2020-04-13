@@ -6,19 +6,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 
-import model.User;
+import aux.CustomException;
 import model.WithdrawableAccount;
-import view.DataChangeView;
+import view.DialogView;
 import view.ProgressBarButtonView;
 
 public class AccountWithrdrawCeilingController extends Controller {
 
 	private WithdrawableAccount account;
 	private ProgressBarButtonView view;
-	private User user;
 	
-	public AccountWithrdrawCeilingController(User user, WithdrawableAccount account, ProgressBarButtonView view) {
-		this.user = user;
+	public AccountWithrdrawCeilingController(WithdrawableAccount account, ProgressBarButtonView view) {
 		this.account = account;
 		this.view = view;
 	}
@@ -30,7 +28,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 	
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addButtonListener(new ButtonActionListener());
 	}
 
@@ -38,7 +36,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 	public void setupViewText() {
 		
 		int min = 0;
-		int max = (int) account.getWithrdrawalCeiling();
+		int max = (int) account.getMaxWithdraw();
 		double current = account.getCurrentlyEngagedAmount();
 		int displayedCurrent = (int) current;
 		
@@ -47,13 +45,14 @@ public class AccountWithrdrawCeilingController extends Controller {
 		view.setProgressBarCurrent(displayedCurrent);
 		
 		Font font = new Font(Font.SERIF, Font.ITALIC, 12);
+		for (int i = 0; i < 4; i++) {
+			view.setLabelFont(i, font);
+		}
 		
-		view.setLabelText(0, "Plafond: " +  Integer.toString(max));
-		view.setLabelFont(0, font);
-		view.setLabelText(1, "Montant engagé: " + current);
-		view.setLabelFont(1, new Font(Font.SERIF, Font.ITALIC, 12));
-		
-		view.setAuxVisibility(false);
+		view.setLabelText(0, "Montant engagé: ");
+		view.setLabelText(1, Double.toString(current));
+		view.setLabelText(2, "Maximum: ");
+		view.setLabelText(3, Integer.toString(max));
 		
 		view.setButtonText("Modifier");
 		view.setBorder(BorderFactory.createTitledBorder("Plafond de payement/retrait"));
@@ -62,12 +61,27 @@ public class AccountWithrdrawCeilingController extends Controller {
 	class ButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Edition plafond payement/retrait", 
-					true, "capacité de payement", true);
-			WithdrawalCeilingChangeController controller = 
-					new WithdrawalCeilingChangeController(user, newView, AccountWithrdrawCeilingController.this, account);
-			controller.setupView();
-			controller.displayView();
+			String[] input = DialogView.getDoubleStringInput("Entrez nouvelle capacité de payement: ", "Confirmez capacité de payement: ",
+					"Édition capacité de payement", false, false);
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) throws CustomException {
+							int newMax = Integer.parseInt(newData);
+							account.setMaxWithrdraw(newMax);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor editor = new Editor();
+					editor.runDoubleInputEditionProtocol(input[0], input[1], "[0-9]*", account.getOwner().getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 

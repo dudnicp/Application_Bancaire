@@ -33,6 +33,8 @@ public class AccountInfoView extends ContentView{
 		c.gridwidth = 1;
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 0, 5, 0);
+		c.ipadx = 0;
+
 		this.add(infoBox,c);
 		
 	}

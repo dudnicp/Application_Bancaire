@@ -2,24 +2,25 @@ package model;
 
 import java.util.Date;
 
-import aux.CeilingExceedingException;
+import aux.CustomException;
 import aux.InsuficentAmountException;
+import aux.WithdrawalCapacityExceedingException;
 
 public abstract class WithdrawableAccount extends PersonalAccount {
 	
-	protected double withrdrawalCeiling;
-	protected double minBalance;
+	protected int maxWithrdraw;
+	protected int minBalance;
 
 	public WithdrawableAccount(String iban, String name, User owner, Date date, 
-						double amount, double balanceCeiling, double withdrawalCeiling, double minimalBalance) {
-		super(iban, name, owner, date, amount, balanceCeiling);
-		this.withrdrawalCeiling = withdrawalCeiling;
-		this.setMinBalance(minimalBalance);
+						double amount, int maxBalance, int minBalance, int maxWithrdraw) {
+		super(iban, name, owner, date, amount, maxBalance);
+		this.maxWithrdraw = maxWithrdraw;
+		this.minBalance = minBalance;
 	}
 	
 	public WithdrawableAccount(WithdrawableAccount other) {
 		super(other);
-		this.withrdrawalCeiling = other.withrdrawalCeiling;
+		this.maxWithrdraw = other.maxWithrdraw;
 		this.minBalance = other.minBalance;
 	}
 	
@@ -41,33 +42,42 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 	}
 	
 	public Transaction pay(double amount, Account account, TransactionType type) 
-					throws InsuficentAmountException, CeilingExceedingException {
+					throws InsuficentAmountException, WithdrawalCapacityExceedingException {
 		if (getBalance() > amount) {
-			if (getCurrentlyEngagedAmount() + amount > withrdrawalCeiling) {
-				Transaction transaction = new Transaction(account, amount, new Date(), type);
-				addPendingTransaction(transaction);
+			if (getCurrentlyEngagedAmount() + amount > maxWithrdraw) {
+				Transaction transaction = new Transaction(account, amount, Transaction.PENDING, new Date(), type);
+				addTransaction(transaction);
 				return transaction;
 			} else {
-				throw new CeilingExceedingException();
+				throw new WithdrawalCapacityExceedingException();
 			}
 		} else {
 			throw new InsuficentAmountException();
 		}
 	}
 	
-	public double getWithrdrawalCeiling() {
-		return withrdrawalCeiling;
+	public int getMaxWithdraw() {
+		return maxWithrdraw;
 	}
 	
-	public void setWithrdrawalCeiling(double withrdrawalCeiling) {
-		this.withrdrawalCeiling = withrdrawalCeiling;
+	public void setMaxWithrdraw(int maxWithrdraw) throws CustomException {
+		if (maxWithrdraw < getCurrentlyEngagedAmount()) {
+			throw new CustomException(
+					"Modification impossible : la nouvelle capacité de payement "
+					+ "doit être supérieure au montant actuellement engagé.");
+		}
+		this.maxWithrdraw = maxWithrdraw;
 	}
 	
-	public void setMinBalance(double minBalance) {
+	public void setMinBalance(int minBalance) throws CustomException {
+		if (minBalance > balance) {
+			throw new CustomException("Modification impossible : le nouveau seuil doit être inférieur au solde actuel.");
+		}
 		this.minBalance = minBalance;
 	}
 	
-	public double getMinBalance() {
+	@Override
+	public int getMinBalance() {
 		return minBalance;
 	}
 }

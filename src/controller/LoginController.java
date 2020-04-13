@@ -84,7 +84,7 @@ public class LoginController extends Controller {
 	}
 
 	@Override
-	public void setupViewButtons() {
+	public void setupViewButtonsActions() {
 		view.addLoginListener(new LoginButtonListener(), new LoginKeyListener());
 	}
 }
