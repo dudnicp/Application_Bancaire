@@ -6,19 +6,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 
-import model.User;
+import aux.CustomException;
 import model.WithdrawableAccount;
-import view.DataChangeView;
+import view.DialogView;
 import view.ProgressBarButtonView;
 
 public class AccountWithrdrawCeilingController extends Controller {
 
 	private WithdrawableAccount account;
 	private ProgressBarButtonView view;
-	private User user;
 	
-	public AccountWithrdrawCeilingController(User user, WithdrawableAccount account, ProgressBarButtonView view) {
-		this.user = user;
+	public AccountWithrdrawCeilingController(WithdrawableAccount account, ProgressBarButtonView view) {
 		this.account = account;
 		this.view = view;
 	}
@@ -53,7 +51,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 		
 		view.setLabelText(0, "Montant engagé: ");
 		view.setLabelText(1, Double.toString(current));
-		view.setLabelText(2, "Maximim: ");
+		view.setLabelText(2, "Maximum: ");
 		view.setLabelText(3, Integer.toString(max));
 		
 		view.setButtonText("Modifier");
@@ -63,12 +61,26 @@ public class AccountWithrdrawCeilingController extends Controller {
 	class ButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Edition plafond payement/retrait", 
-					true, "capacité de payement", true);
-			WithdrawalCeilingChangeController controller = 
-					new WithdrawalCeilingChangeController(user, newView, AccountWithrdrawCeilingController.this, account);
-			controller.setupView();
-			controller.displayView();
+			String input = DialogView.getStringOption("Entrez nouvelle capacité de payement: ", "Édition capacité de payement");
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) throws CustomException {
+							int newMax = Integer.parseInt(newData);
+							account.setMaxWithrdraw(newMax);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor editor = new Editor();
+					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 

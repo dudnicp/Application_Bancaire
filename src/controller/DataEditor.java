@@ -1,11 +1,14 @@
 package controller;
 
 import aux.CustomException;
+import aux.InvalidFormatException;
+import aux.InvalidPasswordException;
+import aux.NonMatchingEntriesException;
 import view.DialogView;
 
 public interface DataEditor {
 	
-	public abstract void editData(String newData);
+	public abstract void editData(String newData) throws CustomException;
 	
 	public abstract void update();
 	
@@ -13,7 +16,7 @@ public interface DataEditor {
 		if (input1.equals(input2)) {
 			runSimpleInputEditionProtocol(input1, regex, password);
 		} else {
-			throw new CustomException("Les deux entrées ne corréspondent pas");
+			throw new NonMatchingEntriesException();
 		}
 	}
 	
@@ -23,14 +26,14 @@ public interface DataEditor {
 			if (inputPassword != null) {
 				if (inputPassword.equals(password)) {
 					editData(input);
-					DialogView.displayInfoDialog("Modification enregistrée avec succès", "Confirmation");
+					DialogView.displayModificationSuccessMessage();
 					update();
 				} else {
-					throw new CustomException("Code secret invalide");
+					throw new InvalidPasswordException();
 				}
 			}	
 		} else {
-			throw new CustomException("Format invalide");
+			throw new InvalidFormatException();
 		}
 	}
 }

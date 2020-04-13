@@ -56,8 +56,8 @@ public class PreferencesController extends Controller {
 							setupViewText();
 						}
 					}
-					Editor mailEditor = new Editor();
-					mailEditor.runDoubleInputEditionProtocol(
+					Editor editor = new Editor();
+					editor.runDoubleInputEditionProtocol(
 							input[0], input[1], ".+"+"@"+".+"+"."+".+", loggedUser.getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
@@ -84,8 +84,8 @@ public class PreferencesController extends Controller {
 							setupViewText();
 						}
 					}
-					Editor mailEditor = new Editor();
-					mailEditor.runDoubleInputEditionProtocol(
+					Editor editor = new Editor();
+					editor.runDoubleInputEditionProtocol(
 							input[0], input[1], "0[0-9]{9}", loggedUser.getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
@@ -112,8 +112,8 @@ public class PreferencesController extends Controller {
 							setupViewText();
 						}
 					}
-					Editor mailEditor = new Editor();
-					mailEditor.runDoubleInputEditionProtocol(
+					Editor editor = new Editor();
+					editor.runDoubleInputEditionProtocol(
 							input[0], input[1], ".*", loggedUser.getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
@@ -139,8 +139,8 @@ public class PreferencesController extends Controller {
 							setupViewText();
 						}
 					}
-					Editor mailEditor = new Editor();
-					mailEditor.runDoubleInputEditionProtocol(
+					Editor editor = new Editor();
+					editor.runDoubleInputEditionProtocol(
 							input[0], input[1], ".*", loggedUser.getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());

@@ -5,32 +5,36 @@ import java.util.Date;
 
 public class Transaction {
 	
-	private Account recieverAccount;
+	public static final int PENDING = 0;
+	public static final int REGISTERED = 1;
+	
+	private Account linkedAccount;
 	private double amount;
 	private Date date;
+	private int status;
 	private String category;
 	private TransactionType type;
 	
 	public Transaction(Account recieverAccount, 
-			double amount, Date date, TransactionType type) {
-		this.recieverAccount = recieverAccount;
+			double amount, int status, Date date, TransactionType type) {
+		this.linkedAccount = recieverAccount;
 		this.amount = amount;
+		this.status = status;
 		this.date = new Date(date.getTime());
 		this.category = InBuiltTransactionCategory.UNKNOWN.toString();
 		this.type = type;
 	}
 	
 	public Transaction(Transaction other) {
-		this(other.recieverAccount, other.amount, other.date, other.type);
+		this(other.linkedAccount, other.amount, other.status, other.date, other.type);
 	}
 	
 	public void setCategory(String category) {
 		this.category = category;
 	}
 	
-	
-	public Account getRecieverAccount() {
-		return recieverAccount;
+	public Account getLinkedAccount() {
+		return linkedAccount;
 	}
 	
 	public double getAmount() {
@@ -47,6 +51,10 @@ public class Transaction {
 	
 	public TransactionType getType() {
 		return type;
+	}
+	
+	public int getStatus() {
+		return status;
 	}
 }
 

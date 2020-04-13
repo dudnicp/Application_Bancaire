@@ -44,12 +44,16 @@ public class AccountSummaryController extends Controller {
 		
 		Double pendingAmount = account.getPendingAmount();
 		view.setLabelFont(4, new Font(Font.SERIF, Font.ITALIC, 15));
-		if (pendingAmount <= 0) {
-			view.setLabelText(4, pendingAmount.toString() + " €");
-			view.setLabelColor(4, new Color(200, 50, 50));
-		} else if (pendingAmount > 0) {
+		
+		
+		if (pendingAmount > 0) {
 			view.setLabelText(4, "+ " + pendingAmount.toString() + " €");
 			view.setLabelColor(4, new Color(50, 200, 50));
+		} else {
+			view.setLabelText(4, pendingAmount.toString() + " €");
+			if (pendingAmount < 0) {
+				view.setLabelColor(4, new Color(200, 50, 50));
+			}
 		}
 		
 		view.addInteraction(new ClickInteraction());

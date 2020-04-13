@@ -32,19 +32,25 @@ public class TransactionController extends Controller {
 		Double amount = transaction.getAmount();
 		if (amount > 0) {
 			view.setLabelText(1, "+" + amount.toString() + " €");
-			view.setLabelColor(1, new Color(50,200,50));
+			if (transaction.getStatus() == Transaction.PENDING) {
+				view.setLabelColor(1, new Color(50,200,50));
+			}
 		} else {
 			view.setLabelText(1, amount.toString() + " €");
-			view.setLabelColor(1, new Color(200,50,50));
+			if (amount < 0) {
+				if (transaction.getStatus() == Transaction.PENDING) {
+					view.setLabelColor(1, new Color(200,50,50));
+				}	
+			}
 		}
 		
 		view.setLabelText(2, transaction.getType().getDirection(amount)
-				+ " " + transaction.getRecieverAccount().getName());
+				+ " " + transaction.getLinkedAccount().getName());
 		view.setLabelFont(2, new Font(Font.DIALOG, Font.BOLD, 15));
 		
 		view.setLabelFont(3, new Font(Font.SERIF, Font.ITALIC, 12));
 		Date transactionDate = transaction.getDate();
-		int day = transactionDate.getDay();
+		int day = transactionDate.getDate();
 		int month = transactionDate.getMonth() + 1;
 		int year = transactionDate.getYear() + 1900;
 		view.setLabelText(3, day + "/" + month + "/" + year);
@@ -70,7 +76,7 @@ public class TransactionController extends Controller {
 			ArrayList<String> knownCategories = mainMenuController.getLoggedUser().getTransactionCategories();
 			ArrayList<String> possibleOptions = new ArrayList<String>(knownCategories);
 			possibleOptions.add(0, addCategory);
-			String newCategory = DialogView.getStringOptionFromList(
+			String newCategory = (String) DialogView.getOptionFromList(
 					possibleOptions, "Séléctionnez catégorie", "Édition catégorie");
 			if (newCategory != null && newCategory.equals(addCategory)) {
 				newCategory = DialogView.getStringOption(

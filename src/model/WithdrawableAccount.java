@@ -2,8 +2,9 @@ package model;
 
 import java.util.Date;
 
-import aux.CeilingExceedingException;
+import aux.CustomException;
 import aux.InsuficentAmountException;
+import aux.WithdrawalCapacityExceedingException;
 
 public abstract class WithdrawableAccount extends PersonalAccount {
 	
@@ -41,14 +42,14 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 	}
 	
 	public Transaction pay(double amount, Account account, TransactionType type) 
-					throws InsuficentAmountException, CeilingExceedingException {
+					throws InsuficentAmountException, WithdrawalCapacityExceedingException {
 		if (getBalance() > amount) {
 			if (getCurrentlyEngagedAmount() + amount > maxWithrdraw) {
-				Transaction transaction = new Transaction(account, amount, new Date(), type);
-				addPendingTransaction(transaction);
+				Transaction transaction = new Transaction(account, amount, Transaction.PENDING, new Date(), type);
+				addTransaction(transaction);
 				return transaction;
 			} else {
-				throw new CeilingExceedingException();
+				throw new WithdrawalCapacityExceedingException();
 			}
 		} else {
 			throw new InsuficentAmountException();
@@ -59,11 +60,19 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 		return maxWithrdraw;
 	}
 	
-	public void setMaxWithrdraw(int maxWithrdraw) {
+	public void setMaxWithrdraw(int maxWithrdraw) throws CustomException {
+		if (maxWithrdraw < getCurrentlyEngagedAmount()) {
+			throw new CustomException(
+					"Modification impossible : la nouvelle capacité de payement "
+					+ "doit être supérieure au montant actuellement engagé.");
+		}
 		this.maxWithrdraw = maxWithrdraw;
 	}
 	
-	public void setMinBalance(int minBalance) {
+	public void setMinBalance(int minBalance) throws CustomException {
+		if (minBalance > balance) {
+			throw new CustomException("Modification impossible : le nouveau seuil doit être inférieur au solde actuel.");
+		}
 		this.minBalance = minBalance;
 	}
 	

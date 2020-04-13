@@ -39,18 +39,30 @@ public class AccountHistoryController extends Controller {
 		view.setButtonText(1, "Informations compte");
 		view.setButtonText(2, "Retour à la liste des comptes");
 		
+		for (Transaction transaction: account.getPendingTransactions()) {
+			TransactionView transactionView = new TransactionView();
+			TransactionController controller = new TransactionController(transaction, transactionView, mainMenuController);
+			controller.setupView();
+			controller.displayView();
+			view.addContentToList(0,transactionView);
+		}
+		
+		TitledBorder title1 = new TitledBorder("Transactions en attente");
+		title1.setTitleFont(new Font("Arial", Font.BOLD, 15));
+		view.setListBorder(0, title1);
+		
 		
 		for (Transaction transaction: account.getHistory()) {
 			TransactionView transactionView = new TransactionView();
 			TransactionController controller = new TransactionController(transaction, transactionView, mainMenuController);
 			controller.setupView();
 			controller.displayView();
-			view.addContentToContentBox(transactionView);
+			view.addContentToList(1,transactionView);
 		}
 		
-		TitledBorder titleBorder = new TitledBorder("Historique des transactions");
-		titleBorder.setTitleFont(new Font("Arial", Font.BOLD, 15));
-		view.setScrollPaneBorder(titleBorder);
+		TitledBorder title2 = new TitledBorder("Transactions enregistrées");
+		title2.setTitleFont(new Font("Arial", Font.BOLD, 15));
+		view.setListBorder(1, title2);
 	}
 
 	@Override

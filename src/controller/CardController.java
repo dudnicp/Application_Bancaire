@@ -4,6 +4,9 @@ package controller;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
 import model.Card;
 import model.CardStatus;
 import view.CardView;
@@ -48,12 +51,14 @@ public class CardController extends Controller {
 		public void actionPerformed(ActionEvent e) {
 			switch (card.getStatus()) {
 			case ACTIVE:
-				String password = DialogView.getConfirmation("Etes vous sûrs de vouloir bloquer cette carte?", 
-						"Confirmation", "Entrez code secret utilisateur", "Confirmation");
-				if (card.getOwner().getPassword().equals(password)) {
-					card.lock();
-					view.setLabelText(2, CardStatus.BLOCKED.toString());
-					view.setButtonText("Réactiver");
+				int confirmation = DialogView.getIntOption("Êtes vous sûrs de vouloir bloquer cette carte?", "Confirmation");
+				if (confirmation == JOptionPane.OK_OPTION) {
+					String password = DialogView.askPassword();
+					if (password != null && card.getOwner().getPassword().equals(password)) {
+						card.lock();
+						view.setLabelText(2, CardStatus.BLOCKED.toString());
+						view.setButtonText("Réactiver");
+					}
 				}
 				break;
 			case BLOCKED:

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import model.BankData;
 import model.User;
 import view.AllAccountsView;
+import view.AllTransfersView;
 import view.ContentView;
 import view.LoginView;
 import view.MainMenuView;
@@ -74,7 +75,11 @@ public class MainMenuController extends Controller {
 	class TransfersButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			AllTransfersView transfersView = new AllTransfersView();
+			AllTransfersController controller = new AllTransfersController(loggedUser, transfersView, MainMenuController.this);
+			changeView(transfersView);
+			controller.setupView();
+			controller.displayView();
 			
 		}
 	}

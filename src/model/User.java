@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class User {
 	
@@ -24,6 +25,9 @@ public class User {
 	/* Payees */
 	private ArrayList<Account> payees;
 	
+	/* Permanent Transfers */
+	private PriorityQueue<PermanentTransfer> permanentTransfers;
+	
 	/* Misc */
 	private ArrayList<String> transactionCategories;
 	
@@ -45,6 +49,8 @@ public class User {
 		livretAAccounts = new ArrayList<LivretAAccount>();
 		pelAccounts = new ArrayList<PELAccount>();
 		payees = new ArrayList<Account>();
+		
+		permanentTransfers = new PriorityQueue<PermanentTransfer>(new PermanentTransferComparator());
 		
 		transactionCategories = new ArrayList<String>();
 		for (InBuiltTransactionCategory type: InBuiltTransactionCategory.values()) {
@@ -113,6 +119,10 @@ public class User {
 		return transactionCategories;
 	}
 	
+	public PriorityQueue<PermanentTransfer> getPermanentTransfers() {
+		return permanentTransfers;
+	}
+	
 	
 	public void setEmail(String email) {
 		this.email = email;
@@ -143,6 +153,10 @@ public class User {
 		pelAccounts.add(pel);
 	}
 	
+	public void closePel(PELAccount pel) {
+		pelAccounts.remove(pel);
+	}
+	
 	public void addPayee(String iban, String name) {
 		addPayee(new Account(iban, name));
 	}
@@ -162,5 +176,9 @@ public class User {
 		if (!transactionCategories.contains(category)) {
 			transactionCategories.add(category);
 		}
+	}
+	
+	public void addPermanentTransfer(PermanentTransfer transfer) {
+		permanentTransfers.add(transfer);
 	}
 }

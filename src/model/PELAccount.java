@@ -20,8 +20,9 @@ public class PELAccount extends PersonalAccount {
 	}
 	
 	public void close(CurrentAccount dest) {
-		Transaction transaction = new Transaction(dest, getBalance(), new Date(), new OneTimeTransferTransaction());
-		dest.addPendingTransaction(transaction);
+		Transaction transaction = new Transaction(dest, getBalance(), Transaction.PENDING, new Date(), new OneTimeTransferTransaction());
+		dest.addTransaction(transaction);
+		owner.closePel(this);
 	}
 
 }

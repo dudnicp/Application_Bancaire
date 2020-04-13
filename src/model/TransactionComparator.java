@@ -10,7 +10,7 @@ public class TransactionComparator implements Comparator<Transaction> {
 			return -1;
 		}
 		else if (t1.getDate().after(t2.getDate())) {
-			return 1;
+			return -1;
 		}
 		else {
 			return 0;

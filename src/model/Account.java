@@ -24,4 +24,9 @@ public class Account {
 	public String getName() {
 		return name;
 	}
+	
+	@Override
+	public String toString() {
+		return name + " - IBAN : " + iban;
+	}
 }

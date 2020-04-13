@@ -5,23 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 
+import aux.CustomException;
 import model.PELAccount;
 import model.PersonalAccount;
-import model.User;
 import model.WithdrawableAccount;
-import view.DataChangeView;
+import view.DialogView;
 import view.ProgressBarButtonView;
 
 public class AccountBalanceCeilingController extends Controller {
 	
 	PersonalAccount account;
 	private ProgressBarButtonView view;
-	private User user;
 	
-	public AccountBalanceCeilingController(User user, PersonalAccount account, ProgressBarButtonView view) {
+	public AccountBalanceCeilingController(PersonalAccount account, ProgressBarButtonView view) {
 		this.account = account;
 		this.view = view;
-		this.user = user;
 	}
 
 	@Override
@@ -59,7 +57,7 @@ public class AccountBalanceCeilingController extends Controller {
 		
 		view.setLabelText(0, "Solde actuel: ");
 		view.setLabelText(1, Double.toString(current));
-		view.setLabelText(2, "Maximim: ");
+		view.setLabelText(2, "Maximum: ");
 		view.setLabelText(3, Integer.toString(max));
 		
 		view.setAuxLabelText(0, "Minimum: ");
@@ -79,23 +77,52 @@ public class AccountBalanceCeilingController extends Controller {
 	class ButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Edition plafond du compte", true, "plafond", false);
-			BalanceCeilingChangeController controller = 
-					new BalanceCeilingChangeController(user, newView, AccountBalanceCeilingController.this, account);
-			controller.setupView();
-			controller.displayView();
+			String input = DialogView.getStringOption("Entrez nouveau seuil max: ", "Édition seuil max");
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) throws CustomException {
+							int newMax = Integer.parseInt(newData);
+							account.setMaxBalance(newMax);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor editor = new Editor();
+					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 	
 	class AuxButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataChangeView newView = new DataChangeView(null, "Edition seuil minimal du compte", true, "seuil minimal", false);
-			MinBalanceChangeController controller = 
-					new MinBalanceChangeController(user, newView, AccountBalanceCeilingController.this, 
-							(WithdrawableAccount) account);
-			controller.setupView();
-			controller.displayView();
+			String input = DialogView.getStringOption("Entrez nouveau seuil min: ", "Édition seuil min");
+			if (input != null) {
+				try {
+					class Editor implements DataEditor {
+						@Override
+						public void editData(String newData) throws CustomException {
+							int newMin = Integer.parseInt(newData);
+							((WithdrawableAccount)account).setMinBalance(newMin);
+						}
+						@Override
+						public void update() {
+							setupViewText();
+						}
+					}
+					Editor editor = new Editor();
+					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 }

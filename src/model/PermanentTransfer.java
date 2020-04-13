@@ -3,48 +3,47 @@ package model;
 import java.util.Date;
 
 public class PermanentTransfer {
-	private double regul;
-	private Date beginDate;
+	
+	public static final String MONTHLY = "Mensuel";
+	public static final String THREE_MONTHLY = "Trimestriel";
+	public static final String BI_ANUAL = "SEMESTRIEL";
+	public static final String ANNUAL = "ANNUEL";
+	
+	private CurrentAccount payer;
+	private Account payee;
 	private double amount;
-	private PersonalAccount receivor;
+	private Date firstTransactionDate;
+	private String regularity;
 	
-	
-	public PermanentTransfer(double regul, Date begindate, double amount, PersonalAccount receivor){
-		this.regul = regul;
-		this.beginDate = begindate;
+	public PermanentTransfer(CurrentAccount payer, Account payee, double amount, Date firstTransactionDate, String regularity) {
+		this.payer = payer;
+		this.payee = payee;
 		this.amount = amount;
-//		this.receivor = new PersonalAccount(receivor);
+		this.firstTransactionDate = firstTransactionDate;
+		this.regularity = regularity;
 	}
 	
 	public PermanentTransfer(PermanentTransfer other) {
-		this(other.regul, other.beginDate, other.amount, other.receivor);
+		this(other.payer, other.payee, other.amount, other.firstTransactionDate, other.regularity);
 	}
 	
-	public double getRegul() {
-		return this.regul;
+	public CurrentAccount getPayer() {
+		return payer;
 	}
 	
-	public Date getBeginDate() {
-		return this.beginDate;
+	public Account getPayee() {
+		return payee;
 	}
 	
-	public double getamount() {
-		return this.amount;
+	public double getAmount() {
+		return amount;
 	}
 	
-	public PersonalAccount getReceive() {
-		return this.receivor;
+	public Date getFirstTransactionDate() {
+		return firstTransactionDate;
 	}
 	
-	public void setRegul(double regul) {
-		this.regul = regul;
-	}
-	
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-	
-	public void setDate(Date date) {
-		this.beginDate = new Date(date.getTime());
+	public String getRegularity() {
+		return regularity;
 	}
 }

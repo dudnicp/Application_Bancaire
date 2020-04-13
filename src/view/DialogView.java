@@ -11,14 +11,6 @@ import javax.swing.JTextField;
 
 
 public class DialogView {
-
-	public static String getConfirmation(String msg1, String title1, String msg2, String title2) {
-		int decision = getIntOption(msg1, title1);
-		if (decision == JOptionPane.OK_OPTION) {
-			return getStringOption(msg2, title2);
-		}
-		return null;
-	}
 	
 	public static void displayInfoDialog(String msg, String title) {
 		JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
@@ -29,12 +21,14 @@ public class DialogView {
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 	
+	
+	
 	public static String getStringOption(String msg, String title) {
 		return JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
 	}
 	
-	public static String getStringOptionFromList(ArrayList<String> options, String msg, String title) {
-		return (String) JOptionPane.showInputDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE, 
+	public static Object getOptionFromList(ArrayList<? extends Object> options, String msg, String title) {
+		return JOptionPane.showInputDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE, 
 							null, options.toArray(), options.toArray()[0]);
 	}
 	
@@ -125,5 +119,9 @@ public class DialogView {
 	
 	public static void displayError(String str) {
 		JOptionPane.showMessageDialog(null, str, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void displayModificationSuccessMessage() {
+		displayInfoDialog("Modification enregistrée avec succès.", null);
 	}
 }
