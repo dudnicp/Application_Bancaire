@@ -1,8 +1,13 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import aux.CustomException;
+import model.Account;
 import model.User;
+import view.DialogView;
 import view.NewTransferView;
 
 public class NewTransferController extends Controller {
@@ -22,8 +27,7 @@ public class NewTransferController extends Controller {
 	}
 	@Override
 	public void setupViewButtonsActions() {
-		// TODO Auto-generated method stub
-		
+		view.addButtonAction(new NewPayeeButton());
 	}
 	@Override
 	public void setupViewText() {
@@ -49,6 +53,36 @@ public class NewTransferController extends Controller {
 		view.setButtonText("Ajouter bénéficiaire");
 	}
 	
-	
+	class NewPayeeButton implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String[] input = DialogView.getDoubleStringInput("IBAN: ", "Nom du bénéficiare: ", "Nouveau bénéficiare", false, false);
+			if (input != null) {
+				String iban = input[0];
+				String name = input[1];
+				
+				class Editor implements DataEditor {
+					@Override
+					public void editData(String newData) throws CustomException {
+						Account payee = new Account(iban, name);
+						user.addPayee(payee);
+						view.addOptionToList2(payee);
+					}
+					@Override
+					public void update() {
+						// nothing to be done
+					}
+				}
+				
+				Editor editor = new Editor();
+				try {
+					editor.runSimpleInputEditionProtocol(iban, "[A-Z0-9]{10}", user.getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
+			
+		}
+	}
 	
 }

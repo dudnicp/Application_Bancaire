@@ -24,7 +24,7 @@ public class NewTransferView extends ContentView {
 	private JButton button = new JButton();
 	private JCheckBox checkBox = new JCheckBox();
 	
-	private JPanel auxPane = new JPanel();
+	private JPanel auxPanel = new JPanel();
 	private JLabel[] auxLabels = new JLabel[2];
 	private JComboBox<Object> auxOptionBox= new JComboBox<Object>();
 	private JTextField auxTextField = new JTextField();
@@ -57,7 +57,6 @@ public class NewTransferView extends ContentView {
 		this.add(optionBox1, c);
 		
 		
-		
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(mainLabels[1], c);
@@ -67,12 +66,10 @@ public class NewTransferView extends ContentView {
 		this.add(optionBox2, c);
 		
 		
-
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 2;
 		this.add(button, c);
-		
 		
 		
 		c.gridx = 0;
@@ -85,11 +82,9 @@ public class NewTransferView extends ContentView {
 		this.add(textField, c);
 		
 		
-		
 		c.gridx = 0;
 		c.gridy = 4;
 		this.add(checkBox, c);
-		
 		
 	}
 	
@@ -138,10 +133,10 @@ public class NewTransferView extends ContentView {
 	}
 	
 	public void showAuxContent() {
-		auxPane.setVisible(true);
+		auxPanel.setVisible(true);
 	}
 	
 	public void hideAuxContent() {
-		auxPane.setVisible(false);
+		auxPanel.setVisible(false);
 	}
 }
