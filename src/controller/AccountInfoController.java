@@ -99,34 +99,20 @@ public class AccountInfoController extends Controller {
 				}
 			});
 			view.addContent(closePelButton);
-			
-			JButton returnButton = new JButton("Retour à la liste des comptes");
-			returnButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					AllAccountsView accountsList = new AllAccountsView();
-					AllAccountsController controller = new AllAccountsController(
-							mainMenuController.getLoggedUser(), accountsList, mainMenuController);
-					mainMenuController.changeView(accountsList);
-					controller.setupView();
-					controller.displayView();
-				}
-			});
-			view.addContent(returnButton);
-		} else {
-			JButton returnButton = new JButton("Retour à l'historiques des transactions");
-			returnButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					AccountHistoryView accountView = new AccountHistoryView();
-					AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
-					mainMenuController.changeView(accountView);
-					controller.setupView();
-					controller.displayView();
-				}
-			});
-			view.addContent(returnButton);
 		}
+		
+		JButton returnButton = new JButton("Retour à l'historiques des transactions");
+		returnButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AccountHistoryView accountView = new AccountHistoryView();
+				AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
+				mainMenuController.changeView(accountView);
+				controller.setupView();
+				controller.displayView();
+			}
+		});
+		view.addContent(returnButton);	
 	}
 
 	@Override

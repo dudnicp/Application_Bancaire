@@ -3,11 +3,9 @@ package controller;
 import java.awt.Color;
 import java.awt.Font;
 
-import model.PELAccount;
 import model.PersonalAccount;
 import view.AccountSummaryView;
 import view.AccountHistoryView;
-import view.AccountInfoView;
 import view.Interaction;
 
 public class AccountSummaryController extends Controller {
@@ -33,14 +31,14 @@ public class AccountSummaryController extends Controller {
 	public void setupViewText() {
 		
 		view.setLabelText(0, account.getName());
-		view.setLabelFont(0, new Font(Font.SERIF, Font.ITALIC, 20));
+		view.setLabelFont(0, new Font(Font.DIALOG, Font.BOLD, 16));
 
 		view.setLabelText(1, account.getType());
-		view.setLabelFont(1, new Font(Font.DIALOG, Font.BOLD, 15));
+		view.setLabelFont(1, new Font(Font.DIALOG, Font.PLAIN, 14));
 		
 		Double amount = account.getBalance();
 		view.setLabelText(2, amount + " €");
-		view.setLabelFont(2, new Font(Font.DIALOG, Font.BOLD, 20));
+		view.setLabelFont(2, new Font(Font.DIALOG, Font.BOLD, 18));
 		if (amount < 0) {
 			view.setLabelColor(2, new Color(200, 50, 50));
 		}
@@ -49,7 +47,7 @@ public class AccountSummaryController extends Controller {
 		view.setLabelFont(3, new Font(Font.SERIF, Font.ITALIC, 10));
 		
 		Double pendingAmount = account.getPendingAmount();
-		view.setLabelFont(4, new Font(Font.SERIF, Font.ITALIC, 15));
+		view.setLabelFont(4, new Font(Font.SERIF, Font.ITALIC, 12));
 		
 		
 		if (pendingAmount > 0) {
@@ -72,19 +70,11 @@ public class AccountSummaryController extends Controller {
 	class ClickInteraction implements Interaction {
 		@Override
 		public void perform() {
-			if (account instanceof PELAccount) {
-				AccountInfoView accountInfoView = new AccountInfoView();
-				AccountInfoController controller = new AccountInfoController(account, accountInfoView, mainMenuController);
-				mainMenuController.changeView(accountInfoView);
-				controller.setupView();
-				controller.displayView();
-			} else {
-				AccountHistoryView accountView = new AccountHistoryView();
-				AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
-				mainMenuController.changeView(accountView);
-				controller.setupView();
-				controller.displayView();
-			}
+			AccountHistoryView accountView = new AccountHistoryView();
+			AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
+			mainMenuController.changeView(accountView);
+			controller.setupView();
+			controller.displayView();
 		}
 	}
 

@@ -47,7 +47,7 @@ public class PermanentTransferModificationController extends Controller {
 		view.setButtonText(3, "Retour à la liste des virements");
 		
 		Font titleFont = new Font("Arial", Font.BOLD, 15);
-		TitledBorder border = new TitledBorder("Possibles Modifications");
+		TitledBorder border = new TitledBorder("Modifications possibles");
 		border.setTitleFont(titleFont);
 		view.setContentBorder(border);
 	}
@@ -77,6 +77,7 @@ public class PermanentTransferModificationController extends Controller {
 						public void editData(String newData) {
 							double newAmount = Double.parseDouble(newData);
 							transfer.setAmount(newAmount);
+							DialogView.displayInfoDialog("Nouveau montant enregistré avec succès.", null);
 						}
 						@Override
 						public void update() {
@@ -106,7 +107,7 @@ public class PermanentTransferModificationController extends Controller {
 				String password = DialogView.askPassword();
 				if (password != null && password.equals(mainMenuController.getLoggedUser().getPassword())) {
 					transfer.setRegularity(input);
-					DialogView.displayModificationSuccessMessage();
+					DialogView.displayInfoDialog("Nouvelle régularité enregirstrée avec succès.", null);
 				}
 			}
 		}

@@ -86,6 +86,7 @@ public class AccountBalanceCeilingController extends Controller {
 						public void editData(String newData) throws CustomException {
 							int newMax = Integer.parseInt(newData);
 							account.setMaxBalance(newMax);
+							DialogView.displayInfoDialog("Nouveau seuil maximal enregistré avec succès.", null);
 						}
 						@Override
 						public void update() {
@@ -113,6 +114,7 @@ public class AccountBalanceCeilingController extends Controller {
 						public void editData(String newData) throws CustomException {
 							int newMin = Integer.parseInt(newData);
 							((WithdrawableAccount)account).setMinBalance(newMin);
+							DialogView.displayInfoDialog("Nouveau seuil minimal enregistré avec succès.", null);
 						}
 						@Override
 						public void update() {

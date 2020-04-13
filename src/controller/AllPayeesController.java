@@ -86,6 +86,7 @@ public class AllPayeesController extends Controller{
 						Account payee = new Account(iban, name);
 						user.addPayee(payee);
 						newPayee = payee;
+						DialogView.displayInfoDialog("Nouveau bénéficiaire enregistré avec succès.", null);
 					}
 					@Override
 					public void update() {
