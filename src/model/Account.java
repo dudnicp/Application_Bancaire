@@ -29,4 +29,8 @@ public class Account {
 	public String toString() {
 		return name + " - IBAN : " + iban;
 	}
+	
+	public void addTransaction(Transaction t) {
+		// nothing to do here
+	}
 }

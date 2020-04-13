@@ -15,27 +15,27 @@ public class Loan {
 	}
 	
 	public double getMyMontant() {
-		return this.forUser.getamount();
+		return this.forUser.getAmount();
 	}
 	
 	public double getAmountToSend() {
-		return this.forBank.getamount();
+		return this.forBank.getAmount();
 	}
 	
 	public Date getDateRecieve() {
-		return this.forUser.getBeginDate();
+		return this.forUser.getFirstTransactionDate();
 	}
 	
 	public Date getDateToSend() {
-		return this.forBank.getBeginDate();
+		return this.forBank.getFirstTransactionDate();
 	}
 	
-	public double getMyRegul() {
-		return this.forUser.getRegul();
+	public TransferRegularity getMyRegularity() {
+		return this.forUser.getRegularity();
 	}
 	
-	public double getBankRegul() {
-		return this.forBank.getRegul();
+	public TransferRegularity getBankRegularity() {
+		return this.forBank.getRegularity();
 	}
 	
 	public double getTaux() {

@@ -50,6 +50,7 @@ public class PreferencesController extends Controller {
 						@Override
 						public void editData(String newData) {
 							loggedUser.setEmail(newData);
+							DialogView.displayInfoDialog("Nouvelle adresse mail enregistrée avec succès.", null);
 						}
 						@Override
 						public void update() {
@@ -78,6 +79,7 @@ public class PreferencesController extends Controller {
 						@Override
 						public void editData(String newData) {
 							loggedUser.setPhoneNumber(newData);
+							DialogView.displayInfoDialog("Nouveau numéro de téléphone enregistré avec succès.", null);
 						}
 						@Override
 						public void update() {
@@ -106,6 +108,7 @@ public class PreferencesController extends Controller {
 						@Override
 						public void editData(String newData) {
 							loggedUser.setAdress(newData);
+							DialogView.displayInfoDialog("Nouvelle adresse enregistrée avec succès.", null);
 						}
 						@Override
 						public void update() {
@@ -133,6 +136,7 @@ public class PreferencesController extends Controller {
 						@Override
 						public void editData(String newData) {
 							loggedUser.setPassword(newData);
+							DialogView.displayInfoDialog("Nouveau code secret enregistré avec succès.", null);
 						}
 						@Override
 						public void update() {

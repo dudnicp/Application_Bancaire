@@ -26,7 +26,6 @@ public interface DataEditor {
 			if (inputPassword != null) {
 				if (inputPassword.equals(password)) {
 					editData(input);
-					DialogView.displayModificationSuccessMessage();
 					update();
 				} else {
 					throw new InvalidPasswordException();

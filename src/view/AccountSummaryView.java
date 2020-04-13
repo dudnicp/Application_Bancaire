@@ -29,7 +29,7 @@ public class AccountSummaryView extends HoverableAndClickableView {
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = 1;
-		c.insets = new Insets(0, 0, 0, 80);
+		c.insets = new Insets(10, 0, 0, 80);
 		this.add(labels[0], c);
 		
 		

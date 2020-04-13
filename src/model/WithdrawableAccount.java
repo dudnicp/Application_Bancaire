@@ -37,17 +37,26 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 				break;
 			}
 		}
+		for (Transaction transaction : getPendingTransactions()) {
+			Date today = new Date();
+			if (transaction.getDate().getMonth() == today.getMonth()) {
+				if (transaction.getAmount() < 0) {
+					currentlyEngaged -= transaction.getAmount();
+				}
+			} else {
+				break;
+			}
+		}
 		
 		return currentlyEngaged;
 	}
 	
-	public Transaction pay(double amount, Account account, TransactionType type) 
+	public void pay(double amount, Account payee, TransactionType type) 
 					throws InsuficentAmountException, WithdrawalCapacityExceedingException {
-		if (getBalance() > amount) {
-			if (getCurrentlyEngagedAmount() + amount > maxWithrdraw) {
-				Transaction transaction = new Transaction(account, amount, Transaction.PENDING, new Date(), type);
-				addTransaction(transaction);
-				return transaction;
+		if (getBalance() >= amount) {
+			if (getCurrentlyEngagedAmount() + amount <= maxWithrdraw) {
+				this.addTransaction(new Transaction(payee, -amount, Transaction.PENDING, new Date(), type));
+				payee.addTransaction(new Transaction(this, amount, Transaction.PENDING, new Date(), type));
 			} else {
 				throw new WithdrawalCapacityExceedingException();
 			}

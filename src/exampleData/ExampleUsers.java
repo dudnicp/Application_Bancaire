@@ -20,7 +20,7 @@ public class ExampleUsers extends LinkedList<User>{
 		CurrentAccount compteAlix = new CurrentAccount(compteVal);
 		CurrentAccount compteAdrien = new CurrentAccount("12345", "Compte Adrien", adrien, new Date(), 400, 2000, 200, 800);
 
-		val.addPayee(compteAlix);
+		val.addPayee(compteAdrien);
 		alix.addPayee(compteAdrien);
 		adrien.addPayee(compteVal);
 		
@@ -40,10 +40,6 @@ public class ExampleUsers extends LinkedList<User>{
 		val.addCurrentAccount(compteVal);
 		val.addPelAccount(new PELAccount("123", "MonPEL", val, new Date(), 4000, 5000));
 		val.addLivretAAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 200, 500));
-		for (int i = 0; i < 10; i++) {
-			val.addCurrentAccount(new CurrentAccount(compteVal));
-			val.addPermanentTransfer(new PermanentTransfer(compteVal, compteAdrien, 50, new Date(), TransferRegularity.MONTHLY));
-		}
 		alix.addCurrentAccount(compteAlix);
 		adrien.addCurrentAccount(compteAdrien);
 		

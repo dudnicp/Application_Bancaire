@@ -67,6 +67,7 @@ public class PayeeController extends Controller {
 						@Override
 						public void editData(String newData) throws CustomException {
 							payee.setName(newData);
+							DialogView.displayInfoDialog("Nouveau nom enregistré avec succès.", null);
 						}
 						@Override
 						public void update() {

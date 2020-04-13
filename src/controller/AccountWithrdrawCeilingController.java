@@ -70,6 +70,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 						public void editData(String newData) throws CustomException {
 							int newMax = Integer.parseInt(newData);
 							account.setMaxWithrdraw(newMax);
+							DialogView.displayInfoDialog("Nouvelle capacité de payement enregistrée avec succès.", null);
 						}
 						@Override
 						public void update() {

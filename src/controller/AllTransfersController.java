@@ -6,10 +6,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
+
+import aux.CustomException;
 import model.PermanentTransfer;
 import model.User;
+import model.WithdrawableAccount;
 import view.AllPayeesView;
 import view.AllTransfersView;
+import view.DialogView;
 import view.NewTransferView;
 import view.PermanentTransferView;
 
@@ -57,14 +61,30 @@ public class AllTransfersController extends Controller {
 	class NewTransferButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			WithdrawableAccount payer = (WithdrawableAccount) DialogView.getOptionFromList(
+					user.getWithdrawableAccounts(), "Séléctionez un compte éméteur", "Nouveau virement");
+			if (payer == null) {
+				return;
+			}
 			NewTransferView newTransferView = new NewTransferView();
-			NewTransferController controller = new NewTransferController(user, newTransferView);
+			NewTransferController controller = new NewTransferController(user, newTransferView, payer);
 			String[] options = new String[]{"Confirmer", "Annuler"};
 			controller.setupView();
 			controller.displayView();
-			JOptionPane.showOptionDialog(null, newTransferView, "Nouveau virement",
+			int confirmation = JOptionPane.showOptionDialog(null, newTransferView, "Nouveau virement",
                     JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[0]);
+			if (confirmation == JOptionPane.OK_OPTION) {
+				try {
+					String password = DialogView.askPassword();
+					if (password != null && password.equals(user.getPassword())) {
+						controller.createNewTransfer();
+					}
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
+				}
+			}
 		}
 	}
 	
