@@ -20,4 +20,5 @@ public class LivretAAccount extends WithdrawableAccount {
 	public String getType() {
 		return PersonalAccount.LIVRET_A;
 	}
+	
 }

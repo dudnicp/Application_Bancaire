@@ -4,7 +4,8 @@ import java.util.Date;
 
 import aux.CustomException;
 import aux.InsuficentAmountException;
-import aux.WithdrawalCapacityExceedingException;
+import aux.MinimalBalanceUnderflowException;
+import aux.WithdrawCapacityOverflowException;
 
 public abstract class WithdrawableAccount extends PersonalAccount {
 	
@@ -52,17 +53,18 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 	}
 	
 	public void pay(double amount, Account payee, TransactionType type) 
-					throws InsuficentAmountException, WithdrawalCapacityExceedingException {
-		if (getBalance() >= amount) {
-			if (getCurrentlyEngagedAmount() + amount <= maxWithrdraw) {
-				this.addTransaction(new Transaction(payee, -amount, Transaction.PENDING, new Date(), type));
-				payee.addTransaction(new Transaction(this, amount, Transaction.PENDING, new Date(), type));
-			} else {
-				throw new WithdrawalCapacityExceedingException();
-			}
-		} else {
+					throws InsuficentAmountException, WithdrawCapacityOverflowException, MinimalBalanceUnderflowException {
+		if (getBalance() < amount) {
 			throw new InsuficentAmountException();
 		}
+		if (getCurrentlyEngagedAmount() + amount > maxWithrdraw) {
+			throw new WithdrawCapacityOverflowException();
+		}
+		if (getMinBalance() > getBalance() - amount) {
+			throw new MinimalBalanceUnderflowException();
+		}
+		this.addTransaction(new Transaction(payee, -amount, Transaction.PENDING, new Date(), type));
+		payee.addTransaction(new Transaction(this, amount, Transaction.PENDING, new Date(), type));
 	}
 	
 	public int getMaxWithdraw() {

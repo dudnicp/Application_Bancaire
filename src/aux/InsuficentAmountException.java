@@ -9,7 +9,7 @@ public class InsuficentAmountException extends CustomException {
 	}
 	
 	public InsuficentAmountException() {
-		super("Solde insuffisant.");
+		super("Opération impossible: solde insuffisant.");
 	}
 	
 

@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
+import aux.CustomException;
 import model.CurrentAccount;
 import model.PELAccount;
 import model.PersonalAccount;
@@ -83,15 +85,19 @@ public class AccountInfoController extends Controller {
 							String password = DialogView.askPassword();
 							if (password != null) {
 								if (password.equals(account.getOwner().getPassword())) {
-									((PELAccount) account).close(dest);
-									DialogView.displayInfoDialog("PEL clôturé avec succès.", null);
-									
-									AllAccountsView newView = new AllAccountsView();
-									AllAccountsController controller = new AllAccountsController(
-											mainMenuController.getLoggedUser(), newView, mainMenuController);
-									mainMenuController.changeView(newView);
-									controller.setupView();
-									controller.displayView();
+									try {
+										((PELAccount) account).close(dest);
+										DialogView.displayInfoDialog("PEL clôturé avec succès.", null);
+										
+										AllAccountsView newView = new AllAccountsView();
+										AllAccountsController controller = new AllAccountsController(
+												mainMenuController.getLoggedUser(), newView, mainMenuController);
+										mainMenuController.changeView(newView);
+										controller.setupView();
+										controller.displayView();
+									} catch (CustomException e2) {
+										DialogView.displayError(e2.getString());
+									}
 								}
 							}
 						}

@@ -3,10 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import aux.CustomException;
 import model.Account;
-import model.OneTimeTransferTransaction;
 import model.TransferRegularity;
 import model.User;
 import model.WithdrawableAccount;
@@ -50,7 +48,7 @@ public class NewTransferController extends Controller {
 		
 		view.setButtonText("Ajouter bénéficiaire");
 		
-		view.setCheckBoxText("Virement pérmanent?");
+		view.setCheckBoxText("Virement permanent?");
 		
 		view.setAuxLabelText(0, "Régularité: ");
 		
@@ -61,30 +59,6 @@ public class NewTransferController extends Controller {
 		view.setAuxLabelText(1, "Date du premier transfert: ");
 	}
 	
-	public void createNewTransfer() throws CustomException {
-		Account payee = (Account) view.getSelectedOption();
-		double amount;
-		if (view.getTextField().matches("[0-9]*[.][0-9]*")) {
-			amount = Double.parseDouble(view.getTextField());
-		} else if (view.getTextField().matches("[0-9]*")) {
-			amount = Integer.parseInt(view.getTextField());
-		} else {
-			throw new CustomException("Montant invalide");
-		}
-		if (view.isCheckBoxChecked()) {
-			// TODO
-			DialogView.displayError("Not yet implemented");
-		} else {
-			payer.pay(amount, payee, new OneTimeTransferTransaction());
-			DialogView.displayInfoDialog("Virement effecué avec succès.", null);
-		}
-	}
-	
-	
-	private boolean checkDateFormat(String dateString) {
-		// TODO
-		return false;
-	}
 	
 	
 	class CheckBoxListener implements ActionListener {
