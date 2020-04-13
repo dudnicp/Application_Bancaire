@@ -61,7 +61,8 @@ public class AccountWithrdrawCeilingController extends Controller {
 	class ButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String input = DialogView.getStringOption("Entrez nouvelle capacité de payement: ", "Édition capacité de payement");
+			String[] input = DialogView.getDoubleStringInput("Entrez nouvelle capacité de payement: ", "Confirmez capacité de payement: ",
+					"Édition capacité de payement", false, false);
 			if (input != null) {
 				try {
 					class Editor implements DataEditor {
@@ -76,7 +77,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 						}
 					}
 					Editor editor = new Editor();
-					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
+					editor.runDoubleInputEditionProtocol(input[0], input[1], "[0-9]*", account.getOwner().getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
 				}

@@ -1,14 +1,12 @@
 package controller;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.border.TitledBorder;
-
 import model.PermanentTransfer;
 import model.User;
+import view.AllPayeesView;
 import view.AllTransfersView;
 import view.PermanentTransferView;
 
@@ -31,7 +29,7 @@ public class AllTransfersController extends Controller {
 
 	@Override
 	public void setupViewButtonsActions() {
-		
+		view.addButtonAction(1, new PayeeManagmentButton());
 	}
 
 	@Override
@@ -55,14 +53,18 @@ public class AllTransfersController extends Controller {
 	class NewTransferButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			
 		}
 	}
 	
 	class PayeeManagmentButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			AllPayeesView allPayees = new AllPayeesView();
+			AllPayeesController controller = new AllPayeesController(user, allPayees, mainMenuController);
+			mainMenuController.changeView(allPayees);
+			controller.setupView();
+			controller.displayView();
 		}
 	}
 	

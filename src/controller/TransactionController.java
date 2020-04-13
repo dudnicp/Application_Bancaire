@@ -21,6 +21,12 @@ public class TransactionController extends Controller {
 		this.mainMenuController = controller;
 	}
 	
+	@Override
+	public void setupView() {
+		super.setupView();
+		view.addInteraction(new ClickInteraction());
+	}
+	
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -61,7 +67,6 @@ public class TransactionController extends Controller {
 		view.setLabelText(5, transaction.getCategory());
 		view.setLabelFont(5, new Font(Font.DIALOG, Font.BOLD, 12));
 		
-		view.addInteraction(new ClickInteraction());
 	}
 
 	@Override
@@ -79,7 +84,7 @@ public class TransactionController extends Controller {
 			String newCategory = (String) DialogView.getOptionFromList(
 					possibleOptions, "Séléctionnez catégorie", "Édition catégorie");
 			if (newCategory != null && newCategory.equals(addCategory)) {
-				newCategory = DialogView.getStringOption(
+				newCategory = DialogView.getStringInput(
 						"Entrez le nom de la nouvelle catégorie: ", "Édition catégorie");
 			}
 			if (newCategory != null) {

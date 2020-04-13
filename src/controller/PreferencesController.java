@@ -42,7 +42,7 @@ public class PreferencesController extends Controller {
 	class MailChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] input = DialogView.getDoubleStringOption(
+			String[] input = DialogView.getDoubleStringInput(
 					"Entrez nouveau mail: ", "Confirmez nouveau mail: ", "Édition mail", false, false);
 			if (input != null) {
 				try {
@@ -70,7 +70,7 @@ public class PreferencesController extends Controller {
 	class PhoneNumberChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] input = DialogView.getDoubleStringOption(
+			String[] input = DialogView.getDoubleStringInput(
 					"Entrez nouveau téléphone: ", "Confirmez nouveau téléphone: ", "Édition téléphone", false, false);
 			if (input != null) {
 				try {
@@ -98,7 +98,7 @@ public class PreferencesController extends Controller {
 	class AdressChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] input = DialogView.getDoubleStringOption(
+			String[] input = DialogView.getDoubleStringInput(
 					"Entrez nouvelle adresse: ", "Confirmez adresse: ", "Édition adresse", false, false);
 			if (input != null) {
 				try {
@@ -125,7 +125,7 @@ public class PreferencesController extends Controller {
 	class PasswordChangeButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] input = DialogView.getDoubleStringOption(
+			String[] input = DialogView.getDoubleStringInput(
 					"Entrez nouveau code secret: ", "Confirmez code secret: ", "Édition code secret", true, true);
 			if (input != null) {
 				try {

@@ -20,6 +20,12 @@ public class PermanentTransferController extends Controller {
 		this.mainMenuController = controller;
 	}
 	
+	@Override
+	public void setupView() {
+		super.setupView();
+		view.addInteraction(new OpenPermanentTransferModificationView());
+	}
+	
 	
 	@Override
 	public void displayView() {
@@ -60,7 +66,6 @@ public class PermanentTransferController extends Controller {
 		view.setLabelText(7, day + "/" + month + "/" + year);
 		view.setLabelFont(7, infoFont);
 		
-		view.addInteraction(new OpenPermanentTransferModificationView());
 	}
 	
 	class OpenPermanentTransferModificationView implements Interaction {

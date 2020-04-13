@@ -51,7 +51,7 @@ public class CardController extends Controller {
 		public void actionPerformed(ActionEvent e) {
 			switch (card.getStatus()) {
 			case ACTIVE:
-				int confirmation = DialogView.getIntOption("Êtes vous sûrs de vouloir bloquer cette carte?", "Confirmation");
+				int confirmation = DialogView.askConfirmation("Êtes vous sûrs de vouloir bloquer cette carte?", "Confirmation");
 				if (confirmation == JOptionPane.OK_OPTION) {
 					String password = DialogView.askPassword();
 					if (password != null && card.getOwner().getPassword().equals(password)) {

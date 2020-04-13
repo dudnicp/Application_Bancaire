@@ -1,7 +1,9 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -17,14 +19,15 @@ public class PermanentTransferModificationView extends ContentView {
 	
 	public PermanentTransferModificationView() {
 		
+		JPanel globalPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = 1;
-		c.ipadx = 30;
-		c.ipady = 20;
+		c.ipadx = 100;
+		c.ipady = 15;
 		c.fill = GridBagConstraints.BOTH;
 		
 		for (int i = 0; i < buttons.length - 1; i++, c.gridy++) {
@@ -32,10 +35,23 @@ public class PermanentTransferModificationView extends ContentView {
 			panel.add(buttons[i], c);
 		}
 		
-		buttons[3] = new JButton();
-		panel.add(buttons[3], c);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		globalPanel.add(panel);
 		
-		this.add(panel);
+		c.gridy = 1;
+		buttons[3] = new JButton();
+		c.ipadx = 0;
+		c.ipady = 10;
+		c.insets = new Insets(100, 0, 0, 0);
+		globalPanel.add(buttons[3], c);
+		
+		this.setLayout(new BorderLayout());
+		this.add(globalPanel, BorderLayout.SOUTH);
 	}
 	
 	public void setButtonText(int index, String text) {

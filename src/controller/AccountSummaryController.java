@@ -22,6 +22,12 @@ public class AccountSummaryController extends Controller {
 		this.mainMenuController = controller;
 	}
 	
+	@Override
+	public void setupView() {
+		super.setupView();
+		view.addInteraction(new ClickInteraction());
+	}
+	
 	
 	@Override
 	public void setupViewText() {
@@ -56,7 +62,6 @@ public class AccountSummaryController extends Controller {
 			}
 		}
 		
-		view.addInteraction(new ClickInteraction());
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
 import model.CurrentAccount;
 import model.PELAccount;
 import model.PersonalAccount;
@@ -74,7 +73,7 @@ public class AccountInfoController extends Controller {
 			closePelButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int confirmation = DialogView.getIntOption("Êtes vous sûrs de vouloir clôturer ce compte?", "Confirmation");
+					int confirmation = DialogView.askConfirmation("Êtes vous sûrs de vouloir clôturer ce compte?", "Confirmation");
 					if (confirmation == JOptionPane.OK_OPTION) {
 						CurrentAccount dest = (CurrentAccount) DialogView.getOptionFromList(
 								account.getOwner().getCurrentAccounts(), 
@@ -85,7 +84,7 @@ public class AccountInfoController extends Controller {
 							if (password != null) {
 								if (password.equals(account.getOwner().getPassword())) {
 									((PELAccount) account).close(dest);
-									DialogView.displayModificationSuccessMessage();
+									DialogView.displayInfoDialog("PEL clôturé avec succès.", null);
 									
 									AllAccountsView newView = new AllAccountsView();
 									AllAccountsController controller = new AllAccountsController(
@@ -105,6 +104,12 @@ public class AccountInfoController extends Controller {
 			returnButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					AllAccountsView accountsList = new AllAccountsView();
+					AllAccountsController controller = new AllAccountsController(
+							mainMenuController.getLoggedUser(), accountsList, mainMenuController);
+					mainMenuController.changeView(accountsList);
+					controller.setupView();
+					controller.displayView();
 				}
 			});
 			view.addContent(returnButton);

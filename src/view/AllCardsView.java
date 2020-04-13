@@ -28,6 +28,8 @@ public class AllCardsView extends ContentView {
 		this.add(scrollListView, c);
 		
 		c.gridy = 1;
+		c.ipady = 10;
+		c.insets = new Insets(10, 0, 0, 0);
 		this.add(button, c);
 	}
 	

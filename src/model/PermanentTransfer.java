@@ -4,18 +4,13 @@ import java.util.Date;
 
 public class PermanentTransfer {
 	
-	public static final String MONTHLY = "Mensuel";
-	public static final String THREE_MONTHLY = "Trimestriel";
-	public static final String BI_ANUAL = "SEMESTRIEL";
-	public static final String ANNUAL = "ANNUEL";
-	
 	private CurrentAccount payer;
 	private Account payee;
 	private double amount;
 	private Date firstTransactionDate;
-	private String regularity;
+	private TransferRegularity regularity;
 	
-	public PermanentTransfer(CurrentAccount payer, Account payee, double amount, Date firstTransactionDate, String regularity) {
+	public PermanentTransfer(CurrentAccount payer, Account payee, double amount, Date firstTransactionDate, TransferRegularity regularity) {
 		this.payer = payer;
 		this.payee = payee;
 		this.amount = amount;
@@ -43,7 +38,15 @@ public class PermanentTransfer {
 		return firstTransactionDate;
 	}
 	
-	public String getRegularity() {
+	public TransferRegularity getRegularity() {
 		return regularity;
+	}
+	
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	
+	public void setRegularity(TransferRegularity regularity) {
+		this.regularity = regularity;
 	}
 }

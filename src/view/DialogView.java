@@ -16,14 +16,14 @@ public class DialogView {
 		JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	public static int getIntOption(String msg, String title) {
+	public static int askConfirmation(String msg, String title) {
 		return JOptionPane.showConfirmDialog(null, msg, title,
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 	
 	
 	
-	public static String getStringOption(String msg, String title) {
+	public static String getStringInput(String msg, String title) {
 		return JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
 	}
 	
@@ -50,9 +50,7 @@ public class DialogView {
 		return null;
 	}
 	
-	public static String[] getDoubleStringOption(String msg1, String msg2, String title, boolean hide1, boolean hide2) {
-		
-		
+	public static String[] getDoubleStringInput(String msg1, String msg2, String title, boolean hide1, boolean hide2) {
 		
 		JPanel panel = new JPanel();
 		JTextField field1 = new JTextField(15);

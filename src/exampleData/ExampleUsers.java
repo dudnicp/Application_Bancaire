@@ -11,12 +11,12 @@ public class ExampleUsers extends LinkedList<User>{
 	public ExampleUsers() {
 		User val = new User("", "", "Valérian", "Thomas", "Mr", 
 				"valerian.thomas@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
-		User adrien = new User("", "", "Adrien", "Déplacé", "Mr", 
+		User adrien = new User("1", "1", "Adrien", "Déplacé", "Mr", 
 				"adrien.deplace@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
-		User alix = new User("", "", "Alix", "Brocoli", "Mr", 
+		User alix = new User("2", "2", "Alix", "Brocoli", "Mr", 
 				"alix.brocoli@grenoble-inp.org", "0123456789", "6 allée des acacias, Sèvres");
 		
-		CurrentAccount compteVal = new CurrentAccount("001", "Compte1", val, new Date(), 100, 1000, 0, 300);
+		CurrentAccount compteVal = new CurrentAccount("1234567890097556", "Compte1", val, new Date(), 100, 1000, 0, 300);
 		CurrentAccount compteAlix = new CurrentAccount(compteVal);
 		CurrentAccount compteAdrien = new CurrentAccount("12345", "Compte Adrien", adrien, new Date(), 400, 2000, 200, 800);
 
@@ -42,7 +42,7 @@ public class ExampleUsers extends LinkedList<User>{
 		val.addLivretAAccount(new LivretAAccount("234", "Super Livret", val, new Date(), 400, 3000, 200, 500));
 		for (int i = 0; i < 10; i++) {
 			val.addCurrentAccount(new CurrentAccount(compteVal));
-			val.addPermanentTransfer(new PermanentTransfer(compteVal, compteAdrien, 50, new Date(), PermanentTransfer.MONTHLY));
+			val.addPermanentTransfer(new PermanentTransfer(compteVal, compteAdrien, 50, new Date(), TransferRegularity.MONTHLY));
 		}
 		alix.addCurrentAccount(compteAlix);
 		adrien.addCurrentAccount(compteAdrien);

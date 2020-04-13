@@ -77,7 +77,8 @@ public class AccountBalanceCeilingController extends Controller {
 	class ButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String input = DialogView.getStringOption("Entrez nouveau seuil max: ", "Édition seuil max");
+			String[] input = DialogView.getDoubleStringInput("Entrez nouveau seuil max: ", 
+					"Confirmez seuil max: ", "Édition seuil max", false, false);
 			if (input != null) {
 				try {
 					class Editor implements DataEditor {
@@ -92,7 +93,7 @@ public class AccountBalanceCeilingController extends Controller {
 						}
 					}
 					Editor editor = new Editor();
-					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
+					editor.runDoubleInputEditionProtocol(input[0], input[1], "[0-9]*", account.getOwner().getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
 				}
@@ -103,7 +104,8 @@ public class AccountBalanceCeilingController extends Controller {
 	class AuxButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String input = DialogView.getStringOption("Entrez nouveau seuil min: ", "Édition seuil min");
+			String[] input = DialogView.getDoubleStringInput("Entrez nouveau seuil min: ", 
+					"Confirmez seuil min: ", "Édition seuil min", false, false);
 			if (input != null) {
 				try {
 					class Editor implements DataEditor {
@@ -118,7 +120,7 @@ public class AccountBalanceCeilingController extends Controller {
 						}
 					}
 					Editor editor = new Editor();
-					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
+					editor.runDoubleInputEditionProtocol(input[0], input[1], "[0-9]*", account.getOwner().getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
 				}

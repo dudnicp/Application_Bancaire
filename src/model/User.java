@@ -165,6 +165,9 @@ public class User {
 		payees.add(account);
 	}
 	
+	public void removePayee(Account payee) {
+		payees.remove(payee);
+	}
 	
 	public String personalData() {
 		String retString = new String();
@@ -180,5 +183,9 @@ public class User {
 	
 	public void addPermanentTransfer(PermanentTransfer transfer) {
 		permanentTransfers.add(transfer);
+	}
+	
+	public void removePermanentTransfer(PermanentTransfer transfer) {
+		permanentTransfers.remove(transfer);
 	}
 }
