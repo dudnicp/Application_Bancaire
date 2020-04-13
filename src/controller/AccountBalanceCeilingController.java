@@ -57,6 +57,7 @@ public class AccountBalanceCeilingController extends Controller {
 		
 		view.setLabelText(0, "Solde actuel: ");
 		view.setLabelText(1, Double.toString(current));
+		
 		view.setLabelText(2, "Maximum: ");
 		view.setLabelText(3, Integer.toString(max));
 		

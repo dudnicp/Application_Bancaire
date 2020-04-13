@@ -34,7 +34,7 @@ public class AccountSummaryController extends Controller {
 		view.setLabelFont(0, new Font(Font.DIALOG, Font.BOLD, 16));
 
 		view.setLabelText(1, account.getType());
-		view.setLabelFont(1, new Font(Font.DIALOG, Font.PLAIN, 14));
+		view.setLabelFont(1, new Font(Font.DIALOG, Font.BOLD, 14));
 		
 		Double amount = account.getBalance();
 		view.setLabelText(2, amount + " €");

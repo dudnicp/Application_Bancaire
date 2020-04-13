@@ -3,12 +3,19 @@ package controller;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
 import aux.CustomException;
+import model.Account;
+import model.OneTimeTransferTransaction;
 import model.PermanentTransfer;
+import model.TransferRegularity;
 import model.User;
 import model.WithdrawableAccount;
 import view.AllPayeesView;
@@ -58,6 +65,48 @@ public class AllTransfersController extends Controller {
 		}
 	}
 	
+	public void createNewTransfer(NewTransferView newView, WithdrawableAccount payer) throws CustomException, ParseException {
+		Account payee = (Account) newView.getSelectedOption();
+		double amount;
+		if (newView.getTextField().matches("[0-9]*[.][0-9]*")) {
+			amount = Double.parseDouble(newView.getTextField());
+		} else if (newView.getTextField().matches("[0-9]*")) {
+			amount = Integer.parseInt(newView.getTextField());
+		} else {
+			throw new CustomException("Montant invalide");
+		}
+		if (newView.isCheckBoxChecked()) {
+			
+			String day = newView.getAuxField(0);
+			String month = newView.getAuxField(1);
+			String year = newView.getAuxField(2);
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+			Date date = dateFormat.parse(day + " " + month + " " + year);
+				
+			if (date.after(new Date())) {
+				TransferRegularity regularity = (TransferRegularity) newView.getAuxOption();
+				PermanentTransfer transfer = new PermanentTransfer(payer, payee, amount, date, regularity);
+				user.addPermanentTransfer(transfer);
+				DialogView.displayInfoDialog("Virement permanent programmé avec succès.", null);
+				
+				PermanentTransferView permanentTransferView = new PermanentTransferView();
+				PermanentTransferController controller = new PermanentTransferController(
+						transfer, permanentTransferView, mainMenuController);
+				view.addContentToList(permanentTransferView);
+				controller.setupView();
+				controller.displayView();
+				
+			} else {
+				throw new CustomException("Impossible d'enregistrer le virement: la date de premier versement dépassée.");
+			}
+		} else {
+			payer.pay(amount, payee, new OneTimeTransferTransaction());
+			DialogView.displayInfoDialog("Virement effecué avec succès.", null);
+		}
+	}
+	
+	
 	class NewTransferButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -79,10 +128,12 @@ public class AllTransfersController extends Controller {
 				try {
 					String password = DialogView.askPassword();
 					if (password != null && password.equals(user.getPassword())) {
-						controller.createNewTransfer();
+						createNewTransfer(newTransferView, payer);
 					}
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
+				} catch (ParseException e2) {
+					DialogView.displayError("Date au mauvais format");
 				}
 			}
 		}

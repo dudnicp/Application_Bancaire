@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class PermanentTransfer {
 	
-	private CurrentAccount payer;
+	private WithdrawableAccount payer;
 	private Account payee;
 	private double amount;
 	private Date firstTransactionDate;
 	private TransferRegularity regularity;
 	
-	public PermanentTransfer(CurrentAccount payer, Account payee, double amount, Date firstTransactionDate, TransferRegularity regularity) {
+	public PermanentTransfer(WithdrawableAccount payer, Account payee, double amount, Date firstTransactionDate, TransferRegularity regularity) {
 		this.payer = payer;
 		this.payee = payee;
 		this.amount = amount;
@@ -22,7 +22,7 @@ public class PermanentTransfer {
 		this(other.payer, other.payee, other.amount, other.firstTransactionDate, other.regularity);
 	}
 	
-	public CurrentAccount getPayer() {
+	public WithdrawableAccount getPayer() {
 		return payer;
 	}
 	

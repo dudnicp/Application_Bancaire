@@ -94,6 +94,7 @@ public abstract class PersonalAccount extends Account {
 		return maxBalance;
 	}
 	
+	
 	public void setMaxBalance(int maxBalance) throws CustomException {
 		if (maxBalance < balance) {
 			throw new CustomException("Modification impossible : le nouveau seuil doit être supérieur au solde actuel.");
