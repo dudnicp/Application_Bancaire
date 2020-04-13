@@ -111,6 +111,13 @@ public class User {
 		return allAccounts;
 	}
 	
+	public ArrayList<WithdrawableAccount> getWithdrawableAccounts() {
+		ArrayList<WithdrawableAccount> accounts = new ArrayList<WithdrawableAccount>();
+		accounts.addAll(currentAccounts);
+		accounts.addAll(livretAAccounts);
+		return accounts;
+	}
+	
 	public ArrayList<Account> getPayees() {
 		return payees;
 	}
