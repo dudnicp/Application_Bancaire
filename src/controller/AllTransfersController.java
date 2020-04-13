@@ -3,11 +3,14 @@ package controller;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import model.PermanentTransfer;
 import model.User;
 import view.AllPayeesView;
 import view.AllTransfersView;
+import view.NewTransferView;
 import view.PermanentTransferView;
 
 public class AllTransfersController extends Controller {
@@ -29,6 +32,7 @@ public class AllTransfersController extends Controller {
 
 	@Override
 	public void setupViewButtonsActions() {
+		view.addButtonAction(0, new NewTransferButton());
 		view.addButtonAction(1, new PayeeManagmentButton());
 	}
 
@@ -53,7 +57,14 @@ public class AllTransfersController extends Controller {
 	class NewTransferButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			NewTransferView newTransferView = new NewTransferView();
+			NewTransferController controller = new NewTransferController(user, newTransferView);
+			String[] options = new String[]{"Confirmer", "Annuler"};
+			controller.setupView();
+			controller.displayView();
+			JOptionPane.showOptionDialog(null, newTransferView, "Nouveau virement",
+                    JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, options, options[0]);
 		}
 	}
 	

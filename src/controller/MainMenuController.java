@@ -9,6 +9,7 @@ import model.User;
 import view.AllAccountsView;
 import view.AllTransfersView;
 import view.ContentView;
+import view.DialogView;
 import view.LoginView;
 import view.MainMenuView;
 import view.PreferencesView;
@@ -87,8 +88,7 @@ public class MainMenuController extends Controller {
 	class LoansButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			DialogView.getDoubleStringInput("", "", "", false, false);
 		}
 	}
 	

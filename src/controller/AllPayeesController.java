@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.border.TitledBorder;
 
-import aux.InvalidFormatException;
+
+import aux.CustomException;
 import model.Account;
 import model.User;
 import view.AllPayeesView;
@@ -75,16 +76,32 @@ public class AllPayeesController extends Controller{
 			if (input != null) {
 				String iban = input[0];
 				String name = input[1];
-				if (iban.matches("[A-Z0-9]{10}")) {
-					user.addPayee(new Account(iban, name));
-					AllPayeesView allPayees = new AllPayeesView();
-					AllPayeesController controller = new AllPayeesController(user, allPayees, mainMenuController);
-					mainMenuController.changeView(allPayees);
-					controller.setupView();
-					controller.displayView();
-					DialogView.displayInfoDialog("Bénéficiaire ajouté avec succès.", "");
-				} else {
-					DialogView.displayError((new InvalidFormatException()).getString());
+				
+				class Editor implements DataEditor {
+					
+					Account newPayee;
+					
+					@Override
+					public void editData(String newData) throws CustomException {
+						Account payee = new Account(iban, name);
+						user.addPayee(payee);
+						newPayee = payee;
+					}
+					@Override
+					public void update() {
+						PayeeView newView = new PayeeView();
+						PayeeController newController = new PayeeController(newPayee, newView, mainMenuController);
+						view.addContentToList(newView);
+						newController.setupView();
+						newController.displayView();
+					}
+				}
+				
+				Editor editor = new Editor();
+				try {
+					editor.runSimpleInputEditionProtocol(iban, "[A-Z0-9]{10}", user.getPassword());
+				} catch (CustomException e2) {
+					DialogView.displayError(e2.getString());
 				}
 			}
 		}
