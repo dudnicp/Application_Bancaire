@@ -10,26 +10,20 @@ import javax.swing.border.TitledBorder;
 import aux.CustomException;
 import model.Account;
 import model.User;
-import view.AllPayeesView;
-import view.AllTransfersView;
+import view.ContentResumeListView;
 import view.DialogView;
 import view.PayeeView;
 
 public class AllPayeesController extends Controller{
 	
 	private User user;
-	private AllPayeesView view;
+	private ContentResumeListView view;
 	private MainMenuController mainMenuController;
 	
-	public AllPayeesController(User user, AllPayeesView view, MainMenuController controller) {
+	public AllPayeesController(User user, ContentResumeListView view, MainMenuController controller) {
 		this.user = user;
 		this.view = view;
 		this.mainMenuController = controller;
-	}
-	
-	@Override
-	public void displayView() {
-		view.setVisible(true);
 	}
 	
 	@Override
@@ -45,26 +39,24 @@ public class AllPayeesController extends Controller{
 		
 		TitledBorder title1 = new TitledBorder("Liste des bénéficiaires");
 		title1.setTitleFont(new Font("Arial", Font.BOLD, 15));
-		view.setListBorder(title1);
+		view.setContentListBorder(0, title1);
 		
 		for (Account payee : user.getPayees()) {
 			PayeeView payeeView = new PayeeView();
 			PayeeController controller = new PayeeController(payee, payeeView, mainMenuController);
-			view.addContentToList(payeeView);
+			view.addContentToList(0, payeeView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
 	class RetrunButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllTransfersView transfersView = new AllTransfersView();
+			ContentResumeListView transfersView = new ContentResumeListView(1,2);
 			AllTransfersController controller = new AllTransfersController(
 					mainMenuController.getLoggedUser(), transfersView, mainMenuController);
 			mainMenuController.changeView(transfersView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
@@ -92,9 +84,8 @@ public class AllPayeesController extends Controller{
 					public void update() {
 						PayeeView newView = new PayeeView();
 						PayeeController newController = new PayeeController(newPayee, newView, mainMenuController);
-						view.addContentToList(newView);
+						view.addContentToList(0, newView);
 						newController.setupView();
-						newController.displayView();
 					}
 				}
 				

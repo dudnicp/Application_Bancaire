@@ -11,8 +11,8 @@ import model.PersonalAccount;
 import model.Transaction;
 import view.AccountHistoryView;
 import view.AccountInfoView;
-import view.AllAccountsView;
 import view.AllCardsView;
+import view.ContentResumeListView;
 import view.TransactionView;
 
 public class AccountHistoryController extends Controller {
@@ -43,7 +43,6 @@ public class AccountHistoryController extends Controller {
 			TransactionView transactionView = new TransactionView();
 			TransactionController controller = new TransactionController(transaction, transactionView, mainMenuController);
 			controller.setupView();
-			controller.displayView();
 			view.addContentToList(0,transactionView);
 		}
 		
@@ -56,7 +55,6 @@ public class AccountHistoryController extends Controller {
 			TransactionView transactionView = new TransactionView();
 			TransactionController controller = new TransactionController(transaction, transactionView, mainMenuController);
 			controller.setupView();
-			controller.displayView();
 			view.addContentToList(1,transactionView);
 		}
 		
@@ -65,10 +63,6 @@ public class AccountHistoryController extends Controller {
 		view.setListBorder(1, title2);
 	}
 
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 	
 	class CardsButtonListener implements ActionListener {
 		@Override
@@ -77,7 +71,6 @@ public class AccountHistoryController extends Controller {
 			AllCardsController controller = new AllCardsController((CurrentAccount)account, allCards, mainMenuController);
 			mainMenuController.changeView(allCards);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
@@ -88,19 +81,17 @@ public class AccountHistoryController extends Controller {
 			AccountInfoController controller = new AccountInfoController(account, accountInfoView, mainMenuController);
 			mainMenuController.changeView(accountInfoView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
 	class ReturnButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllAccountsView accountsList = new AllAccountsView();
+			ContentResumeListView accountsList = new ContentResumeListView(3,0);
 			AllAccountsController controller = new AllAccountsController(
 					mainMenuController.getLoggedUser(), accountsList, mainMenuController);
 			mainMenuController.changeView(accountsList);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 

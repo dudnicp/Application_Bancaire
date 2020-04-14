@@ -15,7 +15,7 @@ import model.PersonalAccount;
 import model.WithdrawableAccount;
 import view.AccountHistoryView;
 import view.AccountInfoView;
-import view.AllAccountsView;
+import view.ContentResumeListView;
 import view.DialogView;
 import view.ProgressBarButtonView;
 
@@ -57,7 +57,6 @@ public class AccountInfoController extends Controller {
 			AccountWithrdrawCeilingController controllerBis = 
 					new AccountWithrdrawCeilingController((WithdrawableAccount)account, progressBarBis);
 			controllerBis.setupView();
-			controllerBis.displayView();
 			view.addContent(progressBarBis);
 		}
 		
@@ -82,12 +81,11 @@ public class AccountInfoController extends Controller {
 										((PELAccount) account).close(dest);
 										DialogView.displayInfoDialog("PEL clôturé avec succès.", null);
 										
-										AllAccountsView newView = new AllAccountsView();
+										ContentResumeListView newView = new ContentResumeListView(3,0);
 										AllAccountsController controller = new AllAccountsController(
 												mainMenuController.getLoggedUser(), newView, mainMenuController);
 										mainMenuController.changeView(newView);
 										controller.setupView();
-										controller.displayView();
 									} catch (CustomException e2) {
 										DialogView.displayError(e2.getString());
 									}
@@ -108,15 +106,9 @@ public class AccountInfoController extends Controller {
 				AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
 				mainMenuController.changeView(accountView);
 				controller.setupView();
-				controller.displayView();
 			}
 		});
 		view.addContent(returnButton);	
-	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
 	}
 
 	@Override

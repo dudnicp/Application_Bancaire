@@ -11,7 +11,6 @@ public class RunApp {
 		LoginView loginView = new LoginView();
 		LoginController loginController = new LoginController(bank, loginView);
 		loginController.setupView();
-		loginController.displayView();
 	}
 
 }

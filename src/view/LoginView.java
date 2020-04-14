@@ -79,6 +79,7 @@ public class LoginView extends JFrame {
 		panel.add(loginButton, c);
 		
 		this.setContentPane(panel);
+		this.setVisible(true);
 	}
 	
 	public String getEnteredId() {

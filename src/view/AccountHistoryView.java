@@ -9,12 +9,12 @@ import javax.swing.border.Border;
 public class AccountHistoryView extends ContentView {
 
 	private static final long serialVersionUID = -1457620948356582102L;
-	private ScrollableListView[] scrollLists = new ScrollableListView[2];
+	private ScrollableList[] scrollLists = new ScrollableList[2];
 	
 	public AccountHistoryView() {
 		
 		for (int i = 0; i < scrollLists.length; i++) {
-			scrollLists[i] = new ScrollableListView();
+			scrollLists[i] = new ScrollableList();
 			scrollLists[i].setScrollPaneSize(new Dimension(420, 200));
 		}
 		

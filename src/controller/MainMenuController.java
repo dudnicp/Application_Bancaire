@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 
 import model.BankData;
 import model.User;
-import view.AllAccountsView;
-import view.AllTransfersView;
+import view.ContentResumeListView;
 import view.ContentView;
 import view.DialogView;
 import view.LoginView;
@@ -25,11 +24,6 @@ public class MainMenuController extends Controller {
 		this.view = view;
 	}
 	
-	
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 
 
 	@Override
@@ -42,10 +36,9 @@ public class MainMenuController extends Controller {
 		view.setSecundaryButtonText(1, "Déconnexion");
 		view.setSecundaryButtonText(2, "Quitter");
 		
-		AllAccountsView accountsList = new AllAccountsView();
+		ContentResumeListView accountsList = new ContentResumeListView(3,0);
 		AllAccountsController controller = new AllAccountsController(loggedUser, accountsList, this);
 		controller.setupView();
-		controller.displayView();
 		view.changeContent(accountsList);
 	}
 	
@@ -61,11 +54,10 @@ public class MainMenuController extends Controller {
 	class AccountButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllAccountsView accountsList = new AllAccountsView();
+			ContentResumeListView accountsList = new ContentResumeListView(3,0);
 			AllAccountsController controller = new AllAccountsController(loggedUser, accountsList, MainMenuController.this);
 			changeView(accountsList);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
@@ -76,12 +68,10 @@ public class MainMenuController extends Controller {
 	class TransfersButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllTransfersView transfersView = new AllTransfersView();
+			ContentResumeListView transfersView = new ContentResumeListView(1, 2);
 			AllTransfersController controller = new AllTransfersController(loggedUser, transfersView, MainMenuController.this);
 			changeView(transfersView);
 			controller.setupView();
-			controller.displayView();
-			
 		}
 	}
 	
@@ -99,7 +89,6 @@ public class MainMenuController extends Controller {
 			PreferencesController controller = new PreferencesController(loggedUser, preferencesView);
 			changeView(preferencesView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
@@ -111,7 +100,6 @@ public class MainMenuController extends Controller {
 			LoginView newLoginView = new LoginView();
 			LoginController newLoginController = new LoginController(bank, newLoginView);
 			newLoginController.setupView();
-			newLoginController.displayView();
 		}
 	}
 	

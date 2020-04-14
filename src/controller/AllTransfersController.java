@@ -7,10 +7,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
-
 import aux.CustomException;
 import model.Account;
 import model.OneTimeTransferTransaction;
@@ -18,8 +16,7 @@ import model.PermanentTransfer;
 import model.TransferRegularity;
 import model.User;
 import model.WithdrawableAccount;
-import view.AllPayeesView;
-import view.AllTransfersView;
+import view.ContentResumeListView;
 import view.DialogView;
 import view.NewTransferView;
 import view.PermanentTransferView;
@@ -27,18 +24,13 @@ import view.PermanentTransferView;
 public class AllTransfersController extends Controller {
 
 	private User user;
-	private AllTransfersView view;
+	private ContentResumeListView view;
 	private MainMenuController mainMenuController;
 	
-	public AllTransfersController(User user, AllTransfersView view, MainMenuController controller) {
+	public AllTransfersController(User user, ContentResumeListView view, MainMenuController controller) {
 		this.user = user;
 		this.view = view;
 		this.mainMenuController = controller;
-	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
 	}
 
 	@Override
@@ -54,14 +46,13 @@ public class AllTransfersController extends Controller {
 		
 		TitledBorder title1 = new TitledBorder("Liste des virements permanents");
 		title1.setTitleFont(new Font("Arial", Font.BOLD, 15));
-		view.setListBorder(title1);
+		view.setContentListBorder(0, title1);
 		
 		for (PermanentTransfer transfer : user.getPermanentTransfers()) {
 			PermanentTransferView transferView = new PermanentTransferView();
 			PermanentTransferController controller = new PermanentTransferController(transfer, transferView, mainMenuController);
-			view.addContentToList(transferView);
+			view.addContentToList(0, transferView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
@@ -93,9 +84,8 @@ public class AllTransfersController extends Controller {
 				PermanentTransferView permanentTransferView = new PermanentTransferView();
 				PermanentTransferController controller = new PermanentTransferController(
 						transfer, permanentTransferView, mainMenuController);
-				view.addContentToList(permanentTransferView);
+				view.addContentToList(0, permanentTransferView);
 				controller.setupView();
-				controller.displayView();
 				
 			} else {
 				throw new CustomException("Impossible d'enregistrer le virement: la date de premier versement dépassée.");
@@ -120,7 +110,6 @@ public class AllTransfersController extends Controller {
 			NewTransferController controller = new NewTransferController(user, newTransferView, payer);
 			String[] options = new String[]{"Confirmer", "Annuler"};
 			controller.setupView();
-			controller.displayView();
 			int confirmation = JOptionPane.showOptionDialog(null, newTransferView, "Nouveau virement",
                     JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[0]);
@@ -142,11 +131,10 @@ public class AllTransfersController extends Controller {
 	class PayeeManagmentButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllPayeesView allPayees = new AllPayeesView();
+			ContentResumeListView allPayees = new ContentResumeListView(1, 2);
 			AllPayeesController controller = new AllPayeesController(user, allPayees, mainMenuController);
 			mainMenuController.changeView(allPayees);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	

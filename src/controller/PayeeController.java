@@ -4,12 +4,10 @@ package controller;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JOptionPane;
-
 import aux.CustomException;
 import model.Account;
-import view.AllPayeesView;
+import view.ContentResumeListView;
 import view.DialogView;
 import view.PayeeView;
 
@@ -24,11 +22,7 @@ public class PayeeController extends Controller {
 		this.view = view;
 		this.mainMenuController = controller;
 	}
-	
-	
-	@Override
-	public void displayView() {
-	}
+
 
 	@Override
 	public void setupViewButtonsActions() {
@@ -92,12 +86,11 @@ public class PayeeController extends Controller {
 				if (password != null && mainMenuController.getLoggedUser().getPassword().equals(password)) {
 					mainMenuController.getLoggedUser().removePayee(payee);
 					DialogView.displayInfoDialog("Le bénéficiaire a bien été supprimé", "Confirmation");
-					AllPayeesView payeesView = new AllPayeesView();
+					ContentResumeListView payeesView = new ContentResumeListView(1,2);
 					AllPayeesController controller = new AllPayeesController(
 							mainMenuController.getLoggedUser(), payeesView, mainMenuController);
 					mainMenuController.changeView(payeesView);
 					controller.setupView();
-					controller.displayView();
 				}
 			}
 		}

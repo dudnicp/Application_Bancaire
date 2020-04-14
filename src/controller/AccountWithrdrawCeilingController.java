@@ -22,12 +22,6 @@ public class AccountWithrdrawCeilingController extends Controller {
 	}
 
 	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
-	
-
-	@Override
 	public void setupViewButtonsActions() {
 		view.addButtonAction(0, new ButtonActionListener());
 	}

@@ -9,7 +9,7 @@ import javax.swing.JButton;
 public class AllCardsView extends ContentView {
 
 	private static final long serialVersionUID = -3538063302676177588L;
-	private ScrollableListView scrollListView = new ScrollableListView();
+	private ScrollableList scrollListView = new ScrollableList();
 	
 	
 	public AllCardsView() {
@@ -32,7 +32,7 @@ public class AllCardsView extends ContentView {
 		this.add(getButton(0), c);
 	}
 	
-	public ScrollableListView getScrollList() {
+	public ScrollableList getScrollList() {
 		return scrollListView;
 	}
 	

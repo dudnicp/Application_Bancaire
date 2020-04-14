@@ -26,11 +26,6 @@ public class PermanentTransferController extends Controller {
 		view.addInteraction(new OpenPermanentTransferModificationView());
 	}
 	
-	
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 
 	@Override
 	public void setupViewButtonsActions() {
@@ -76,7 +71,6 @@ public class PermanentTransferController extends Controller {
 					new PermanentTransferModificationController(transfer, newView, mainMenuController);
 			mainMenuController.changeView(newView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 }
