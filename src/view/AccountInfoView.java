@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,14 +16,14 @@ public class AccountInfoView extends ContentView{
 	private GridBagConstraints c = new GridBagConstraints();
 	
 	private Box infoBox = Box.createVerticalBox();
-	private JLabel[] infoLabels = new JLabel[5];
 	
 	public AccountInfoView() {
 		this.setLayout(new GridBagLayout());
 		
-		for (int i = 0; i < infoLabels.length; i++) {
-			infoLabels[i] = new JLabel();
-			infoBox.add(infoLabels[i]);
+		for (int i = 0; i < 5; i++) {
+			JLabel label = new JLabel();
+			addLabel(label);
+			infoBox.add(label);
 		}
 		
 		c.gridx = 0;
@@ -50,14 +49,6 @@ public class AccountInfoView extends ContentView{
 	
 	public void setInfoPanelBorder(Border border) {
 		infoBox.setBorder(border);
-	}
-	
-	public void setInfoLabelText(int index, String text) {
-		infoLabels[index].setText(text);
-	}
-	
-	public void setInfoLabelFont(int index, Font font) {
-		infoLabels[index].setFont(font);
 	}
 	
 	public int getNumberOfComponents() {

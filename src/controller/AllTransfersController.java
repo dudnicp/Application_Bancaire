@@ -68,9 +68,9 @@ public class AllTransfersController extends Controller {
 	public void createNewTransfer(NewTransferView newView, WithdrawableAccount payer) throws CustomException, ParseException {
 		Account payee = (Account) newView.getSelectedOption();
 		double amount;
-		if (newView.getTextField().matches("[0-9]*[.][0-9]*")) {
+		if (newView.getTextField().matches("[0-9]+[.][0-9]*") || newView.getTextField().matches("[0-9]*[.][0-9]+")) {
 			amount = Double.parseDouble(newView.getTextField());
-		} else if (newView.getTextField().matches("[0-9]*")) {
+		} else if (newView.getTextField().matches("[0-9]+")) {
 			amount = Integer.parseInt(newView.getTextField());
 		} else {
 			throw new CustomException("Montant invalide");

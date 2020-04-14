@@ -4,20 +4,19 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.border.Border;
 
 public class AllCardsView extends ContentView {
 
 	private static final long serialVersionUID = -3538063302676177588L;
 	private ScrollableListView scrollListView = new ScrollableListView();
-	private JButton button = new JButton();
+	
 	
 	public AllCardsView() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		
+		addButton(new JButton());
 		
 		scrollListView.setScrollPaneSize(new Dimension(420, 320));
 		
@@ -30,23 +29,11 @@ public class AllCardsView extends ContentView {
 		c.gridy = 1;
 		c.ipady = 10;
 		c.insets = new Insets(10, 0, 0, 0);
-		this.add(button, c);
+		this.add(getButton(0), c);
 	}
 	
-	public void setButtonText(String text) {
-		button.setText(text);
-	}
-	
-	public void addButtonAction(ActionListener l) {
-		button.addActionListener(l);
-	}
-	
-	public void addContentToContentBox(ContentView content) {
-		scrollListView.addContentToContentBox(content);
-	}
-	
-	public void setScrollPaneBorder(Border border) {
-		scrollListView.setScrollPaneBorder(border);
+	public ScrollableListView getScrollList() {
+		return scrollListView;
 	}
 	
 }

@@ -31,23 +31,23 @@ public class AllCardsController extends Controller{
 
 	@Override
 	public void setupViewButtonsActions() {
-		view.addButtonAction(new ReturnButtonAction());
+		view.addButtonAction(0, new ReturnButtonAction());
 	}
 
 	@Override
 	public void setupViewText() {
 		TitledBorder titleBorder = new TitledBorder("Cartes Associées");
 		titleBorder.setTitleFont(new Font("Arial", Font.BOLD, 15));
-		view.setScrollPaneBorder(titleBorder);
+		view.getScrollList().setScrollPaneBorder(titleBorder);
 		
-		view.setButtonText("Retour à l'historique des transactions");
+		view.setButtonText(0, "Retour à l'historique des transactions");
 		
 		for (Card card : account.getCards()) {
 			CardView cardView = new CardView();
 			CardController controller = new CardController(card, cardView);
 			controller.setupView();
 			controller.displayView();
-			view.addContentToContentBox(cardView);
+			view.getScrollList().addContentToContentBox(cardView);
 		}
 			
 	}

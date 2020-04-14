@@ -32,8 +32,8 @@ public class PayeeController extends Controller {
 
 	@Override
 	public void setupViewButtonsActions() {
-		view.addButtonListener(0, new NameEditionButton());
-		view.addButtonListener(1, new DeletePayeeButton());
+		view.addButtonAction(0, new NameEditionButton());
+		view.addButtonAction(1, new DeletePayeeButton());
 	}
 
 	@Override

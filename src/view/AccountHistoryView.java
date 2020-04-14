@@ -3,7 +3,6 @@ package view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
@@ -11,7 +10,6 @@ public class AccountHistoryView extends ContentView {
 
 	private static final long serialVersionUID = -1457620948356582102L;
 	private ScrollableListView[] scrollLists = new ScrollableListView[2];
-	private JButton[] buttons = new JButton[3];
 	
 	public AccountHistoryView() {
 		
@@ -20,8 +18,8 @@ public class AccountHistoryView extends ContentView {
 			scrollLists[i].setScrollPaneSize(new Dimension(420, 200));
 		}
 		
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i] = new JButton();
+		for (int i = 0; i < 3; i++) {
+			addButton(new JButton());
 		}
 		
 		this.setLayout(new GridBagLayout());
@@ -37,10 +35,10 @@ public class AccountHistoryView extends ContentView {
 			this.add(scrollLists[i], c);
 		}
 		
-		for (int i = 0; i < buttons.length; i++, c.gridy++) {
-			this.add(buttons[i], c);
+		for (JButton button : allButtons()) {
+			this.add(button, c);
+			c.gridy ++;
 		}
-				
 	}
 	
 	public void addContentToList(int index, ContentView content) {
@@ -55,15 +53,7 @@ public class AccountHistoryView extends ContentView {
 		scrollLists[index].setScrollPaneSize(dim);
 	}
 	
-	public void setButtonText(int index, String text) {
-		buttons[index].setText(text);
-	}
-	
-	public void addButtonAction(int index, ActionListener actionListener) {
-		buttons[index].addActionListener(actionListener);
-	}
-	
 	public void setButtonVisibility(int index, boolean b) {
-		buttons[index].setVisible(b);
+		getButton(index).setVisible(b);
 	}
 }

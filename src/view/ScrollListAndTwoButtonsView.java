@@ -4,16 +4,14 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
 public abstract class ScrollListAndTwoButtonsView extends ContentView {
 
 	private static final long serialVersionUID = 1283655078570484842L;
-	
-	private JButton[] buttons = new JButton[2];
-	private ScrollableListView scrollList = new ScrollableListView();
+
+	protected ScrollableListView scrollList = new ScrollableListView();
 	
 	public ScrollListAndTwoButtonsView() {
 		
@@ -22,8 +20,8 @@ public abstract class ScrollListAndTwoButtonsView extends ContentView {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i] = new JButton();
+		for (int i = 0; i < 2; i++) {
+			addButton(new JButton());
 		}
 		
 		c.gridx = 0;
@@ -36,8 +34,9 @@ public abstract class ScrollListAndTwoButtonsView extends ContentView {
 		c.gridy = 1;
 		c.ipady = 5;
 		c.insets = new Insets(0, 0, 0, 0);
-		for (int i = 0; i < buttons.length; i++, c.gridy++) {
-			this.add(buttons[i], c);
+		for (JButton button : allButtons()) {
+			this.add(button, c);
+			c.gridy ++;
 		}
 	}
 	
@@ -52,13 +51,4 @@ public abstract class ScrollListAndTwoButtonsView extends ContentView {
 	public void setListSize(Dimension dim) {
 		scrollList.setScrollPaneSize(dim);
 	}
-	
-	public void setButtonText(int index, String text) {
-		buttons[index].setText(text);
-	}
-	
-	public void addButtonAction(int index, ActionListener actionListener) {
-		buttons[index].addActionListener(actionListener);
-	}
-	
 }

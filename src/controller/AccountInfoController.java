@@ -34,30 +34,23 @@ public class AccountInfoController extends Controller {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void setupViewText() {
-		Font infoFont = new Font(Font.DIALOG, Font.BOLD, 13);
+		Font infoFont = new Font(Font.DIALOG, Font.BOLD, 14);
 		
 		for (int i = 0; i < 5; i++) {
-			view.setInfoLabelFont(i, infoFont);
+			view.setLabelFont(i, infoFont);
 		}
 		
-		view.setInfoLabelText(0, "Nom du compte: " + account.getName());
-		view.setInfoLabelText(1, "Titulaire: "  + account.getOwner().personalData());
-		view.setInfoLabelText(2, "Type : " + account.getType().toString());
-		view.setInfoLabelText(3, "IBAN: " + account.getIban()); 
+		view.setLabelText(0, "Nom du compte: " + account.getName());
+		view.setLabelText(1, "Titulaire: "  + account.getOwner().personalData());
+		view.setLabelText(2, "Type : " + account.getType().toString());
+		view.setLabelText(3, "IBAN: " + account.getIban()); 
 		
 		Date date = account.getOpeningDate();
 		int day = date.getDate();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
-		view.setInfoLabelText(4, "Date d'ouverture: " + day + "/" + month + "/" + year);
+		view.setLabelText(4, "Date d'ouverture: " + day + "/" + month + "/" + year);
 		view.setInfoPanelBorder(BorderFactory.createTitledBorder("Infos compte"));
-		
-		ProgressBarButtonView progressBar = new ProgressBarButtonView();
-		AccountBalanceCeilingController controller = 
-				new AccountBalanceCeilingController(account, progressBar);
-		controller.setupView();
-		controller.displayView();
-		view.addContent(progressBar);
 		
 		if (account instanceof WithdrawableAccount) {
 			ProgressBarButtonView progressBarBis = new ProgressBarButtonView();

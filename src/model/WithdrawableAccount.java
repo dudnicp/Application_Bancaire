@@ -71,13 +71,8 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 		return maxWithrdraw;
 	}
 	
-	public void setMaxWithrdraw(int maxWithrdraw) throws CustomException {
-		if (maxWithrdraw < getCurrentlyEngagedAmount()) {
-			throw new CustomException(
-					"Modification impossible : la nouvelle capacité de payement "
-					+ "doit être supérieure au montant actuellement engagé.");
-		}
-		this.maxWithrdraw = maxWithrdraw;
+	public void addToMaxWithdraw(int amount) throws CustomException {
+		this.maxWithrdraw += amount;
 	}
 	
 	public void setMinBalance(int minBalance) throws CustomException {
