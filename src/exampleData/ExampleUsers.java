@@ -9,9 +9,9 @@ public class ExampleUsers extends LinkedList<User>{
 	private static final long serialVersionUID = -3057261316659943475L;
 
 	public ExampleUsers() {
-		User user1 = new User("1", "", "Lewis", "Witely", "Mr", 
+		User user1 = new User("1", "1", "Lewis", "Witely", "Mr", 
 				"lewis.witely@gmail.com", "06740555876", "6 rue des lilas, Paris, 94800");
-		User user2 = new User("2", "", "Fiona", "Snyder", "Ms", 
+		User user2 = new User("2", "2", "Fiona", "Snyder", "Ms", 
 				"fsnyder@outlook.com", "0502784579", "66 bouleverd Arstride Briand, Le Bouscat, 33110");
 		
 		Account random1 = new Account("1538405826", "Boulangerie Duchère");
