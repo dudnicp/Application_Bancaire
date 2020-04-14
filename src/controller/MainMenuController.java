@@ -9,7 +9,7 @@ import javax.swing.border.TitledBorder;
 import model.BankData;
 import model.Loan;
 import model.User;
-import view.ContentResumeListView;
+import view.SummaryListView;
 import view.ContentView;
 import view.LoanView;
 import view.LoginView;
@@ -39,7 +39,7 @@ public class MainMenuController extends Controller {
 		view.setSecundaryButtonText(1, "Déconnexion");
 		view.setSecundaryButtonText(2, "Quitter");
 		
-		ContentResumeListView accountsList = new ContentResumeListView(3,0);
+		SummaryListView accountsList = new SummaryListView(3,0);
 		AllAccountsController controller = new AllAccountsController(loggedUser, accountsList, this);
 		controller.setupView();
 		view.changeContent(accountsList);
@@ -57,7 +57,7 @@ public class MainMenuController extends Controller {
 	class AccountButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ContentResumeListView accountsList = new ContentResumeListView(3,0);
+			SummaryListView accountsList = new SummaryListView(3,0);
 			AllAccountsController controller = new AllAccountsController(loggedUser, accountsList, MainMenuController.this);
 			changeView(accountsList);
 			controller.setupView();
@@ -71,7 +71,7 @@ public class MainMenuController extends Controller {
 	class TransfersButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ContentResumeListView transfersView = new ContentResumeListView(1, 2);
+			SummaryListView transfersView = new SummaryListView(1, 2);
 			AllTransfersController controller = new AllTransfersController(loggedUser, transfersView, MainMenuController.this);
 			changeView(transfersView);
 			controller.setupView();
@@ -81,10 +81,11 @@ public class MainMenuController extends Controller {
 	class LoansButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ContentResumeListView allLoans = new ContentResumeListView(1, 0);
+			SummaryListView allLoans = new SummaryListView(1, 0);
 			for (Loan loan : loggedUser.getLoans()) {
 				LoanView loanView = new LoanView();
 				LoanController controller = new LoanController(loan, loanView);
+				allLoans.addContentToList(0, loanView);
 				controller.setupView();
 			}
 			TitledBorder titleBorder = new TitledBorder("Liste des emprunts");

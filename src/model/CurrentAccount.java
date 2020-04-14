@@ -7,9 +7,9 @@ public class CurrentAccount extends WithdrawableAccount {
 	
 	private ArrayList<Card> cards = new ArrayList<Card>();
 
-	public CurrentAccount(String iban, String name, User owner, Date date, double amount, int maxBalance, 
+	public CurrentAccount(String iban, String name, User owner, Date date, double amount,
 			int minBalance, int maxWithrdraw) {
-		super(iban, name, owner, date, amount, maxBalance, minBalance, maxWithrdraw);
+		super(iban, name, owner, date, amount, minBalance, maxWithrdraw);
 	}
 	
 	public CurrentAccount(CurrentAccount other) {

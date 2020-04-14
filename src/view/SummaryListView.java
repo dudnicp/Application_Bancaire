@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
-public class ContentResumeListView extends ContentView {
+public class SummaryListView extends ContentView {
 	private static final long serialVersionUID = -3910085196143230755L;
 
 	private ArrayList<ScrollableList> contentLists = new ArrayList<ScrollableList>();
 	
-	public ContentResumeListView(int nLists, int nButtons) {
+	public SummaryListView(int nLists, int nButtons) {
 		
 		for (int i = 0; i < nLists; i++) {
 			contentLists.add(new ScrollableList());
@@ -35,10 +35,11 @@ public class ContentResumeListView extends ContentView {
 		for (ScrollableList scrollableList : contentLists) {
 			this.add(scrollableList, c);
 			scrollableList.setScrollPaneSize(new Dimension(MainMenuView.MAIN_PANEL_WIDTH - 30, 
-						(MainMenuView.MAIN_PANEL_HEIGHT - ((nButtons == 0)? 40 : (35*nButtons))) / nLists));
+						(MainMenuView.MAIN_PANEL_HEIGHT - 20 - (25*(nButtons + 1))) / nLists));
 			c.gridy ++;
 		}
 		
+		c.ipady = 5;
 		for (JButton button : allButtons()) {
 			this.add(button, c);
 			c.gridy ++;

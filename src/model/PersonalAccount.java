@@ -2,7 +2,6 @@ package model;
 
 import java.util.Date;
 import java.util.PriorityQueue;
-import aux.CustomException;
 
 public abstract class PersonalAccount extends Account {
 	
@@ -13,23 +12,23 @@ public abstract class PersonalAccount extends Account {
 	protected User owner;
 	protected double balance;
 	protected Date openingDate;
-	protected int maxBalance;
+	protected int minBalance;
 	protected PriorityQueue<Transaction> history;
 	protected PriorityQueue<Transaction> pendingTransactions;
 	
-	public PersonalAccount(String iban, String name, User owner, Date date, double amount, int maxBalance) {
+	public PersonalAccount(String iban, String name, User owner, Date date, double amount, int minBalance) {
 		super(iban, name);
 		this.owner = owner;
 		this.openingDate = date;
 		this.balance = amount;
-		this.maxBalance = maxBalance;
+		this.minBalance = minBalance;
 		
 		this.history = new PriorityQueue<Transaction>(new TransactionComparator());
 		this.pendingTransactions = new PriorityQueue<Transaction>(new TransactionComparator());
 	}
 	
 	public PersonalAccount(PersonalAccount other) {
-		this(other.getIban(), other.getName(), other.owner, other.openingDate, other.balance, other.maxBalance);
+		this(other.getIban(), other.getName(), other.owner, other.openingDate, other.balance, other.minBalance);
 		for (Transaction transaction : other.history) {
 			this.history.add(transaction);
 		}
@@ -87,20 +86,9 @@ public abstract class PersonalAccount extends Account {
 	}
 	
 	public int getMinBalance() {
-		return 0;
+		return minBalance;
 	}
 	
-	public int getMaxBalance() {
-		return maxBalance;
-	}
-	
-	
-	public void setMaxBalance(int maxBalance) throws CustomException {
-		if (maxBalance < balance) {
-			throw new CustomException("Modification impossible : le nouveau seuil doit être supérieur au solde actuel.");
-		}
-		this.maxBalance = maxBalance;
-	}
 	
 	public abstract String getType();
 }

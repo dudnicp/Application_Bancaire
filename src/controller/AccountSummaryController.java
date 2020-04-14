@@ -5,7 +5,7 @@ import java.awt.Font;
 
 import model.PersonalAccount;
 import view.AccountSummaryView;
-import view.AccountHistoryView;
+import view.SummaryListView;
 import view.Interaction;
 
 public class AccountSummaryController extends Controller {
@@ -65,7 +65,7 @@ public class AccountSummaryController extends Controller {
 	class ClickInteraction implements Interaction {
 		@Override
 		public void perform() {
-			AccountHistoryView accountView = new AccountHistoryView();
+			SummaryListView accountView = new SummaryListView(2,3);
 			AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
 			mainMenuController.changeView(accountView);
 			controller.setupView();

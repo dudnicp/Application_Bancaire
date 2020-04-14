@@ -49,7 +49,7 @@ public class PreferencesController extends Controller {
 						}
 						@Override
 						public void update() {
-							setupViewText();
+							view.setLabelText(1, loggedUser.getEmail());
 						}
 					}
 					Editor editor = new Editor();
@@ -78,7 +78,7 @@ public class PreferencesController extends Controller {
 						}
 						@Override
 						public void update() {
-							setupViewText();
+							view.setLabelText(3, loggedUser.getPhoneNumber());
 						}
 					}
 					Editor editor = new Editor();
@@ -107,7 +107,7 @@ public class PreferencesController extends Controller {
 						}
 						@Override
 						public void update() {
-							setupViewText();
+							view.setLabelText(5, loggedUser.getAdress());
 						}
 					}
 					Editor editor = new Editor();

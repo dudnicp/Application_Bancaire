@@ -3,7 +3,8 @@ package controller;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -13,9 +14,8 @@ import model.CurrentAccount;
 import model.PELAccount;
 import model.PersonalAccount;
 import model.WithdrawableAccount;
-import view.AccountHistoryView;
 import view.AccountInfoView;
-import view.ContentResumeListView;
+import view.SummaryListView;
 import view.DialogView;
 import view.ProgressBarButtonView;
 
@@ -31,7 +31,6 @@ public class AccountInfoController extends Controller {
 		this.mainMenuController = controller;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void setupViewText() {
 		Font infoFont = new Font(Font.DIALOG, Font.BOLD, 14);
@@ -45,11 +44,9 @@ public class AccountInfoController extends Controller {
 		view.setLabelText(2, "Type : " + account.getType().toString());
 		view.setLabelText(3, "IBAN: " + account.getIban()); 
 		
-		Date date = account.getOpeningDate();
-		int day = date.getDate();
-		int month = date.getMonth() + 1;
-		int year = date.getYear() + 1900;
-		view.setLabelText(4, "Date d'ouverture: " + day + "/" + month + "/" + year);
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		String strDate = dateFormat.format(account.getOpeningDate());  
+		view.setLabelText(4, "Date d'ouverture: " + strDate);
 		view.setInfoPanelBorder(BorderFactory.createTitledBorder("Infos compte"));
 		
 		if (account instanceof WithdrawableAccount) {
@@ -81,7 +78,7 @@ public class AccountInfoController extends Controller {
 										((PELAccount) account).close(dest);
 										DialogView.displayInfoDialog("PEL clôturé avec succès.", null);
 										
-										ContentResumeListView newView = new ContentResumeListView(3,0);
+										SummaryListView newView = new SummaryListView(3,0);
 										AllAccountsController controller = new AllAccountsController(
 												mainMenuController.getLoggedUser(), newView, mainMenuController);
 										mainMenuController.changeView(newView);
@@ -102,7 +99,7 @@ public class AccountInfoController extends Controller {
 		returnButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AccountHistoryView accountView = new AccountHistoryView();
+				SummaryListView accountView = new SummaryListView(2,3);
 				AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
 				mainMenuController.changeView(accountView);
 				controller.setupView();

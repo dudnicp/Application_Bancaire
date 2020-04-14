@@ -9,19 +9,18 @@ import aux.WithdrawCapacityOverflowException;
 
 public abstract class WithdrawableAccount extends PersonalAccount {
 	
-	protected int maxWithrdraw;
-	protected int minBalance;
+	protected int maxWithdraw;
 
 	public WithdrawableAccount(String iban, String name, User owner, Date date, 
-						double amount, int maxBalance, int minBalance, int maxWithrdraw) {
-		super(iban, name, owner, date, amount, maxBalance);
-		this.maxWithrdraw = maxWithrdraw;
+						double amount, int minBalance, int maxWithrdraw) {
+		super(iban, name, owner, date, amount, minBalance);
+		this.maxWithdraw = maxWithrdraw;
 		this.minBalance = minBalance;
 	}
 	
 	public WithdrawableAccount(WithdrawableAccount other) {
 		super(other);
-		this.maxWithrdraw = other.maxWithrdraw;
+		this.maxWithdraw = other.maxWithdraw;
 		this.minBalance = other.minBalance;
 	}
 	
@@ -57,7 +56,7 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 		if (getBalance() < amount) {
 			throw new InsuficentAmountException();
 		}
-		if (getCurrentlyEngagedAmount() + amount > maxWithrdraw) {
+		if (getCurrentlyEngagedAmount() + amount > maxWithdraw) {
 			throw new WithdrawCapacityOverflowException();
 		}
 		if (getMinBalance() > getBalance() - amount) {
@@ -68,18 +67,11 @@ public abstract class WithdrawableAccount extends PersonalAccount {
 	}
 	
 	public int getMaxWithdraw() {
-		return maxWithrdraw;
+		return maxWithdraw;
 	}
 	
 	public void addToMaxWithdraw(int amount) throws CustomException {
-		this.maxWithrdraw += amount;
-	}
-	
-	public void setMinBalance(int minBalance) throws CustomException {
-		if (minBalance > balance) {
-			throw new CustomException("Modification impossible : le nouveau seuil doit être inférieur au solde actuel.");
-		}
-		this.minBalance = minBalance;
+		this.maxWithdraw += amount;
 	}
 	
 	@Override

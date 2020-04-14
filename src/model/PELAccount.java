@@ -7,13 +7,18 @@ import aux.PermanentsTransfersTowardPELException;
 
 public class PELAccount extends PersonalAccount {
 	
-	public PELAccount(String iban, String name, User owner, Date date, double amount, int maxBalance) {
-		super(iban, name, owner, date, amount, maxBalance);
+	private int maxBalance;
+	
+	
+	public PELAccount(String iban, String name, User owner, Date date, double amount, int minBalance, int maxBalance) {
+		super(iban, name, owner, date, amount, minBalance);
+		this.maxBalance = maxBalance;
 	}
 
 
 	public PELAccount(PELAccount other) {
 		super(other);
+		this.maxBalance = other.maxBalance;
 	}
 	
 	@Override

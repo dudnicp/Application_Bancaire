@@ -14,9 +14,10 @@ public class Loan {
 	private Date dueDate;
 	
 	
-	public Loan(double amountToRecieve, double rate, double currentlyRecieved, 
+	public Loan(double amountToRecieve, double amountToPay, double rate, double currentlyRecieved, 
 			double currentlyPaid, Date firstRepaymentDate, Date dueDate) {
 		this.amountToRecieve = amountToRecieve;
+		this.amountToPay = amountToPay;
 		this.rate = rate;
 		this.currentlyPaidAmount = currentlyPaid;
 		this.currentlyRecievedAmount = currentlyRecieved;

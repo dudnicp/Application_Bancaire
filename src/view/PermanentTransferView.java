@@ -71,6 +71,6 @@ public class PermanentTransferView extends HoverableAndClickableView {
 		c.gridx = 2;
 		c.gridy = 5;
 		c.insets = new Insets(5, 0, 10, 0);
-		this.add(getLabel(8), c);
+		this.add(getLabel(7), c);
 	}
 }

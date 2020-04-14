@@ -9,7 +9,7 @@ import javax.swing.border.TitledBorder;
 import aux.CustomException;
 import model.PermanentTransfer;
 import model.TransferRegularity;
-import view.ContentResumeListView;
+import view.SummaryListView;
 import view.DialogView;
 import view.PermanentTransferModificationView;
 
@@ -51,7 +51,7 @@ public class PermanentTransferModificationController extends Controller {
 	class RetrunButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ContentResumeListView transfersView = new ContentResumeListView(1,2);
+			SummaryListView transfersView = new SummaryListView(1,2);
 			AllTransfersController controller = new AllTransfersController(
 					mainMenuController.getLoggedUser(), transfersView, mainMenuController);
 			mainMenuController.changeView(transfersView);
@@ -116,7 +116,7 @@ public class PermanentTransferModificationController extends Controller {
 				if (password != null && mainMenuController.getLoggedUser().getPassword().equals(password)) {
 					mainMenuController.getLoggedUser().removePermanentTransfer(transfer);
 					DialogView.displayInfoDialog("Le virement a bien été supprimé", "Confirmation");
-					ContentResumeListView transfersView = new ContentResumeListView(1,2);
+					SummaryListView transfersView = new SummaryListView(1,2);
 					AllTransfersController controller = new AllTransfersController(
 							mainMenuController.getLoggedUser(), transfersView, mainMenuController);
 					mainMenuController.changeView(transfersView);
