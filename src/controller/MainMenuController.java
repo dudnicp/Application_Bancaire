@@ -1,14 +1,17 @@
 package controller;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.border.TitledBorder;
 
 import model.BankData;
+import model.Loan;
 import model.User;
 import view.ContentResumeListView;
 import view.ContentView;
-import view.DialogView;
+import view.LoanView;
 import view.LoginView;
 import view.MainMenuView;
 import view.PreferencesView;
@@ -78,7 +81,16 @@ public class MainMenuController extends Controller {
 	class LoansButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DialogView.getDoubleStringInput("", "", "", false, false);
+			ContentResumeListView allLoans = new ContentResumeListView(1, 0);
+			for (Loan loan : loggedUser.getLoans()) {
+				LoanView loanView = new LoanView();
+				LoanController controller = new LoanController(loan, loanView);
+				controller.setupView();
+			}
+			TitledBorder titleBorder = new TitledBorder("Liste des emprunts");
+			titleBorder.setTitleFont(new Font("Arial", Font.BOLD, 15));
+			allLoans.setContentListBorder(0, titleBorder);
+			changeView(allLoans);
 		}
 	}
 	

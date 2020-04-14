@@ -11,7 +11,6 @@ import model.PersonalAccount;
 import model.Transaction;
 import view.AccountHistoryView;
 import view.AccountInfoView;
-import view.AllCardsView;
 import view.ContentResumeListView;
 import view.TransactionView;
 
@@ -67,7 +66,7 @@ public class AccountHistoryController extends Controller {
 	class CardsButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllCardsView allCards = new AllCardsView();
+			ContentResumeListView allCards = new ContentResumeListView(1, 1);
 			AllCardsController controller = new AllCardsController((CurrentAccount)account, allCards, mainMenuController);
 			mainMenuController.changeView(allCards);
 			controller.setupView();
