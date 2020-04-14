@@ -16,6 +16,8 @@ public class MainMenuView extends JFrame {
 
 	private static final long serialVersionUID = -8220796308066878211L;
 
+	public static final int MAIN_PANEL_WIDTH = 450;
+	public static final int MAIN_PANEL_HEIGHT = 510;
 	
 	private static final Dimension MAIN_BUTTON_DIMENSION = new Dimension(150, 120);
 	private static final Dimension SECUNDARY_BUTTON_DIMENSION = new Dimension(150, 50);
@@ -103,6 +105,7 @@ public class MainMenuView extends JFrame {
 		this.setContentPane(mainPanel);
 		this.pack();
 		this.setLocationRelativeTo(null);
+		this.setVisible(true);
 	}
 	
 	public void setMainButtonText(int index, String text) {

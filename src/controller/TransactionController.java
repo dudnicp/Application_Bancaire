@@ -68,11 +68,6 @@ public class TransactionController extends Controller {
 		view.setLabelFont(5, new Font(Font.DIALOG, Font.BOLD, 12));
 		
 	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 	
 	class ClickInteraction implements Interaction {
 		@Override

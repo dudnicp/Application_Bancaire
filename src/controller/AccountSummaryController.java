@@ -61,11 +61,6 @@ public class AccountSummaryController extends Controller {
 		}
 		
 	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 	
 	class ClickInteraction implements Interaction {
 		@Override
@@ -74,7 +69,6 @@ public class AccountSummaryController extends Controller {
 			AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
 			mainMenuController.changeView(accountView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 

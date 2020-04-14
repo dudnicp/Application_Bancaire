@@ -15,12 +15,6 @@ public class AllLoansController extends Controller {
 	private User user;
 
 	@Override
-	public void displayView() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void setupViewButtonsActions() {
 		// TODO Auto-generated method stub
 

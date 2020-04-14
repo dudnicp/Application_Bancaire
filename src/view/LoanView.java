@@ -56,4 +56,12 @@ public class LoanView extends ContentView {
 		c.gridy = 5;
 		this.add(getLabel(5), c);
 	}
+	
+	public void setPrgoressBarMax(int index, int max) {
+		progressBars[index].setMaximum(max);
+	}
+	
+	public void setProgressBarValue(int index, int value) {
+		progressBars[index].setValue(value);
+	}
 }

@@ -5,7 +5,6 @@ public abstract class Controller {
 		setupViewText();
 		setupViewButtonsActions();
 	}
-	public abstract void displayView();
 	public abstract void setupViewButtonsActions();
 	public abstract void setupViewText();
 }

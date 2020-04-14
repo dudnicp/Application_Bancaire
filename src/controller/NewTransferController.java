@@ -24,10 +24,7 @@ public class NewTransferController extends Controller {
 		this.payer = payer;
 	}
 	
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
+
 	@Override
 	public void setupViewButtonsActions() {
 		view.addButtonAction(new NewPayeeButton());

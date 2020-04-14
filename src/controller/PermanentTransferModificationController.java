@@ -9,7 +9,7 @@ import javax.swing.border.TitledBorder;
 import aux.CustomException;
 import model.PermanentTransfer;
 import model.TransferRegularity;
-import view.AllTransfersView;
+import view.ContentResumeListView;
 import view.DialogView;
 import view.PermanentTransferModificationView;
 
@@ -24,11 +24,6 @@ public class PermanentTransferModificationController extends Controller {
 		this.transfer = transfer;
 		this.view = view;
 		this.mainMenuController = controller;
-	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
 	}
 
 	@Override
@@ -56,12 +51,11 @@ public class PermanentTransferModificationController extends Controller {
 	class RetrunButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AllTransfersView transfersView = new AllTransfersView();
+			ContentResumeListView transfersView = new ContentResumeListView(1,2);
 			AllTransfersController controller = new AllTransfersController(
 					mainMenuController.getLoggedUser(), transfersView, mainMenuController);
 			mainMenuController.changeView(transfersView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 	
@@ -122,12 +116,11 @@ public class PermanentTransferModificationController extends Controller {
 				if (password != null && mainMenuController.getLoggedUser().getPassword().equals(password)) {
 					mainMenuController.getLoggedUser().removePermanentTransfer(transfer);
 					DialogView.displayInfoDialog("Le virement a bien été supprimé", "Confirmation");
-					AllTransfersView transfersView = new AllTransfersView();
+					ContentResumeListView transfersView = new ContentResumeListView(1,2);
 					AllTransfersController controller = new AllTransfersController(
 							mainMenuController.getLoggedUser(), transfersView, mainMenuController);
 					mainMenuController.changeView(transfersView);
 					controller.setupView();
-					controller.displayView();
 				}
 			}
 		}

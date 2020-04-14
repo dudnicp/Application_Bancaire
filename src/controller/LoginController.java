@@ -39,13 +39,6 @@ public class LoginController extends Controller {
 		MainMenuView mainMenu = new MainMenuView();
 		MainMenuController controller = new MainMenuController(user, bank, mainMenu);
 		controller.setupView();
-		controller.displayView();
-	}
-	
-	
-	@Override
-	public void displayView() {
-		view.setVisible(true);
 	}
 	
 	@Override

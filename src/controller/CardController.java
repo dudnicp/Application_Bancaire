@@ -22,12 +22,6 @@ public class CardController extends Controller {
 		this.view = view;
 	}
 	
-	
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-
-	}
 
 	@Override
 	public void setupViewButtonsActions() {

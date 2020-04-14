@@ -7,16 +7,16 @@ import model.LivretAAccount;
 import model.PELAccount;
 import model.User;
 import view.AccountSummaryView;
-import view.AllAccountsView;
+import view.ContentResumeListView;
 
 public class AllAccountsController extends Controller {
 	
 	private User user;
-	private AllAccountsView view;
+	private ContentResumeListView view;
 	private MainMenuController mainMenuController;
 	
 	
-	public AllAccountsController(User user, AllAccountsView view, MainMenuController controller) {
+	public AllAccountsController(User user, ContentResumeListView view, MainMenuController controller) {
 		this.user = user;
 		this.view = view;
 		this.mainMenuController = controller;
@@ -35,16 +35,15 @@ public class AllAccountsController extends Controller {
 		TitledBorder thirdBorder = new TitledBorder("Prêts épargne et logement");
 		thirdBorder.setTitleFont(titleFont);
 		
-		view.setListBorder(0, firstBorder);
-		view.setListBorder(1, secondBorder);
-		view.setListBorder(2, thirdBorder);
+		view.setContentListBorder(0, firstBorder);
+		view.setContentListBorder(1, secondBorder);
+		view.setContentListBorder(2, thirdBorder);
 		
 		
 		for (CurrentAccount account : user.getCurrentAccounts()) {
 			AccountSummaryView accountView = new AccountSummaryView();
 			AccountSummaryController controller = new AccountSummaryController(account, accountView, mainMenuController);
 			controller.setupView();
-			controller.displayView();
 			view.addContentToList(0, accountView);
 		}
 		
@@ -52,7 +51,6 @@ public class AllAccountsController extends Controller {
 			AccountSummaryView accountView = new AccountSummaryView();
 			AccountSummaryController controller = new AccountSummaryController(account, accountView, mainMenuController);
 			controller.setupView();
-			controller.displayView();
 			view.addContentToList(1, accountView);
 		}
 		
@@ -60,14 +58,8 @@ public class AllAccountsController extends Controller {
 			AccountSummaryView accountView = new AccountSummaryView();
 			AccountSummaryController controller = new AccountSummaryController(account, accountView, mainMenuController);
 			controller.setupView();
-			controller.displayView();
 			view.addContentToList(2, accountView);
 		}
-	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
 	}
 
 	@Override

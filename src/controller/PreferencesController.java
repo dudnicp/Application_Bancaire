@@ -32,11 +32,6 @@ public class PreferencesController extends Controller {
 		view.setButtonText(2, "Changer");
 		view.setButtonText(3, "Changer code secret");
 	}
-
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 	
 
 	class MailChangeButton implements ActionListener {

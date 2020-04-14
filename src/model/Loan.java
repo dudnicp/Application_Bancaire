@@ -4,10 +4,11 @@ import java.util.Date;
 public class Loan {
 	
 	private double amountToRecieve;
+	private double amountToPay;
 	private double rate;
 	
-	private double currentlyPaid;
-	private double currentlyRecieved;
+	private double currentlyPaidAmount;
+	private double currentlyRecievedAmount;
 	
 	private Date firstRepaymentDate;
 	private Date dueDate;
@@ -17,22 +18,26 @@ public class Loan {
 			double currentlyPaid, Date firstRepaymentDate, Date dueDate) {
 		this.amountToRecieve = amountToRecieve;
 		this.rate = rate;
-		this.currentlyPaid = currentlyPaid;
-		this.currentlyRecieved = currentlyRecieved;
+		this.currentlyPaidAmount = currentlyPaid;
+		this.currentlyRecievedAmount = currentlyRecieved;
 		this.firstRepaymentDate = new Date(firstRepaymentDate.getTime());
 		this.dueDate = new Date(dueDate.getTime());
+	}
+	
+	public double getAmountToPay() {
+		return amountToPay;
 	}
 	
 	public double getAmountToRecieve() {
 		return amountToRecieve;
 	}
 	
-	public double getCurrentlyPaid() {
-		return currentlyPaid;
+	public double getCurrentlyPaidAmount() {
+		return currentlyPaidAmount;
 	}
 	
-	public double getCurrentlyRecieved() {
-		return currentlyRecieved;
+	public double getCurrentlyRecievedAmount() {
+		return currentlyRecievedAmount;
 	}
 	
 	public Date getDueDate() {

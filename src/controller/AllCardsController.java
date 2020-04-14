@@ -24,10 +24,6 @@ public class AllCardsController extends Controller{
 		this.mainMenuController = controller;
 	}
 
-	@Override
-	public void displayView() {
-		view.setVisible(true);
-	}
 
 	@Override
 	public void setupViewButtonsActions() {
@@ -46,7 +42,6 @@ public class AllCardsController extends Controller{
 			CardView cardView = new CardView();
 			CardController controller = new CardController(card, cardView);
 			controller.setupView();
-			controller.displayView();
 			view.getScrollList().addContentToContentBox(cardView);
 		}
 			
@@ -59,7 +54,6 @@ public class AllCardsController extends Controller{
 			AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
 			mainMenuController.changeView(accountView);
 			controller.setupView();
-			controller.displayView();
 		}
 	}
 }
