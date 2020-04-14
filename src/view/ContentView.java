@@ -59,5 +59,12 @@ public abstract class ContentView extends JPanel {
 		buttons.get(index).addActionListener(action);
 	}
 	
+	public void setButtonVisibility(int index, boolean b) {
+		buttons.get(index).setVisible(b);
+	}
+	
+	public void setLabelVisibility(int index, boolean b) {
+		buttons.get(index).setVisible(b);
+	}
 
 }

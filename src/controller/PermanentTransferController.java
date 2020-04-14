@@ -1,8 +1,8 @@
 package controller;
 
 import java.awt.Font;
-import java.util.Date;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import model.PermanentTransfer;
 import view.Interaction;
 import view.PermanentTransferModificationView;
@@ -33,7 +33,6 @@ public class PermanentTransferController extends Controller {
 		
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void setupViewText() {
 		
@@ -52,13 +51,13 @@ public class PermanentTransferController extends Controller {
 		view.setLabelFont(4, auxFont);
 		view.setLabelText(5,  transfer.getAmount() + " € - " + transfer.getRegularity());
 		view.setLabelFont(5, infoFont);
-		Date transactionDate = transfer.getFirstTransactionDate();
-		int day = transactionDate.getDate();
-		int month = transactionDate.getMonth() + 1;
-		int year = transactionDate.getYear() + 1900;
+		
+		
 		view.setLabelText(6, "Date de premier versement: ");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		String strDate = dateFormat.format(transfer.getFirstTransactionDate());  
 		view.setLabelFont(6, auxFont);
-		view.setLabelText(7, day + "/" + month + "/" + year);
+		view.setLabelText(7, strDate);
 		view.setLabelFont(7, infoFont);
 		
 	}

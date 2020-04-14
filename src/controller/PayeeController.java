@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import aux.CustomException;
 import model.Account;
-import view.ContentResumeListView;
+import view.SummaryListView;
 import view.DialogView;
 import view.PayeeView;
 
@@ -86,7 +86,7 @@ public class PayeeController extends Controller {
 				if (password != null && mainMenuController.getLoggedUser().getPassword().equals(password)) {
 					mainMenuController.getLoggedUser().removePayee(payee);
 					DialogView.displayInfoDialog("Le bénéficiaire a bien été supprimé", "Confirmation");
-					ContentResumeListView payeesView = new ContentResumeListView(1,2);
+					SummaryListView payeesView = new SummaryListView(1,2);
 					AllPayeesController controller = new AllPayeesController(
 							mainMenuController.getLoggedUser(), payeesView, mainMenuController);
 					mainMenuController.changeView(payeesView);

@@ -91,6 +91,6 @@ public class PreferencesView extends ContentView {
 		c.gridy = 6;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridheight = 1;
-		this.add(getButton(4), c);
+		this.add(getButton(3), c);
 	}
 }

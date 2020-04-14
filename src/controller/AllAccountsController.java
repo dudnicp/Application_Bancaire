@@ -7,16 +7,16 @@ import model.LivretAAccount;
 import model.PELAccount;
 import model.User;
 import view.AccountSummaryView;
-import view.ContentResumeListView;
+import view.SummaryListView;
 
 public class AllAccountsController extends Controller {
 	
 	private User user;
-	private ContentResumeListView view;
+	private SummaryListView view;
 	private MainMenuController mainMenuController;
 	
 	
-	public AllAccountsController(User user, ContentResumeListView view, MainMenuController controller) {
+	public AllAccountsController(User user, SummaryListView view, MainMenuController controller) {
 		this.user = user;
 		this.view = view;
 		this.mainMenuController = controller;

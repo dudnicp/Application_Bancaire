@@ -8,17 +8,16 @@ import javax.swing.border.TitledBorder;
 
 import model.Card;
 import model.CurrentAccount;
-import view.AccountHistoryView;
 import view.CardView;
-import view.ContentResumeListView;
+import view.SummaryListView;
 
 public class AllCardsController extends Controller{
 	
 	private CurrentAccount account;
-	private ContentResumeListView view;
+	private SummaryListView view;
 	private MainMenuController mainMenuController;
 	
-	public AllCardsController(CurrentAccount account, ContentResumeListView view, MainMenuController controller) {
+	public AllCardsController(CurrentAccount account, SummaryListView view, MainMenuController controller) {
 		this.account = account;
 		this.view = view;
 		this.mainMenuController = controller;
@@ -50,7 +49,7 @@ public class AllCardsController extends Controller{
 	class ReturnButtonAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AccountHistoryView accountView = new AccountHistoryView();
+			SummaryListView accountView = new SummaryListView(2,3);
 			AccountHistoryController controller = new AccountHistoryController(account, accountView, mainMenuController);
 			mainMenuController.changeView(accountView);
 			controller.setupView();

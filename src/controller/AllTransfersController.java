@@ -16,7 +16,7 @@ import model.PermanentTransfer;
 import model.TransferRegularity;
 import model.User;
 import model.WithdrawableAccount;
-import view.ContentResumeListView;
+import view.SummaryListView;
 import view.DialogView;
 import view.NewTransferView;
 import view.PermanentTransferView;
@@ -24,10 +24,10 @@ import view.PermanentTransferView;
 public class AllTransfersController extends Controller {
 
 	private User user;
-	private ContentResumeListView view;
+	private SummaryListView view;
 	private MainMenuController mainMenuController;
 	
-	public AllTransfersController(User user, ContentResumeListView view, MainMenuController controller) {
+	public AllTransfersController(User user, SummaryListView view, MainMenuController controller) {
 		this.user = user;
 		this.view = view;
 		this.mainMenuController = controller;
@@ -131,7 +131,7 @@ public class AllTransfersController extends Controller {
 	class PayeeManagmentButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ContentResumeListView allPayees = new ContentResumeListView(1, 2);
+			SummaryListView allPayees = new SummaryListView(1, 2);
 			AllPayeesController controller = new AllPayeesController(user, allPayees, mainMenuController);
 			mainMenuController.changeView(allPayees);
 			controller.setupView();

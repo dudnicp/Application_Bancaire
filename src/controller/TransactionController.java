@@ -2,8 +2,9 @@ package controller;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import model.Transaction;
 import view.DialogView;
 import view.Interaction;
@@ -28,7 +29,6 @@ public class TransactionController extends Controller {
 	}
 	
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void setupViewText() {
 		view.setLabelText(0, transaction.getType().info());
@@ -54,12 +54,11 @@ public class TransactionController extends Controller {
 				+ " " + transaction.getLinkedAccount().getName());
 		view.setLabelFont(2, new Font(Font.DIALOG, Font.BOLD, 15));
 		
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		String strDate = dateFormat.format(transaction.getDate());  
+		view.setLabelText(3, strDate);
 		view.setLabelFont(3, new Font(Font.SERIF, Font.ITALIC, 12));
-		Date transactionDate = transaction.getDate();
-		int day = transactionDate.getDate();
-		int month = transactionDate.getMonth() + 1;
-		int year = transactionDate.getYear() + 1900;
-		view.setLabelText(3, day + "/" + month + "/" + year);
 		
 		view.setLabelText(4, "Catégorie:");
 		view.setLabelFont(4, new Font(Font.SERIF, Font.ITALIC, 12));

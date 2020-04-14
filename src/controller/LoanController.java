@@ -23,16 +23,16 @@ public class LoanController  extends Controller {
 
 	@Override
 	public void setupViewText() {
-		view.setPrgoressBarMax(0, (int) loan.getAmountToRecieve());
+		view.setProgressBarMax(0, (int) loan.getAmountToRecieve());
 		view.setProgressBarValue(0,(int) loan.getCurrentlyRecievedAmount());
 		view.setLabelText(0, "Montant recu:   " + loan.getCurrentlyRecievedAmount() + " / " + loan.getAmountToRecieve());
 		
-		view.setPrgoressBarMax(1, (int) loan.getAmountToPay());
+		view.setProgressBarMax(1, (int) loan.getAmountToPay());
 		view.setProgressBarValue(1, (int) loan.getCurrentlyPaidAmount());
 		view.setLabelText(1, "Montant payé:   " + loan.getCurrentlyPaidAmount() + " / " + loan.getAmountToPay());
 		
 		
-		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String date1 = dateFormat.format(loan.getFirstRepaymentDate());
 		String date2 = dateFormat.format(loan.getDueDate());
 		
