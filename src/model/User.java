@@ -28,6 +28,9 @@ public class User {
 	/* Permanent Transfers */
 	private PriorityQueue<PermanentTransfer> permanentTransfers;
 	
+	/*Loans */
+	private ArrayList<Loan> loans;
+	
 	/* Misc */
 	private ArrayList<String> transactionCategories;
 	
@@ -49,9 +52,8 @@ public class User {
 		livretAAccounts = new ArrayList<LivretAAccount>();
 		pelAccounts = new ArrayList<PELAccount>();
 		payees = new ArrayList<Account>();
-		
+		loans = new ArrayList<Loan>();
 		permanentTransfers = new PriorityQueue<PermanentTransfer>(new PermanentTransferComparator());
-		
 		transactionCategories = new ArrayList<String>();
 		for (InBuiltTransactionCategory type: InBuiltTransactionCategory.values()) {
 			transactionCategories.add(type.toString());
@@ -177,6 +179,14 @@ public class User {
 	
 	public void removePayee(Account payee) {
 		payees.remove(payee);
+	}
+	
+	public void addLoan(Loan loan) {
+		loans.add(loan);
+	}
+	
+	public ArrayList<Loan> getLoans() {
+		return loans;
 	}
 	
 	public String personalData() {
