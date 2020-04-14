@@ -3,42 +3,48 @@ import java.util.Date;
 
 public class Loan {
 	
-	private PermanentTransfer forUser, forBank;
+	private double amountToRecieve;
+	private double rate;
 	
-	public Loan(PermanentTransfer forUser, PermanentTransfer forBank) {
-		this.forUser = new PermanentTransfer(forUser);
-		this.forBank = new PermanentTransfer(forBank);
+	private double currentlyPaid;
+	private double currentlyRecieved;
+	
+	private Date firstRepaymentDate;
+	private Date dueDate;
+	
+	
+	public Loan(double amountToRecieve, double rate, double currentlyRecieved, 
+			double currentlyPaid, Date firstRepaymentDate, Date dueDate) {
+		this.amountToRecieve = amountToRecieve;
+		this.rate = rate;
+		this.currentlyPaid = currentlyPaid;
+		this.currentlyRecieved = currentlyRecieved;
+		this.firstRepaymentDate = new Date(firstRepaymentDate.getTime());
+		this.dueDate = new Date(dueDate.getTime());
 	}
 	
-	public Loan(Loan other) {
-		this(other.forUser, other.forBank);
+	public double getAmountToRecieve() {
+		return amountToRecieve;
 	}
 	
-	public double getMyMontant() {
-		return this.forUser.getAmount();
+	public double getCurrentlyPaid() {
+		return currentlyPaid;
 	}
 	
-	public double getAmountToSend() {
-		return this.forBank.getAmount();
+	public double getCurrentlyRecieved() {
+		return currentlyRecieved;
 	}
 	
-	public Date getDateRecieve() {
-		return this.forUser.getFirstTransactionDate();
+	public Date getDueDate() {
+		return dueDate;
 	}
 	
-	public Date getDateToSend() {
-		return this.forBank.getFirstTransactionDate();
+	public Date getFirstRepaymentDate() {
+		return firstRepaymentDate;
 	}
 	
-	public TransferRegularity getMyRegularity() {
-		return this.forUser.getRegularity();
+	public double getRate() {
+		return rate;
 	}
 	
-	public TransferRegularity getBankRegularity() {
-		return this.forBank.getRegularity();
-	}
-	
-	public double getTaux() {
-		return (this.getAmountToSend()/this.getMyMontant())-1;
-	}
 }
