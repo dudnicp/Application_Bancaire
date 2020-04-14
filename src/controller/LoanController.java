@@ -3,8 +3,6 @@ package controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import model.Loan;
 import view.LoanView;
 
