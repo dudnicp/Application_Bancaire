@@ -36,6 +36,7 @@ public class NewTransferController extends Controller {
 		
 		ArrayList<Object> payees = new ArrayList<Object>();
 		payees.addAll(user.getPayees());
+		payees.addAll(user.getAccounts());
 		payees.remove(payer);
 		for (Object account : payees) {
 			view.addOption(account);
