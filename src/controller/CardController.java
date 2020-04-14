@@ -31,7 +31,7 @@ public class CardController extends Controller {
 
 	@Override
 	public void setupViewButtonsActions() {
-		view.addButtonListener(new ButtonActionListener());
+		view.addButtonAction(0, new ButtonActionListener());
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class CardController extends Controller {
 		view.setLabelText(2, card.getStatus().toString());
 		view.setLabelFont(2, new Font(Font.SERIF, Font.ITALIC, 13));
 		
-		view.setButtonText(card.getStatus().equals(CardStatus.ACTIVE)? "Bloquer" : "Réactiver");
+		view.setButtonText(0, card.getStatus().equals(CardStatus.ACTIVE)? "Bloquer" : "Réactiver");
 	}
 	
 	class ButtonActionListener implements ActionListener {
@@ -57,7 +57,7 @@ public class CardController extends Controller {
 					if (password != null && card.getOwner().getPassword().equals(password)) {
 						card.lock();
 						view.setLabelText(2, CardStatus.BLOCKED.toString());
-						view.setButtonText("Réactiver");
+						view.setButtonText(0, "Réactiver");
 					}
 				}
 				break;

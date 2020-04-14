@@ -29,7 +29,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 
 	@Override
 	public void setupViewButtonsActions() {
-		view.addButtonListener(new ButtonActionListener());
+		view.addButtonAction(0, new ButtonActionListener());
 	}
 
 	@Override
@@ -54,22 +54,21 @@ public class AccountWithrdrawCeilingController extends Controller {
 		view.setLabelText(2, "Maximum: ");
 		view.setLabelText(3, Integer.toString(max));
 		
-		view.setButtonText("Modifier");
+		view.setButtonText(0, "Modifier");
 		view.setBorder(BorderFactory.createTitledBorder("Plafond de payement/retrait"));
 	}
 	
 	class ButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] input = DialogView.getDoubleStringInput("Entrez nouvelle capacité de payement: ", "Confirmez capacité de payement: ",
-					"Édition capacité de payement", false, false);
+			String input = DialogView.getStringInput("Augmentation souhaitée", "Édition capacité de payement");
 			if (input != null) {
 				try {
 					class Editor implements DataEditor {
 						@Override
 						public void editData(String newData) throws CustomException {
-							int newMax = Integer.parseInt(newData);
-							account.setMaxWithrdraw(newMax);
+							int amount = Integer.parseInt(newData);
+							account.addToMaxWithdraw(amount);
 							DialogView.displayInfoDialog("Nouvelle capacité de payement enregistrée avec succès.", null);
 						}
 						@Override
@@ -78,7 +77,7 @@ public class AccountWithrdrawCeilingController extends Controller {
 						}
 					}
 					Editor editor = new Editor();
-					editor.runDoubleInputEditionProtocol(input[0], input[1], "[0-9]*", account.getOwner().getPassword());
+					editor.runSimpleInputEditionProtocol(input, "[0-9]*", account.getOwner().getPassword());
 				} catch (CustomException e2) {
 					DialogView.displayError(e2.getString());
 				}
