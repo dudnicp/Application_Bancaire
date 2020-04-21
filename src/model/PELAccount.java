@@ -26,15 +26,15 @@ public class PELAccount extends PersonalAccount {
 		return PersonalAccount.PEL;
 	}
 	
-	public void close(CurrentAccount dest) throws PermanentsTransfersTowardPELException{
-		Transaction transaction = new Transaction(this, getBalance(), Transaction.PENDING, new Date(), new OneTimeTransferTransaction());
-		dest.addTransaction(transaction);
-		owner.closePel(this);
+	public void close(CurrentAccount dest) throws PermanentsTransfersTowardPELException {
 		for (PermanentTransfer permanentTransfer : owner.getPermanentTransfers()) {
 			if (permanentTransfer.getPayee().equals(this)) {
 				 throw new PermanentsTransfersTowardPELException();
 			}
 		}
+		Transaction transaction = new Transaction(this, getBalance(), Transaction.PENDING, new Date(), new OneTimeTransferTransaction());
+		dest.addTransaction(transaction);
+		owner.closePel(this);
 	}
 	
 }

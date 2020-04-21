@@ -152,17 +152,14 @@ public class User {
 	
 	public void addCurrentAccount(CurrentAccount account) {
 		currentAccounts.add(account);
-		payees.add(account);
 	}
 	
 	public void addLivretAAccount(LivretAAccount livretA) {
 		livretAAccounts.add(livretA);
-		payees.add(livretA);
 	}
 	
 	public void addPelAccount(PELAccount pel) {
 		pelAccounts.add(pel);
-		payees.add(pel);
 	}
 	
 	public void closePel(PELAccount pel) {
