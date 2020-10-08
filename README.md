@@ -1,17 +1,29 @@
-Pour compiler: depuis la source du projet, entrer en ligne de commande
-make compile
-Pour lancer l'application: depuis la source du projet, entrer en ligne de commande
-make run
+# Projet Analyse et Conception d'Objets Logiciels
 
-Sinon, depuis éclipse initialiser le projet et lancer le test de RunApp
+## Application Bancaire client.
+Il s'agit d'une simple interface, pas de base de données derrière.
 
+## Logiciels utilisés
+Java 8 ou supérieur
 
+## Compilation et execution
+
+### En ligne de commande
+
+- Compilation : depuis la source du projet : '''make compile'''
+- Execution :  depuis la source du projet : '''make run'''
+
+### Depuis Eclpise
+
+Initialiser le projet sur Eclipse et lancer le test de RunApp
+
+## Codes clients 
 Deux utilisateurs sont disponnibles pour les tests, leurs identifiants sont:
 
-Utilisateur1: 
+### Utilisateur1: 
 identifiant: "1"
 code secret: "1"
 
-Utilisateur2:
+### Utilisateur2:
 identifiant: "2"
 code secret: "2"
