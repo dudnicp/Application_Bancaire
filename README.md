@@ -10,8 +10,8 @@ Java 8 ou supérieur
 
 ### En ligne de commande
 
-- Compilation : depuis la source du projet : '''make compile'''
-- Execution :  depuis la source du projet : '''make run'''
+- Compilation : depuis la source du projet : ```make compile```
+- Execution :  depuis la source du projet : ```make run```
 
 ### Depuis Eclpise
 
@@ -22,8 +22,10 @@ Deux utilisateurs sont disponnibles pour les tests, leurs identifiants sont:
 
 ### Utilisateur1: 
 identifiant: "1"
+
 code secret: "1"
 
 ### Utilisateur2:
 identifiant: "2"
+
 code secret: "2"
